@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Update Employee</title>
+    <title>Update Customer</title>
     <link href="vendor/jquery-nice-select/css/nice-select.css" rel="stylesheet">
     <link rel="stylesheet" href="vendor/nouislider/nouislider.min.css">
     <link href="css/style.css" rel="stylesheet">
@@ -69,7 +69,7 @@
             <div class="col-lg-12 col-md-10 col-sm-12"> 
                 <div class="card">
                     <div class="card-body">
-                        <h2 class="text-center mb-4">Update Employee Information</h2>
+                        <h2 class="text-center mb-4">Update Customer Information</h2>
                         <?php
                         // Database connection
                         $conn = new mysqli("localhost", "root", "", "sairom_service");
@@ -78,10 +78,10 @@
                             die("Connection failed: " . $conn->connect_error);
                         }
 
-                        // Fetch employee data based on employee_id
+                        // Fetch customer data based on customer_id
                         if (isset($_GET['id'])) {
-                            $employee_id = intval($_GET['id']);
-                            $sql = "SELECT first_name, last_name, contact_no, address, email, profile, account_type FROM employees WHERE employee_id = '$employee_id'";
+                            $customer_id = intval($_GET['id']);
+                            $sql = "SELECT first_name, last_name, contact_no, address, email, profile, account_type FROM customers WHERE customer_id = '$customer_id'";
                             $result = $conn->query($sql);
 
                             if ($result->num_rows > 0) {
@@ -90,13 +90,13 @@
                                 $contact_no = $row['contact_no'];
                                 $address = $row['address'];
                                 $email = $row['email'];
-                                $profile_picture = !empty($row['profile']) ? $row['profile'] : 'uploads/employee_profile/default_profile.jpg'; 
-                                $account_type = $row['account_type']; // Directly use the account_type for the select input
+                                $profile_picture = !empty($row['profile']) ? $row['profile'] : 'uploads/customer_profile/default_profile.jpg'; 
+                                $account_type = $row['account_type']; // Get account type
                             } else {
-                                echo "<p>No employee found.</p>";
+                                echo "<p>No customer found.</p>";
                             }
                         } else {
-                            echo "<p>Invalid employee ID.</p>";
+                            echo "<p>Invalid customer ID.</p>";
                         }
 
                         $conn->close();
@@ -106,8 +106,8 @@
                             <img src="<?php echo $profile_picture; ?>" alt="Profile Picture" class="profile-picture">
                         </div>
 
-                        <form action="update_employee_process.php" method="POST" enctype="multipart/form-data">
-                            <input type="hidden" name="employee_id" value="<?php echo $employee_id; ?>">
+                        <form action="update_customer_process.php" method="POST" enctype="multipart/form-data">
+                            <input type="hidden" name="customer_id" value="<?php echo $customer_id; ?>">
                             <div class="form-group">
                                 <label for="first_name">First Name:</label>
                                 <input type="text" name="first_name" value="<?php echo $row['first_name']; ?>" class="form-control" required>
@@ -135,12 +135,12 @@
                             <div class="form-group">
                                 <label for="account_type">Account Type:</label>
                                 <select name="account_type" class="form-control" required>
-                                    <option value="1" <?php echo $account_type == 1 ? 'selected' : ''; ?>>Employee</option>
+                                    <option value="2" <?php echo ($account_type == 2) ? 'selected' : ''; ?>>Customer</option>
                                 </select>
                             </div>
                             <div class="text-center">
                                 <button type="submit" class="btn btn-primary">Update</button>
-                                <a href="employees.php" class="btn btn-warning"> <i class="fas fa-arrow-left"></i> Back</a>
+                                <a href="customers.php" class="btn btn-warning"> <i class="fas fa-arrow-left"></i> Back</a>
                             </div>
                         </form>
 
