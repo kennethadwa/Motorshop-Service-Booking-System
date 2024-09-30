@@ -1,3 +1,10 @@
+<?php
+if (!isset($_SESSION['account_type']) || $_SESSION['account_type'] != 0) {
+header("Location: ../login-register.php");
+exit();
+}
+?>
+
 <div id="preloader">
     <div class="waviy">
 		   <span style="--i:1">S</span>

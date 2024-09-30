@@ -1,5 +1,11 @@
 <?php
 
+if (!isset($_SESSION['account_type']) || $_SESSION['account_type'] != 0) {
+header("Location: ../login-register.php");
+exit();
+}
+
+
 $firstName = isset($_SESSION['first_name']) ? $_SESSION['first_name'] : 'Guest';
 $lastName = isset($_SESSION['last_name']) ? $_SESSION['last_name'] : '';
 $email = isset($_SESSION['email']) ? $_SESSION['email'] : 'No email available';

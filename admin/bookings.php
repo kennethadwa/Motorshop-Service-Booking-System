@@ -6,7 +6,7 @@ if (!isset($_SESSION['account_type']) || $_SESSION['account_type'] != 0) {
 }
 
 // Include the database connection
-include('../connection.php'); // Make sure this path is correct
+include('../connection.php'); 
 
 // Fetch booking requests
 $requestSql = "SELECT sr.request_id, CONCAT(c.first_name, ' ', c.last_name) AS customer_name, 

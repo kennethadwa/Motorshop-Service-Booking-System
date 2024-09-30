@@ -1,3 +1,11 @@
+<?php
+session_start();
+if (!isset($_SESSION['account_type']) || $_SESSION['account_type'] != 0) {
+header("Location: ../login-register.php");
+exit();
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>

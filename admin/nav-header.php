@@ -1,3 +1,10 @@
+<?php
+if (!isset($_SESSION['account_type']) || $_SESSION['account_type'] != 0) {
+header("Location: ../login-register.php");
+exit();
+}
+?>
+
 <div class="nav-header">
             <a href="index.html" class="brand-logo">
 				<svg class="logo-abbr" width="53" height="53" viewBox="0 0 53 53">
