@@ -9,7 +9,7 @@
 												<img src="images/pattern/circle.png" class="mb-4" alt="">
 												<h2 class="text-white card-balance">₱324,571.93</h2>
 												<ue class="fs-16">Total Revenue</ue>
-												<span style="color: lightgreen">+0,8% than last week</span>
+												<span style="color: lightgreen">+0.8% than last week</span>
 											</div>
 											<a class="change-btn" href="javascript:void(0);"><i class="fa fa-caret-up up-ico"></i>Change<span class="reload-icon"><i class="fas fa-sync-alt reload active"></i></span></a>
 										</div>

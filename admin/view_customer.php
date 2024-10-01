@@ -113,7 +113,7 @@ exit();
                             
                             <!-- Action Buttons -->
                         <div class="col-12 text-center mt-4">
-                            <a href="customers.php" class="btn btn-warning action-btn"> <i class="fas fa-arrow-left"></i> Back</a>
+                            <a href="user-information.php" class="btn btn-warning action-btn"> <i class="fas fa-arrow-left"></i> Back</a>
                             <a href="update_customer.php?id=<?php echo $customer_id; ?>" class="btn btn-success action-btn"><i class="fa-solid fa-pencil" style="color: #ffffff;"></i> Update</a>
                             <a href="delete_customer.php?id=<?php echo $customer_id; ?>" class="btn btn-danger action-btn" onclick="return confirm('Are you sure you want to delete this customer?')"><i class="fa-solid fa-trash" style="color: #ffffff;"></i> Delete</a>
                         </div>

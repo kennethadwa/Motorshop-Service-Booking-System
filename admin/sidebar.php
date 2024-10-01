@@ -23,17 +23,19 @@ $email = isset($_SESSION['email']) ? $_SESSION['email'] : 'No email available';
                     </div>
                 </a>
             </li>
+            
             <li><a href="index.php" aria-expanded="false">
                 <i class="flaticon-025-dashboard"></i>
                 <span class="nav-text">Dashboard</span>
             </a></li>
-            <li><a href="employees.php" aria-expanded="false">
+            <li><a href="user-information.php" aria-expanded="false">
                 <i class="fa-solid fa-user"></i>
-                <span class="nav-text">Employees</span>
-            </a></li>
-            <li><a href="customers.php" aria-expanded="false">
+                <span class="nav-text">User Information</span>
+            </a>
+        </li>
+            <li><a href="manage-account.php" aria-expanded="false">
                 <i class="fa-solid fa-user"></i>
-                <span class="nav-text">Customers</span>
+                <span class="nav-text">Manage Account</span>
             </a></li>
             <li><a href="schedule.php" aria-expanded="false">
                 <i class="fa-regular fa-calendar-days"></i>

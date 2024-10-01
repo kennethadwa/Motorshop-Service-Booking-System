@@ -66,7 +66,6 @@ exit();
                 <div class="col-12"> <!-- Full width for all devices -->
                     <div class="card">
                         <div class="card-body">
-                            <h2 class="text-center">customer List</h2>
                             <div class="row align-items-center mb-3">
                                 <div class="col-md-6">
                                     <h3>Add Customer</h3>
@@ -143,10 +142,6 @@ exit();
         </div>
     </div>
     <!-- Content Body End -->
-
-    <!-- Footer Start -->
-    <?php include('footer.php'); ?>
-    <!-- Footer End -->
 
 </div>
 <!-- Main wrapper end -->

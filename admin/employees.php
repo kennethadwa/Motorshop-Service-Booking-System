@@ -65,8 +65,7 @@ exit();
                 <!-- Employee Table Start -->
                 <div class="col-12"> <!-- Full width for all devices -->
                     <div class="card">
-                        <div class="card-body">
-                            <h2 class="text-center">Employee List</h2>
+                        <div class="card-body">                                     
                             <div class="row align-items-center mb-3">
                                 <div class="col-md-6">
                                     <h3>Add Employee</h3>
@@ -143,11 +142,6 @@ exit();
         </div>
     </div>
     <!-- Content Body End -->
-
-    <!-- Footer Start -->
-    <?php include('footer.php'); ?>
-    <!-- Footer End -->
-
 </div>
 <!-- Main wrapper end -->
 

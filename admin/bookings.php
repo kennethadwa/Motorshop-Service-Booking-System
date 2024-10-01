@@ -98,10 +98,6 @@ $requests = $conn->query($requestSql);
 </div>
 <!-- Content Body End -->
 
-<!-- Footer Start -->
-<?php include('footer.php'); ?>
-<!-- Footer End -->
-
 </div>
 <!-- Main wrapper end -->
 

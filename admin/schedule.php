@@ -87,12 +87,8 @@ $result = $conn->query($sql);
                     </div>
                 </div>
             </div>
-
         </div>
     </div>
-
-    <?php include('footer.php'); ?>
-
 </div>
 
 <script src="vendor/global/global.min.js"></script>

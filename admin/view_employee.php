@@ -113,7 +113,7 @@ exit();
                             
                             <!-- Action Buttons -->
                             <div class="col-12 text-center mt-4">
-                                <a href="employees.php" class="btn btn-warning action-btn"> <i class="fas fa-arrow-left"></i> Back</a>
+                                <a href="user-information.php" class="btn btn-warning action-btn"> <i class="fas fa-arrow-left"></i> Back</a>
                                 <a href="update_employee.php?id=<?php echo $employee_id; ?>" class="btn btn-success action-btn"><i class="fa-solid fa-pencil" style="color: #ffffff;"></i> Update</a>
                                 <a href="delete_employee.php?id=<?php echo $employee_id; ?>" class="btn btn-danger action-btn"><i class="fa-solid fa-trash" style="color: #ffffff;"></i> Delete</a>
                             </div>
@@ -124,10 +124,6 @@ exit();
         </div>
     </div>
     <!-- Content Body End -->
-
-    <!-- Footer Start -->
-    <?php include('footer.php'); ?>
-    <!-- Footer End -->
 
 </div>
 <!-- Main wrapper end -->

@@ -53,7 +53,10 @@ $requests = $conn->query($requestSql);
                 <div class="col-md-6">
                     <div class="card">
                         <div class="card-body">
+                           <div class="d-flex justify-content-center mb-3">
                             <h3>Add Schedule</h3>
+                           </div> 
+                            
                             <form action="submit_schedule.php" method="POST"> <!-- Adjust action as necessary -->
                                 <div class="mb-3">
                                     <label for="customer" class="form-label">Customer Name</label>
@@ -80,9 +83,9 @@ $requests = $conn->query($requestSql);
                                 </div>
 
                                 <div class="mb-3">
-                                    <label for="request" class="form-label">Booking Request ID</label>
+                                    <label for="request" class="form-label">Booking Request No.</label>
                                     <select id="request" name="request_id" class="form-select" required>
-                                        <option value="">Select Request ID</option>
+                                        <option value="">Select Request No.</option>
                                         <?php while ($row = $requests->fetch_assoc()): ?>
                                             <option value="<?php echo $row['request_id']; ?>">
                                                 <?php echo $row['request_id']; ?>
@@ -104,12 +107,8 @@ $requests = $conn->query($requestSql);
                     </div>
                 </div>
             </div>
-
         </div>
     </div>
-
-    <?php include('footer.php'); ?>
-
 </div>
 
 <script src="vendor/global/global.min.js"></script>
