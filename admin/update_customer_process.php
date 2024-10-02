@@ -15,10 +15,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $sex = $conn->real_escape_string($_POST['sex']);  // Add sex
     $contact_no = $conn->real_escape_string($_POST['contact_no']);
     $address = $conn->real_escape_string($_POST['address']);
-    $email = $conn->real_escape_string($_POST['email']);
-    
-    // Retrieve account_type from POST data
-    $account_type = $conn->real_escape_string($_POST['account_type']); 
 
     $profile_picture = $_FILES['profile']['name'];
     $target_dir = "uploads/customer_profile/";
@@ -34,9 +30,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 sex='$sex', 
                 contact_no='$contact_no', 
                 address='$address', 
-                email='$email', 
-                profile='$target_file', 
-                account_type='$account_type' 
+                profile='$target_file'
                 WHERE customer_id='$customer_id'";
     } else {
         $sql = "UPDATE customers SET 
@@ -46,9 +40,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 birthday='$birthday', 
                 sex='$sex', 
                 contact_no='$contact_no', 
-                address='$address', 
-                email='$email', 
-                account_type='$account_type' 
+                address='$address' 
                 WHERE customer_id='$customer_id'";
     }
     

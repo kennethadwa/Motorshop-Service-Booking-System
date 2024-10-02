@@ -9,11 +9,13 @@ if (!isset($_SESSION['account_type']) || $_SESSION['account_type'] != 0) {
 include('../connection.php'); 
 
 // Fetch booking requests
-$requestSql = "SELECT sr.request_id, CONCAT(c.first_name, ' ', c.last_name) AS customer_name, 
-                       v.model AS vehicle_model, sr.date, sr.status
-                FROM service_requests sr
-                JOIN customers c ON sr.customer_id = c.customer_id
-                JOIN vehicles v ON sr.vehicle_id = v.vehicle_id";
+$requestSql = "SELECT br.request_id, 
+                      CONCAT(c.first_name, ' ', c.last_name) AS customer_name, 
+                      br.model_name AS vehicle_model, 
+                      br.address, 
+                      br.status
+               FROM booking_request br
+               JOIN customers c ON br.customer_id = c.customer_id";
 $requests = $conn->query($requestSql);
 ?>
 
@@ -52,18 +54,16 @@ $requests = $conn->query($requestSql);
             <div class="col-12">
                 <div class="card mb-4">
                     <div class="card-body">
-                        <h5 class="card-title">Booking Requests</h5>
-
                         <div class="table-responsive">
                             <table class="table table-bordered table-striped">
                                 <thead>
                                     <tr>
-                                        <th>Request ID</th> <!-- Added Request ID Column -->
+                                        <th>Request ID</th>
                                         <th>Customer Name</th>
                                         <th>Vehicle Model</th>
-                                        <th>Date</th>
+                                        <th>Booking Address</th>
                                         <th>Status</th>
-                                        <th>View Details</th> <!-- New column header -->
+                                        <th>View Details</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -71,22 +71,22 @@ $requests = $conn->query($requestSql);
                                       <?php while ($row = $requests->fetch_assoc()): ?>
                                           <tr>
                                               <td><?php echo $row['request_id']; ?></td> <!-- Display Request ID -->
-                                              <td><?php echo $row['full_name']; ?></td> <!-- Display Customer Name -->
+                                              <td><?php echo $row['customer_name']; ?></td> <!-- Display Customer Name -->
                                               <td><?php echo $row['vehicle_model']; ?></td> <!-- Display Vehicle Model -->
-                                              <td><?php echo $row['date']; ?></td> <!-- Display Date -->
+                                              <td><?php echo $row['address']; ?></td> <!-- Display Booking Address -->
                                               <td><?php echo ucfirst($row['status']); ?></td> <!-- Display Status -->
                                               <td class="text-center">
                                                   <a href="view_details.php?request_id=<?php echo $row['request_id']; ?>" class="btn btn-primary">
                                                       <i class="fas fa-eye"></i> View
-                                                </a>
-                                            </td>
-                                        </tr>
-                                    <?php endwhile; ?>
-                                <?php else: ?>
-                                    <tr>
-                                            <td colspan="6" class="text-center">No Booking Request Available</td> <!-- Message when no requests are found -->
-                                        </tr>
-                                    <?php endif; ?>
+                                                  </a>
+                                              </td>
+                                          </tr>
+                                      <?php endwhile; ?>
+                                  <?php else: ?>
+                                      <tr>
+                                          <td colspan="6" class="text-center">No Booking Requests Available</td> <!-- Message when no requests are found -->
+                                      </tr>
+                                  <?php endif; ?>
                                 </tbody>
                             </table>
                         </div>

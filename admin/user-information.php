@@ -79,17 +79,6 @@ $customer_result = mysqli_query($conn, $customer_query);
                 <div class="col-12">
                     <div class="card">
                         <div class="card-body">                                     
-                            <div class="row align-items-center mb-3">
-                                <div class="col-md-6">
-                                    <h3>User Information</h3>
-                                </div>
-                                <div class="col-md-6 text-md-end">
-                                    <button class="btn btn-primary" onclick="window.location.href='add_user.php'">
-                                        <i class="fa fa-plus"></i>ADD USER
-                                    </button>
-                                </div>
-                            </div>
-
                             <div class="table-responsive">
                                 <ul class="nav nav-tabs" id="userTabs" role="tablist">
                                     <li class="nav-item" role="presentation">

@@ -1,8 +1,8 @@
 <?php
 session_start();
 if (!isset($_SESSION['account_type']) || $_SESSION['account_type'] != 0) {
-header("Location: ../login-register.php");
-exit();
+    header("Location: ../login-register.php");
+    exit();
 }
 ?>
 
@@ -12,7 +12,7 @@ exit();
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Add Employee</title>
+    <title>Add Admin</title>
     <link href="vendor/jquery-nice-select/css/nice-select.css" rel="stylesheet">
     <link rel="stylesheet" href="vendor/nouislider/nouislider.min.css">
     <!-- Style CSS -->
@@ -65,7 +65,7 @@ exit();
                     <div class="card-body">
 
                         <!-- FORM -->
-<form action="add_employee_process.php" method="POST" enctype="multipart/form-data">
+<form action="add_admin_process.php" method="POST" enctype="multipart/form-data">
     <div class="form-group">
         <label for="first_name">First Name</label>
         <input type="text" class="form-control" id="first_name" name="first_name" required>
@@ -113,7 +113,7 @@ exit();
     <div class="form-group">
         <label for="account_type">Account Type</label>
         <select class="form-control" id="account_type" name="account_type" required>
-            <option value="1">Employee</option>
+            <option value="0">Admin</option>
         </select>
     </div>
     <!-- Profile Picture Upload -->
@@ -122,7 +122,7 @@ exit();
         <input type="file" class="form-control-file" id="profile" name="profile" accept="image/*">
     </div>
     <div class="text-center">
-        <button type="submit" class="btn btn-primary">Add Employee</button>
+        <button type="submit" class="btn btn-primary">Add Admin</button>
     </div>
 </form>
 <!-- FORM END -->

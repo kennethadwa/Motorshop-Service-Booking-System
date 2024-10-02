@@ -152,18 +152,8 @@ if (!isset($_SESSION['account_type']) || $_SESSION['account_type'] != 0) {
                                 <input type="text" name="address" value="<?php echo $address; ?>" class="form-control" required>
                             </div>
                             <div class="form-group">
-                                <label for="email">Email:</label>
-                                <input type="email" name="email" value="<?php echo $email; ?>" class="form-control" required>
-                            </div>
-                            <div class="form-group">
                                 <label for="profile">Profile Picture:</label>
                                 <input type="file" name="profile" class="form-control-file">
-                            </div>
-                            <div class="form-group">
-                                <label for="account_type">Account Type:</label>
-                                <select name="account_type" class="form-control" required>
-                                    <option value="1" <?php echo $account_type == 1 ? 'selected' : ''; ?>>Employee</option>
-                                </select>
                             </div>
                             <div class="text-center">
                                 <button type="submit" class="btn btn-primary">Update</button>

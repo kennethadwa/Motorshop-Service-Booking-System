@@ -83,12 +83,10 @@ $customer_result = mysqli_query($conn, $customer_query);
                     <div class="card">
                         <div class="card-body">                                     
                             <div class="row align-items-center mb-3">
-                                <div class="col-md-6">
-                                    <h3>Manage Account</h3>
-                                </div>
-                                <div class="col-md-6 text-md-end"> <!-- Align text to the end on larger screens -->
-                                    <button class="btn btn-primary" onclick="window.location.href='add_user.php'">
-                                        <i class="fa fa-plus"></i>ADD USER
+                                <div class="col-md-12 text-md-end"> <!-- Align text to the end on larger screens -->
+                                    <!-- Dynamic Add Button based on selected tab -->
+                                    <button id="addUserBtn" class="btn btn-primary">
+                                        <i class="fa fa-plus"></i> Add User
                                     </button>
                                 </div>
                             </div>
@@ -129,17 +127,7 @@ $customer_result = mysqli_query($conn, $customer_query);
                                                         <td><img src="<?php echo $profile_picture; ?>" alt="Profile Picture" class="profile-picture"></td>
                                                         <td><?php echo $row['email']; ?></td>
                                                         <td><?php echo $row['password']; ?></td>
-                                                        <td class="<?php echo $account_type == 0 ? 'admin' : ($account_type == 1 ? 'employee' : 'customer'); ?>">
-                                                           <?php 
-                                                           if ($account_type == 0) {
-                                                               echo 'Admin';
-                                                           } elseif ($account_type == 1) {
-                                                               echo 'Employee';
-                                                           } elseif ($account_type == 2) {
-                                                               echo 'Customer';
-                                                           }
-                                                           ?>
-                                                       </td>
+                                                        <td class="admin">Admin</td>
                                                         <td><a href="view_admin_account.php?id=<?php echo $row['admin_id']; ?>" class="btn btn-info btn-sm">View</a></td>
                                                     </tr>
                                                 <?php } ?>
@@ -168,17 +156,7 @@ $customer_result = mysqli_query($conn, $customer_query);
                                                         <td><img src="<?php echo $profile_picture; ?>" alt="Profile Picture" class="profile-picture"></td>
                                                         <td><?php echo $row['email']; ?></td>
                                                         <td><?php echo $row['password']; ?></td>
-                                                        <td class="<?php echo $account_type == 0 ? 'admin' : ($account_type == 1 ? 'employee' : 'customer'); ?>">
-                                                            <?php 
-                                                            if ($account_type == 0) {
-                                                                echo 'Admin';
-                                                            } elseif ($account_type == 1) {
-                                                                echo 'Employee';
-                                                            } elseif ($account_type == 2) {
-                                                                echo 'Customer';
-                                                            }
-                                                            ?>
-                                                        </td>
+                                                        <td class="employee">Employee</td>
                                                         <td><a href="view_employee_account.php?id=<?php echo $row['employee_id']; ?>" class="btn btn-info btn-sm">View</a></td>
                                                     </tr>
                                                 <?php } ?>
@@ -191,7 +169,7 @@ $customer_result = mysqli_query($conn, $customer_query);
                                         <table class="table mt-3">
                                             <thead>
                                                 <tr>
-                                                    <th>Profile</th> <!-- Added Profile column -->
+                                                    <th>Profile</th> 
                                                     <th>Email</th>
                                                     <th>Password</th>
                                                     <th>Account Type</th>
@@ -201,23 +179,12 @@ $customer_result = mysqli_query($conn, $customer_query);
                                             <tbody>
                                                 <?php while ($row = mysqli_fetch_assoc($customer_result)) { 
                                                 $profile_picture = $row['profile'] ? $row['profile'] : 'path/to/default/profile/picture.jpg';
-                                                $account_type = $row['account_type'];
                                                 ?>
                                                     <tr>
                                                         <td><img src="<?php echo $profile_picture; ?>" alt="Profile Picture" class="profile-picture"></td>
                                                         <td><?php echo $row['email']; ?></td>
                                                         <td><?php echo $row['password']; ?></td>
-                                                        <td class="<?php echo $account_type == 0 ? 'admin' : ($account_type == 1 ? 'employee' : 'customer'); ?>">
-                                                            <?php 
-                                                            if ($account_type == 0) {
-                                                                echo 'Admin';
-                                                            } elseif ($account_type == 1) {
-                                                                echo 'Employee';
-                                                            } elseif ($account_type == 2) {
-                                                                echo 'Customer';
-                                                            }
-                                                            ?>
-                                                        </td>
+                                                        <td class="customer">Customer</td>
                                                         <td><a href="view_customer_account.php?id=<?php echo $row['customer_id']; ?>" class="btn btn-info btn-sm">View</a></td>
                                                     </tr>
                                                 <?php } ?>
@@ -256,5 +223,46 @@ $customer_result = mysqli_query($conn, $customer_query);
 <script src="js/dlabnav-init.js"></script>
 <script src="js/demo.js"></script>
 <script src="js/styleSwitcher.js"></script>
+
+<!-- Custom script for dynamic button handling -->
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // Get references to the Add User button and tabs
+        const addUserBtn = document.getElementById('addUserBtn');
+        const adminTab = document.getElementById('admin-tab');
+        const employeeTab = document.getElementById('employee-tab');
+        const customerTab = document.getElementById('customer-tab');
+
+        // Function to update button text based on the selected tab
+        function updateAddUserButtonText(selectedTab) {
+            if (selectedTab === 'admin') {
+                addUserBtn.innerHTML = '<i class="fa fa-plus"></i> Add Admin';
+                addUserBtn.setAttribute('onclick', "location.href='add_admin.php'");
+            } else if (selectedTab === 'employee') {
+                addUserBtn.innerHTML = '<i class="fa fa-plus"></i> Add Employee';
+                addUserBtn.setAttribute('onclick', "location.href='add_employee.php'");
+            } else if (selectedTab === 'customer') {
+                addUserBtn.innerHTML = '<i class="fa fa-plus"></i> Add Customer';
+                addUserBtn.setAttribute('onclick', "location.href='add_customer.php'");
+            }
+        }
+
+        // Event listeners for tab click to change the button text dynamically
+        adminTab.addEventListener('click', function () {
+            updateAddUserButtonText('admin');
+        });
+
+        employeeTab.addEventListener('click', function () {
+            updateAddUserButtonText('employee');
+        });
+
+        customerTab.addEventListener('click', function () {
+            updateAddUserButtonText('customer');
+        });
+
+        // Initialize with Admin as the default
+        updateAddUserButtonText('admin');
+    });
+</script>
 </body>
 </html>

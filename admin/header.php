@@ -1,12 +1,32 @@
+<?php
+// Get the current file name
+$current_page = basename($_SERVER['PHP_SELF']);
+
+// Define an array to map page names to display text
+$page_titles = [
+    'dashboard.php' => 'Dashboard',
+    'schedule.php' => 'Schedule',
+    'bookings.php' => 'Booking',
+		'inventory.php' => 'Inventory',
+		'transaction.php' => 'Transaction History',
+		'user-information.php' => 'User Information',
+		'manage-account.php' => 'Manage Account',
+    
+];
+
+// Set a default title in case the page is not listed
+$page_title = isset($page_titles[$current_page]) ? $page_titles[$current_page] : 'Dashboard';
+?>
+
 <div class="header">
-            <div class="header-content">
-                <nav class="navbar navbar-expand">
-                    <div class="collapse navbar-collapse justify-content-between">
-                        <div class="header-left">
-							<div class="dashboard_bar">
-                                Dashboard 
-                            </div>
-                        </div>
+    <div class="header-content">
+        <nav class="navbar navbar-expand">
+            <div class="collapse navbar-collapse justify-content-between">
+                <div class="header-left">
+                    <div class="dashboard_bar">
+                        <?php echo $page_title; // Display the page-specific title ?>
+                    </div>
+                </div>
                         <ul class="navbar-nav header-right">
 							<li class="nav-item">
 								<div class="input-group search-area">

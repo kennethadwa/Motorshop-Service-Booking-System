@@ -38,7 +38,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // Successful update
         echo "<script>
                 alert('Admin information updated successfully.'); 
-                window.location.href = 'view_admin.php?id={$admin_id}'; 
+                window.location.href = 'manage-account.php?id={$admin_id}'; 
               </script>";
         exit;
     } else {
