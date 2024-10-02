@@ -15,7 +15,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // Successful deletion
         echo "<script>
                 alert('Employee deleted successfully.');
-                window.location.href = 'employees.php'; // Redirect to employees page
+                window.location.href = 'user-information.php'; // Redirect to employees page
               </script>";
         exit;
     } else {

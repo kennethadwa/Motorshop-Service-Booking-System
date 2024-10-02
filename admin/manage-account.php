@@ -52,9 +52,9 @@ $customer_result = mysqli_query($conn, $customer_query);
             border-radius: 50%; /* Make it circular */
             object-fit: cover; /* Ensure image covers the circle */
         }
-        .admin { color: red; }
-        .employee { color: green; }
-        .customer { color: blue; }
+        .admin { color: red; font-weight: bold;}
+        .employee { color: green; font-weight: bold;}
+        .customer { color: blue; font-weight: bold;}
     </style>
 </head>
 <body>
@@ -140,7 +140,7 @@ $customer_result = mysqli_query($conn, $customer_query);
                                                            }
                                                            ?>
                                                        </td>
-                                                        <td><a href="view_admin.php?id=<?php echo $row['admin_id']; ?>" class="btn btn-info btn-sm">View</a></td>
+                                                        <td><a href="view_admin_account.php?id=<?php echo $row['admin_id']; ?>" class="btn btn-info btn-sm">View</a></td>
                                                     </tr>
                                                 <?php } ?>
                                             </tbody>
@@ -179,7 +179,7 @@ $customer_result = mysqli_query($conn, $customer_query);
                                                             }
                                                             ?>
                                                         </td>
-                                                        <td><a href="view_employee.php?id=<?php echo $row['employee_id']; ?>" class="btn btn-info btn-sm">View</a></td>
+                                                        <td><a href="view_employee_account.php?id=<?php echo $row['employee_id']; ?>" class="btn btn-info btn-sm">View</a></td>
                                                     </tr>
                                                 <?php } ?>
                                             </tbody>
@@ -218,7 +218,7 @@ $customer_result = mysqli_query($conn, $customer_query);
                                                             }
                                                             ?>
                                                         </td>
-                                                        <td><a href="view_customer.php?id=<?php echo $row['customer_id']; ?>" class="btn btn-info btn-sm">View</a></td>
+                                                        <td><a href="view_customer_account.php?id=<?php echo $row['customer_id']; ?>" class="btn btn-info btn-sm">View</a></td>
                                                     </tr>
                                                 <?php } ?>
                                             </tbody>

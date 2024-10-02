@@ -10,6 +10,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $employee_id = intval($_POST['employee_id']);
     $first_name = $conn->real_escape_string($_POST['first_name']);
     $last_name = $conn->real_escape_string($_POST['last_name']);
+    $age = intval($_POST['age']); // Age field
+    $birthday = $conn->real_escape_string($_POST['birthday']); // Birthday field
+    $sex = $conn->real_escape_string($_POST['sex']); // Sex field
     $contact_no = $conn->real_escape_string($_POST['contact_no']);
     $address = $conn->real_escape_string($_POST['address']);
     $email = $conn->real_escape_string($_POST['email']);
@@ -21,9 +24,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     
     // Prepare the SQL query based on whether a new profile picture is uploaded
     if (!empty($profile_picture) && move_uploaded_file($_FILES['profile']['tmp_name'], $target_file)) {
-        $sql = "UPDATE employees SET first_name='$first_name', last_name='$last_name', contact_no='$contact_no', address='$address', email='$email', profile='$target_file', account_type='$account_type' WHERE employee_id='$employee_id'";
+        $sql = "UPDATE employees SET first_name='$first_name', last_name='$last_name', age='$age', birthday='$birthday', sex='$sex', contact_no='$contact_no', address='$address', email='$email', profile='$target_file', account_type='$account_type' WHERE employee_id='$employee_id'";
     } else {
-        $sql = "UPDATE employees SET first_name='$first_name', last_name='$last_name', contact_no='$contact_no', address='$address', email='$email', account_type='$account_type' WHERE employee_id='$employee_id'";
+        $sql = "UPDATE employees SET first_name='$first_name', last_name='$last_name', age='$age', birthday='$birthday', sex='$sex', contact_no='$contact_no', address='$address', email='$email', account_type='$account_type' WHERE employee_id='$employee_id'";
     }
     
     if ($conn->query($sql) === TRUE) {

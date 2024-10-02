@@ -1,9 +1,10 @@
 <?php
 session_start();
-if (!isset($_SESSION['account_type']) || $_SESSION['account_type'] != 0) {
+if (!isset($_SESSION['account_type']) || (int)$_SESSION['account_type'] !== 0) {
     header("Location: ../login-register.php");
     exit();
 }
+
 ?>
 
 <!DOCTYPE html>
@@ -20,26 +21,26 @@ if (!isset($_SESSION['account_type']) || $_SESSION['account_type'] != 0) {
             max-width: 320px;
             height: auto;
             display: flex;
-            flex-direction: column; /* Stack items vertically */
-            align-items: center; /* Center items horizontally */
+            flex-direction: column;
+            align-items: center;
         }
 
         .info-container {
-            max-width: 100%; /* Allow container to be responsive */
-            padding: 15px; /* Optional padding */
-            text-align: center; /* Center text inside the container */
+            max-width: 100%;
+            padding: 15px;
+            text-align: center;
         }
 
         .profile-image {
-            width: 80px; /* Set width to 80px */
-            height: 80px; /* Set height to 80px for a smaller size */
-            border-radius: 50%; /* Make the image circular */
-            margin-bottom: 10px; /* Spacing below the image */
-            object-fit: cover; /* Maintain aspect ratio and cover the area */
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            margin-bottom: 10px;
+            object-fit: cover;
         }
 
         .action-btn {
-            margin: 10px; /* Spacing between buttons */
+            margin: 10px;
         }
     </style>
 </head>
@@ -64,7 +65,7 @@ if (!isset($_SESSION['account_type']) || $_SESSION['account_type'] != 0) {
     <div class="content-body">
         <div class="container-fluid">
             <div class="row justify-content-center align-items-center">
-                <div class="col-lg-7 col-md-10 col-sm-12"> <!-- Responsive columns -->
+                <div class="col-lg-7 col-md-10 col-sm-12">
                     <div class="card">
                         <div class="card-body row justify-content-center">
                             <h2 class="text-center mb-3">Admin Information</h2>
@@ -79,30 +80,22 @@ if (!isset($_SESSION['account_type']) || $_SESSION['account_type'] != 0) {
                             // Fetch admin data based on admin_id
                             if (isset($_GET['id'])) {
                                 $admin_id = intval($_GET['id']);
-                                $sql = "SELECT first_name, last_name, contact_no, address, email, profile, account_type, age, birthday, sex FROM admin WHERE admin_id = '$admin_id'";
+                                $sql = "SELECT email, password, profile, account_type FROM admin WHERE admin_id = '$admin_id'";
                                 $result = $conn->query($sql);
                             
                                 if ($result->num_rows > 0) {
                                     $row = $result->fetch_assoc();
-                                    $full_name = $row['first_name'] . ' ' . $row['last_name'];
-                                    $contact_no = $row['contact_no'];
-                                    $address = $row['address'];
                                     $email = $row['email'];
-                                    $age = $row['age'];
-                                    $birthday = $row['birthday'];
-                                    $sex = $row['sex'];
+                                    $password = $row['password']; // Be careful displaying passwords
                                     $profile_picture = !empty($row['profile']) ? $row['profile'] : 'uploads/admin_profile/default_profile.jpg'; 
-                                    $account_type = $row['account_type'] == 1 ? "<span class='account-type' style='color: red'>Admin</span>" : "Other";
+                                    $account_type = $row['account_type'] == 0 ? "Admin" : "Other";
 
                                     echo "<div class='admin-info'>";
-                                    echo "<img src='$profile_picture' alt='Profile Picture' class='profile-image'>"; // Profile image at the top
+                                    echo "<img src='$profile_picture' alt='Profile Picture' class='profile-image'>"; // Display the profile picture
                                     echo "<div class='info-container'>";
-                                    echo "<p><strong>Full Name:</strong> $full_name</p>";
-                                    echo "<p><strong>Age:</strong> $age</p>"; // Display age
-                                    echo "<p><strong>Birthday:</strong> $birthday</p>"; // Display birthday
-                                    echo "<p><strong>Sex:</strong> $sex</p>"; // Display sex
-                                    echo "<p><strong>Contact Number:</strong> $contact_no</p>";
-                                    echo "<p><strong>Address:</strong> $address</p>";
+                                    echo "<p><strong>Email:</strong> $email</p>";
+                                    echo "<p><strong>Password:</strong> $password</p>"; // Be cautious displaying this
+                                    echo "<p><strong>Account Type:</strong> <span style='color: red; font-weight: bold;'>$account_type<span></span></p>";
                                     echo "</div>";
                                     echo "</div>";
                                 } else {
@@ -117,8 +110,8 @@ if (!isset($_SESSION['account_type']) || $_SESSION['account_type'] != 0) {
                             
                             <!-- Action Buttons -->
                             <div class="col-12 text-center mt-4">
-                                <a href="user-information.php" class="btn btn-warning action-btn"> <i class="fas fa-arrow-left"></i> Back</a>
-                                <a href="update_admin.php?id=<?php echo $admin_id; ?>" class="btn btn-success action-btn"><i class="fa-solid fa-pencil" style="color: #ffffff;"></i> Update</a>
+                                <a href="manage-account.php" class="btn btn-warning action-btn"> <i class="fas fa-arrow-left"></i> Back</a>
+                                <a href="update_admin_account.php?id=<?php echo $admin_id; ?>" class="btn btn-success action-btn"><i class="fa-solid fa-pencil" style="color: #ffffff;"></i> Update</a>
                                 <a href="delete_admin.php?id=<?php echo $admin_id; ?>" class="btn btn-danger action-btn" onclick="return confirm('Are you sure you want to delete this admin?')"><i class="fa-solid fa-trash" style="color: #ffffff;"></i> Delete</a>
                             </div>
                         </div>
@@ -137,17 +130,16 @@ if (!isset($_SESSION['account_type']) || $_SESSION['account_type'] != 0) {
 <!-- Main wrapper end -->
 
 <!-- Scripts -->
-<!-- Required vendors -->
 <script src="vendor/global/global.min.js"></script>
 <script src="vendor/chart.js/Chart.bundle.min.js"></script>
 <script src="vendor/jquery-nice-select/js/jquery.nice-select.min.js"></script>
 <script src="https://kit.fontawesome.com/b931534883.js" crossorigin="anonymous"></script>
-    
+
 <!-- Apex Chart -->
 <script src="vendor/apexchart/apexchart.js"></script>
 <script src="vendor/nouislider/nouislider.min.js"></script>
 <script src="vendor/wnumb/wNumb.js"></script>
-    
+
 <!-- Dashboard 1 -->
 <script src="js/dashboard/dashboard-1.js"></script>
 

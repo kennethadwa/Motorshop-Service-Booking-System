@@ -6,20 +6,20 @@ if ($conn->connect_error) {
 }
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $customer_id = intval($_POST['customer_id']);
+    $admin_id = intval($_POST['admin_id']);
     
     // Perform delete operation
-    $sql = "DELETE FROM customers WHERE customer_id = '$customer_id'";
+    $sql = "DELETE FROM admin WHERE admin_id = '$admin_id'";
 
     if ($conn->query($sql) === TRUE) {
         // Successful deletion
         echo "<script>
-                alert('Customer deleted successfully.');
-                window.location.href = 'user-information.php'; // Redirect to customers page
+                alert('Admin deleted successfully.');
+                window.location.href = 'user-information.php';
               </script>";
         exit;
     } else {
-        echo "Error deleting customer: " . $conn->error;
+        echo "Error deleting admin: " . $conn->error;
     }
 }
 

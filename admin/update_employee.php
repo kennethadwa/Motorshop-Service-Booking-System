@@ -1,8 +1,8 @@
 <?php
 session_start();
 if (!isset($_SESSION['account_type']) || $_SESSION['account_type'] != 0) {
-header("Location: ../login-register.php");
-exit();
+    header("Location: ../login-register.php");
+    exit();
 }
 ?>
 
@@ -47,11 +47,11 @@ exit();
             margin-bottom: 20px;
         }
         .profile-picture {
-            width: 100px; /* Adjust the size as needed */
-            height: 100px; /* Adjust the size as needed */
+            width: 100px;
+            height: 100px;
             border-radius: 50%;
             object-fit: cover;
-            border: 2px solid #ccc; /* Optional: border for the profile picture */
+            border: 2px solid #ccc;
         }
     </style>
 </head>
@@ -89,7 +89,7 @@ exit();
                         // Fetch employee data based on employee_id
                         if (isset($_GET['id'])) {
                             $employee_id = intval($_GET['id']);
-                            $sql = "SELECT first_name, last_name, contact_no, address, email, profile, account_type FROM employees WHERE employee_id = '$employee_id'";
+                            $sql = "SELECT first_name, last_name, contact_no, address, email, profile, account_type, age, birthday, sex FROM employees WHERE employee_id = '$employee_id'";
                             $result = $conn->query($sql);
 
                             if ($result->num_rows > 0) {
@@ -99,7 +99,10 @@ exit();
                                 $address = $row['address'];
                                 $email = $row['email'];
                                 $profile_picture = !empty($row['profile']) ? $row['profile'] : 'uploads/employee_profile/default_profile.jpg'; 
-                                $account_type = $row['account_type']; // Directly use the account_type for the select input
+                                $account_type = $row['account_type']; 
+                                $age = $row['age'];
+                                $birthday = $row['birthday'];
+                                $sex = $row['sex'];
                             } else {
                                 echo "<p>No employee found.</p>";
                             }
@@ -123,6 +126,22 @@ exit();
                             <div class="form-group">
                                 <label for="last_name">Last Name:</label>
                                 <input type="text" name="last_name" value="<?php echo $row['last_name']; ?>" class="form-control" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="age">Age:</label>
+                                <input type="number" name="age" value="<?php echo $age; ?>" class="form-control" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="birthday">Birthday:</label>
+                                <input type="date" name="birthday" value="<?php echo $birthday; ?>" class="form-control" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="sex">Sex:</label>
+                                <select name="sex" class="form-control" required>
+                                    <option value="Male" <?php echo $sex == 'Male' ? 'selected' : ''; ?>>Male</option>
+                                    <option value="Female" <?php echo $sex == 'Female' ? 'selected' : ''; ?>>Female</option>
+                                    <option value="Other" <?php echo $sex == 'Other' ? 'selected' : ''; ?>>Other</option>
+                                </select>
                             </div>
                             <div class="form-group">
                                 <label for="contact_no">Contact Number:</label>

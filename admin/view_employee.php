@@ -1,8 +1,8 @@
 <?php
 session_start();
 if (!isset($_SESSION['account_type']) || $_SESSION['account_type'] != 0) {
-header("Location: ../login-register.php");
-exit();
+    header("Location: ../login-register.php");
+    exit();
 }
 ?>
 
@@ -79,12 +79,15 @@ exit();
                             // Fetch employee data based on employee_id
                             if (isset($_GET['id'])) {
                                 $employee_id = intval($_GET['id']);
-                                $sql = "SELECT first_name, last_name, contact_no, address, email, profile, account_type FROM employees WHERE employee_id = '$employee_id'";
+                                $sql = "SELECT first_name, last_name, contact_no, address, email, profile, account_type, age, birthday, sex FROM employees WHERE employee_id = '$employee_id'";
                                 $result = $conn->query($sql);
                             
                                 if ($result->num_rows > 0) {
                                     $row = $result->fetch_assoc();
                                     $full_name = $row['first_name'] . ' ' . $row['last_name'];
+                                    $age = $row['age'];
+                                    $birthday = $row['birthday'];
+                                    $sex = $row['sex'];
                                     $contact_no = $row['contact_no'];
                                     $address = $row['address'];
                                     $email = $row['email'];
@@ -95,10 +98,11 @@ exit();
                                     echo "<img src='$profile_picture' alt='Profile Picture' class='profile-image'>"; // Profile image at the top
                                     echo "<div class='info-container'>";
                                     echo "<p><strong>Full Name:</strong> $full_name</p>";
+                                    echo "<p><strong>Age:</strong> $age</p>";
+                                    echo "<p><strong>Birthday:</strong> $birthday</p>";
+                                    echo "<p><strong>Sex:</strong> $sex</p>";
                                     echo "<p><strong>Contact Number:</strong> $contact_no</p>";
                                     echo "<p><strong>Address:</strong> $address</p>";
-                                    echo "<p><strong>Email:</strong> $email</p>";
-                                    echo "<p><strong>Account Type:</strong> $account_type</p>";
                                     echo "</div>";
                                     echo "</div>";
                                 } else {
@@ -129,18 +133,15 @@ exit();
 <!-- Main wrapper end -->
 
 <!-- Scripts -->
-<!-- Required vendors -->
 <script src="vendor/global/global.min.js"></script>
 <script src="vendor/chart.js/Chart.bundle.min.js"></script>
 <script src="vendor/jquery-nice-select/js/jquery.nice-select.min.js"></script>
 <script src="https://kit.fontawesome.com/b931534883.js" crossorigin="anonymous"></script>
     
-<!-- Apex Chart -->
 <script src="vendor/apexchart/apexchart.js"></script>
 <script src="vendor/nouislider/nouislider.min.js"></script>
 <script src="vendor/wnumb/wNumb.js"></script>
     
-<!-- Dashboard 1 -->
 <script src="js/dashboard/dashboard-1.js"></script>
 
 <script src="js/custom.min.js"></script>

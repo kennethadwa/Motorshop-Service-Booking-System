@@ -89,7 +89,7 @@ if (!isset($_SESSION['account_type']) || $_SESSION['account_type'] != 0) {
                         // Fetch admin data based on admin_id
                         if (isset($_GET['id'])) {
                             $admin_id = intval($_GET['id']);
-                            $sql = "SELECT first_name, last_name, contact_no, address, email, profile, account_type FROM admin WHERE admin_id = '$admin_id'";
+                            $sql = "SELECT first_name, last_name, contact_no, address, email, profile, account_type, age, birthday, sex FROM admin WHERE admin_id = '$admin_id'";
                             $result = $conn->query($sql);
 
                             if ($result->num_rows > 0) {
@@ -100,6 +100,9 @@ if (!isset($_SESSION['account_type']) || $_SESSION['account_type'] != 0) {
                                 $email = $row['email'];
                                 $profile_picture = !empty($row['profile']) ? $row['profile'] : 'uploads/admin_profile/default_profile.jpg'; 
                                 $account_type = $row['account_type']; // Get account type
+                                $age = $row['age']; // Fetch age
+                                $birthday = $row['birthday']; // Fetch birthday
+                                $sex = $row['sex']; // Fetch sex
                             } else {
                                 echo "<p>No admin found.</p>";
                             }
@@ -123,6 +126,22 @@ if (!isset($_SESSION['account_type']) || $_SESSION['account_type'] != 0) {
                             <div class="form-group">
                                 <label for="last_name">Last Name:</label>
                                 <input type="text" name="last_name" value="<?php echo $row['last_name']; ?>" class="form-control" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="age">Age:</label>
+                                <input type="number" name="age" value="<?php echo $age; ?>" class="form-control" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="birthday">Birthday:</label>
+                                <input type="date" name="birthday" value="<?php echo $birthday; ?>" class="form-control" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="sex">Sex:</label>
+                                <select name="sex" class="form-control" required>
+                                    <option value="Male" <?php echo ($sex == 'Male') ? 'selected' : ''; ?>>Male</option>
+                                    <option value="Female" <?php echo ($sex == 'Female') ? 'selected' : ''; ?>>Female</option>
+                                    <option value="Other" <?php echo ($sex == 'Other') ? 'selected' : ''; ?>>Other</option>
+                                </select>
                             </div>
                             <div class="form-group">
                                 <label for="contact_no">Contact Number:</label>

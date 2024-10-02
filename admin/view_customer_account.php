@@ -1,6 +1,6 @@
 <?php
 session_start();
-if (!isset($_SESSION['account_type']) || $_SESSION['account_type'] != 0) {
+if (!isset($_SESSION['account_type']) || (int)$_SESSION['account_type'] !== 0) {
     header("Location: ../login-register.php");
     exit();
 }
@@ -12,7 +12,7 @@ if (!isset($_SESSION['account_type']) || $_SESSION['account_type'] != 0) {
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>View customer</title>
+    <title>View Customer</title>
     <link rel="stylesheet" href="vendor/nouislider/nouislider.min.css">
     <link href="./css/style.css" rel="stylesheet">
     <style>
@@ -71,39 +71,32 @@ if (!isset($_SESSION['account_type']) || $_SESSION['account_type'] != 0) {
                             <?php
                             // Database connection
                             $conn = new mysqli("localhost", "root", "", "sairom_service");
-                            
+
                             if ($conn->connect_error) {
                                 die("Connection failed: " . $conn->connect_error);
                             }
-                            
+
                             // Fetch customer data based on customer_id
                             if (isset($_GET['id'])) {
                                 $customer_id = intval($_GET['id']);
-                                $sql = "SELECT first_name, last_name, contact_no, address, email, profile, account_type, age, birthday, sex 
-                                        FROM customers WHERE customer_id = '$customer_id'";
+                                $sql = "SELECT email, password, profile, account_type FROM customers WHERE customer_id = '$customer_id'";
                                 $result = $conn->query($sql);
-                            
+
                                 if ($result->num_rows > 0) {
                                     $row = $result->fetch_assoc();
-                                    $full_name = $row['first_name'] . ' ' . $row['last_name'];
-                                    $contact_no = $row['contact_no'];
-                                    $address = $row['address'];
                                     $email = $row['email'];
-                                    $profile_picture = !empty($row['profile']) ? $row['profile'] : 'uploads/customer_profile/default_profile.jpg'; 
-                                    $account_type = $row['account_type'] == 2 ? "<span class='account-type' style='color: green'>Customer</span>" : "Other";
-                                    $age = $row['age'];
-                                    $birthday = $row['birthday'];
-                                    $sex = $row['sex'];
+                                    $password = $row['password']; // Be careful displaying passwords
+                                    $profile_picture = !empty($row['profile']) ? $row['profile'] : 'uploads/customer_profile/default_profile.jpg';
+                                    
+                                    // Check account type and display "Customer" in blue if account_type is 2
+                                    $account_type = $row['account_type'] == 2 ? "<span style='color: blue; font-weight: bold;'>Customer</span>" : "Other";
 
                                     echo "<div class='customer-info'>";
-                                    echo "<img src='$profile_picture' alt='Profile Picture' class='profile-image'>";
+                                    echo "<img src='$profile_picture' alt='Profile Picture' class='profile-image'>"; // Display the profile picture
                                     echo "<div class='info-container'>";
-                                    echo "<p><strong>Full Name:</strong> $full_name</p>";
-                                    echo "<p><strong>Age:</strong> $age</p>";
-                                    echo "<p><strong>Birthday:</strong> $birthday</p>";
-                                    echo "<p><strong>Sex:</strong> $sex</p>";
-                                    echo "<p><strong>Contact Number:</strong> $contact_no</p>";
-                                    echo "<p><strong>Address:</strong> $address</p>";
+                                    echo "<p><strong>Email:</strong> $email</p>";
+                                    echo "<p><strong>Password:</strong> $password</p>"; // Be cautious displaying this
+                                    echo "<p><strong>Account Type:</strong> $account_type</p>";
                                     echo "</div>";
                                     echo "</div>";
                                 } else {
@@ -112,14 +105,14 @@ if (!isset($_SESSION['account_type']) || $_SESSION['account_type'] != 0) {
                             } else {
                                 echo "<p>Invalid customer ID.</p>";
                             }
-                            
+
                             $conn->close();
                             ?>
-                            
+
                             <!-- Action Buttons -->
                             <div class="col-12 text-center mt-4">
-                                <a href="user-information.php" class="btn btn-warning action-btn"> <i class="fas fa-arrow-left"></i> Back</a>
-                                <a href="update_customer.php?id=<?php echo $customer_id; ?>" class="btn btn-success action-btn"><i class="fa-solid fa-pencil" style="color: #ffffff;"></i> Update</a>
+                                <a href="manage-account.php" class="btn btn-warning action-btn"> <i class="fas fa-arrow-left"></i> Back</a>
+                                <a href="update_customer_account.php?id=<?php echo $customer_id; ?>" class="btn btn-success action-btn"><i class="fa-solid fa-pencil" style="color: #ffffff;"></i> Update</a>
                                 <a href="delete_customer.php?id=<?php echo $customer_id; ?>" class="btn btn-danger action-btn" onclick="return confirm('Are you sure you want to delete this customer?')"><i class="fa-solid fa-trash" style="color: #ffffff;"></i> Delete</a>
                             </div>
                         </div>
@@ -142,10 +135,15 @@ if (!isset($_SESSION['account_type']) || $_SESSION['account_type'] != 0) {
 <script src="vendor/chart.js/Chart.bundle.min.js"></script>
 <script src="vendor/jquery-nice-select/js/jquery.nice-select.min.js"></script>
 <script src="https://kit.fontawesome.com/b931534883.js" crossorigin="anonymous"></script>
+
+<!-- Apex Chart -->
 <script src="vendor/apexchart/apexchart.js"></script>
 <script src="vendor/nouislider/nouislider.min.js"></script>
 <script src="vendor/wnumb/wNumb.js"></script>
+
+<!-- Dashboard 1 -->
 <script src="js/dashboard/dashboard-1.js"></script>
+
 <script src="js/custom.min.js"></script>
 <script src="js/dlabnav-init.js"></script>
 <script src="js/demo.js"></script>
