@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 29, 2024 at 05:56 PM
+-- Generation Time: Oct 03, 2024 at 09:01 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -31,9 +31,14 @@ CREATE TABLE `admin` (
   `admin_id` int(11) NOT NULL,
   `first_name` varchar(100) NOT NULL,
   `last_name` varchar(100) NOT NULL,
+  `age` int(11) DEFAULT NULL,
+  `birthday` date DEFAULT NULL,
+  `sex` varchar(10) DEFAULT NULL,
   `contact_no` varchar(20) NOT NULL,
+  `address` varchar(255) NOT NULL,
   `email` varchar(150) NOT NULL,
   `password` varchar(255) NOT NULL,
+  `profile` varchar(255) DEFAULT NULL,
   `account_type` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -41,8 +46,25 @@ CREATE TABLE `admin` (
 -- Dumping data for table `admin`
 --
 
-INSERT INTO `admin` (`admin_id`, `first_name`, `last_name`, `contact_no`, `email`, `password`, `account_type`) VALUES
-(1, 'Kenneth', 'Lorenzo', '09376298340', 'kennetics1@gmail.com', '$2y$10$e7mtNKwBKV2ihCaI0ytkse3eO6qYHyhQZQfouCFaIW5c0tBQxK97C', 0);
+INSERT INTO `admin` (`admin_id`, `first_name`, `last_name`, `age`, `birthday`, `sex`, `contact_no`, `address`, `email`, `password`, `profile`, `account_type`) VALUES
+(1, 'Kenneth', 'Lorenzo', 21, '2003-12-11', 'Male', '09376298340', 'Bunny Village', 'kennetics1@gmail.com', '$2y$10$.unEkaeHkQqZHrAngbKmROZyjYkB9FGL5lAKraU1kJdKT1cdbXsCS', 'uploads/admin_profile/bunny.jpg', 0),
+(3, 'Spongebob', 'Lorenzo', 20, '1993-06-18', 'Male', '09111111111', 'Krusty Krab', 'spongebob@gmail.com', '$2y$10$ZSVfmOo7O0UsIubbU06zlONbwOZBzrMWy01WoFqqI/IhVUFbHBvey', 'uploads/admin_profile/dog.jpg', 0);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `booking_request`
+--
+
+CREATE TABLE `booking_request` (
+  `request_id` int(11) NOT NULL,
+  `customer_id` int(11) DEFAULT NULL,
+  `model_name` varchar(255) DEFAULT NULL,
+  `address` varchar(255) DEFAULT NULL,
+  `request_date` date DEFAULT NULL,
+  `description` varchar(255) DEFAULT NULL,
+  `status` varchar(255) DEFAULT 'pending'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -54,6 +76,9 @@ CREATE TABLE `customers` (
   `customer_id` int(11) NOT NULL,
   `first_name` varchar(100) NOT NULL,
   `last_name` varchar(100) NOT NULL,
+  `age` int(11) DEFAULT NULL,
+  `birthday` date DEFAULT NULL,
+  `sex` varchar(10) DEFAULT NULL,
   `contact_no` varchar(20) NOT NULL,
   `address` varchar(255) DEFAULT NULL,
   `email` varchar(150) NOT NULL,
@@ -67,11 +92,10 @@ CREATE TABLE `customers` (
 -- Dumping data for table `customers`
 --
 
-INSERT INTO `customers` (`customer_id`, `first_name`, `last_name`, `contact_no`, `address`, `email`, `password`, `profile`, `account_type`, `created_at`) VALUES
-(1, 'Kenneth', 'Lorenzo', '09123456789', 'Meow Village', 'kenneth@gmail.com', '$2y$10$NPOhQHYxgCSE.74h20HTg.E9k.ODAFRkXKmqzAJGBJjYBOWXBsrxS', 'uploads/customer_profile/dog.jpg', 2, '2024-09-26 11:22:57'),
-(2, 'Trisha Mae', 'Lorenzo', '09123456789', 'Cat Village', 'trishana@gmail.com', '$2y$10$Of3VQUEl47HZ4j8qI8Ko.uF2oRUgIjlKkdB0NIjG4SXu6x5OI1J22', NULL, 2, '2024-09-26 11:31:57'),
-(3, 'Faye', 'Alfaro', '09633874702', 'Cat Village', 'faye@gmail.com', '$2y$10$N8wHyADZCqgDyl.QgFT9Q.5Yj.pnPoT9mA7hIwRPFN5YoOOKJbEaC', 'uploads/customer_profile/1727586871_dog.jpg', 2, '2024-09-29 05:14:31'),
-(4, 'Hachiko', 'Lorenzo', '09999999999', 'Dog Village', 'hachi@gmail.com', '$2y$10$dU9pKgQwXnIfQayNdGJJi.MxxY4PFnhU8MQXm38twsZEuE9RsenPG', 'uploads/customer_profile/1727587151_dog.jpg', 2, '2024-09-29 05:19:11');
+INSERT INTO `customers` (`customer_id`, `first_name`, `last_name`, `age`, `birthday`, `sex`, `contact_no`, `address`, `email`, `password`, `profile`, `account_type`, `created_at`) VALUES
+(1, 'Kenneth', 'Lorenzo', 20, '2003-12-11', 'Male', '09123456789', 'Meow Village', 'kenneth@gmail.com', '$2y$10$NPOhQHYxgCSE.74h20HTg.E9k.ODAFRkXKmqzAJGBJjYBOWXBsrxS', 'uploads/customer_profile/bunny.jpg', 2, '2024-09-26 11:22:57'),
+(3, 'Trisha Mae', 'Quiras', 22, '2003-10-21', 'Female', '09633874702', 'Cat Village', 'faye@gmail.com', '$2y$10$N8wHyADZCqgDyl.QgFT9Q.5Yj.pnPoT9mA7hIwRPFN5YoOOKJbEaC', 'uploads/customer_profile/1727586871_dog.jpg', 2, '2024-09-29 05:14:31'),
+(4, 'Hachiko', 'Lorenzo', 6, '2018-07-08', 'Male', '09999999999', 'Dog Village', 'hachi@gmail.com', '$2y$10$dU9pKgQwXnIfQayNdGJJi.MxxY4PFnhU8MQXm38twsZEuE9RsenPG', 'uploads/customer_profile/1727587151_dog.jpg', 2, '2024-09-29 05:19:11');
 
 -- --------------------------------------------------------
 
@@ -83,6 +107,9 @@ CREATE TABLE `employees` (
   `employee_id` int(11) NOT NULL,
   `first_name` varchar(100) NOT NULL,
   `last_name` varchar(100) NOT NULL,
+  `age` int(11) DEFAULT NULL,
+  `birthday` date DEFAULT NULL,
+  `sex` varchar(10) DEFAULT NULL,
   `contact_no` varchar(20) NOT NULL,
   `address` varchar(255) NOT NULL,
   `email` varchar(150) NOT NULL,
@@ -95,10 +122,10 @@ CREATE TABLE `employees` (
 -- Dumping data for table `employees`
 --
 
-INSERT INTO `employees` (`employee_id`, `first_name`, `last_name`, `contact_no`, `address`, `email`, `password`, `profile`, `account_type`) VALUES
-(2, 'Cherry', 'Berry', '09567388923', 'Meow Meow, St. Cat Village, Lipa City, Batangas', 'cherryberry@gmail.com', '$2y$10$39BLAMbrGczZFhx8UN5UY.SPghOggb0Ai/3G9j9QHiUwakJPlZZD.', 'uploads/employee_profile/mew_profile.jpg', 0),
-(3, 'Mew', 'Lorenzo', '09876543212', 'Meow Village, Lipa City', 'mew@gmail.com', '$2y$10$1GVbdDmKf/Gc2hpUW1ibFOu8zE3kSPJkGfClhNoJGyHNvAVBRUr0e', 'uploads/employee_profile/1727543971_mew_profile.jpg', 0),
-(4, 'Cherry', 'Lorenzo', '09888888888', 'Cat Village', 'cherry@gmail.com', '$2y$10$EhA/T8PWd9nnc673t0UqOejYtsdRjIHBoU7uKC5UcJJVlpQ.Xfs/m', 'uploads/employee_profile/1727587266_mew_profile.jpg', 1);
+INSERT INTO `employees` (`employee_id`, `first_name`, `last_name`, `age`, `birthday`, `sex`, `contact_no`, `address`, `email`, `password`, `profile`, `account_type`) VALUES
+(3, 'Mew', 'Lorenzo', 2, '2022-11-10', 'Male', '09876543212', 'Meow Village, Lipa City', 'mew@gmail.com', '$2y$10$1GVbdDmKf/Gc2hpUW1ibFOu8zE3kSPJkGfClhNoJGyHNvAVBRUr0e', 'uploads/employee_profile/bunny.jpg', 1),
+(4, 'Cherry', 'Lorenzo', 2, '2022-07-14', 'Female', '09888888888', 'Cat Village', 'cherry@gmail.com', '$2y$10$EhA/T8PWd9nnc673t0UqOejYtsdRjIHBoU7uKC5UcJJVlpQ.Xfs/m', 'uploads/employee_profile/1727587266_mew_profile.jpg', 1),
+(5, 'Trisha Mae', 'Quiras', 21, '2024-10-21', 'Female', '09123456789', 'Lynville, Latag', 'trishana@gmail.com', '$2y$10$fK9YMJhYeaj6q8cA4QnPce6sYmR5e97e6.uCZyfHYYx4lXPYTH9ue', 'uploads/employee_profile/1727885889_mew_profile.jpg', 1);
 
 -- --------------------------------------------------------
 
@@ -123,10 +150,8 @@ CREATE TABLE `payments` (
 
 CREATE TABLE `schedule` (
   `schedule_id` int(11) NOT NULL,
-  `customer_id` int(11) DEFAULT NULL,
   `employee_id` int(11) DEFAULT NULL,
-  `request_id` int(11) DEFAULT NULL,
-  `schedule_date` datetime DEFAULT NULL
+  `booking_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -163,21 +188,6 @@ CREATE TABLE `transactions` (
   `created_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- --------------------------------------------------------
-
---
--- Table structure for table `vehicles`
---
-
-CREATE TABLE `vehicles` (
-  `vehicle_id` int(11) NOT NULL,
-  `customer_id` int(11) NOT NULL,
-  `model` varchar(100) NOT NULL,
-  `color` varchar(50) NOT NULL,
-  `purchase_date` date DEFAULT NULL,
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
 --
 -- Indexes for dumped tables
 --
@@ -188,6 +198,13 @@ CREATE TABLE `vehicles` (
 ALTER TABLE `admin`
   ADD PRIMARY KEY (`admin_id`),
   ADD UNIQUE KEY `email` (`email`);
+
+--
+-- Indexes for table `booking_request`
+--
+ALTER TABLE `booking_request`
+  ADD PRIMARY KEY (`request_id`),
+  ADD KEY `customer_id` (`customer_id`);
 
 --
 -- Indexes for table `customers`
@@ -215,9 +232,8 @@ ALTER TABLE `payments`
 --
 ALTER TABLE `schedule`
   ADD PRIMARY KEY (`schedule_id`),
-  ADD KEY `customer_id` (`customer_id`),
   ADD KEY `employee_id` (`employee_id`),
-  ADD KEY `request_id` (`request_id`);
+  ADD KEY `booking_id` (`booking_id`);
 
 --
 -- Indexes for table `service_requests`
@@ -236,13 +252,6 @@ ALTER TABLE `transactions`
   ADD KEY `employee_id` (`employee_id`);
 
 --
--- Indexes for table `vehicles`
---
-ALTER TABLE `vehicles`
-  ADD PRIMARY KEY (`vehicle_id`),
-  ADD KEY `customer_id` (`customer_id`);
-
---
 -- AUTO_INCREMENT for dumped tables
 --
 
@@ -250,7 +259,13 @@ ALTER TABLE `vehicles`
 -- AUTO_INCREMENT for table `admin`
 --
 ALTER TABLE `admin`
-  MODIFY `admin_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `admin_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT for table `booking_request`
+--
+ALTER TABLE `booking_request`
+  MODIFY `request_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `customers`
@@ -262,7 +277,7 @@ ALTER TABLE `customers`
 -- AUTO_INCREMENT for table `employees`
 --
 ALTER TABLE `employees`
-  MODIFY `employee_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `employee_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `payments`
@@ -289,14 +304,14 @@ ALTER TABLE `transactions`
   MODIFY `transaction_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `vehicles`
---
-ALTER TABLE `vehicles`
-  MODIFY `vehicle_id` int(11) NOT NULL AUTO_INCREMENT;
-
---
 -- Constraints for dumped tables
 --
+
+--
+-- Constraints for table `booking_request`
+--
+ALTER TABLE `booking_request`
+  ADD CONSTRAINT `booking_request_ibfk_1` FOREIGN KEY (`customer_id`) REFERENCES `customers` (`customer_id`);
 
 --
 -- Constraints for table `payments`
@@ -308,9 +323,8 @@ ALTER TABLE `payments`
 -- Constraints for table `schedule`
 --
 ALTER TABLE `schedule`
-  ADD CONSTRAINT `schedule_ibfk_1` FOREIGN KEY (`customer_id`) REFERENCES `customers` (`customer_id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `schedule_ibfk_2` FOREIGN KEY (`employee_id`) REFERENCES `employees` (`employee_id`) ON DELETE SET NULL,
-  ADD CONSTRAINT `schedule_ibfk_3` FOREIGN KEY (`request_id`) REFERENCES `service_requests` (`request_id`) ON DELETE CASCADE;
+  ADD CONSTRAINT `schedule_ibfk_1` FOREIGN KEY (`employee_id`) REFERENCES `employees` (`employee_id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `schedule_ibfk_2` FOREIGN KEY (`booking_id`) REFERENCES `booking_request` (`request_id`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `service_requests`
@@ -325,12 +339,6 @@ ALTER TABLE `service_requests`
 ALTER TABLE `transactions`
   ADD CONSTRAINT `transactions_ibfk_1` FOREIGN KEY (`request_id`) REFERENCES `service_requests` (`request_id`) ON DELETE CASCADE,
   ADD CONSTRAINT `transactions_ibfk_2` FOREIGN KEY (`employee_id`) REFERENCES `employees` (`employee_id`) ON DELETE SET NULL;
-
---
--- Constraints for table `vehicles`
---
-ALTER TABLE `vehicles`
-  ADD CONSTRAINT `vehicles_ibfk_1` FOREIGN KEY (`customer_id`) REFERENCES `customers` (`customer_id`) ON DELETE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

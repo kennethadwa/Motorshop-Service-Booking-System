@@ -22715,7 +22715,7 @@ html:not([dir=rtl]) .noUi-horizontal .noUi-handle {
   background-color: #b48dd3;
   border-color: #b48dd3;
   color: #fff; }
-
+  
 .accordion-header-shadow .accordion-header {
   border: none;
   box-shadow: 0 0 0.9375rem -3px rgba(0, 0, 0, 0.3); }
@@ -30391,6 +30391,7 @@ html[dir="rtl"] [direction="rtl"][data-sidebar-style="compact"]:not([data-layout
 [data-theme-version="dark"] .card {
   background-color: #212130;
   box-shadow: none; }
+  
 
 [data-theme-version="dark"] .dropdown-menu {
   background-color: #212130;
