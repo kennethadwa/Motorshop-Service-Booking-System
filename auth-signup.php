@@ -46,7 +46,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                   VALUES ('$first_name', '$last_name', '$contact', '$email', '$hashed_password', 2)";
 
         if ($conn->query($query)) {
-            echo "<script>alert('Registration successful!'); window.location.href='login-register.php';</script>";
+            echo "<script>alert('Registration successful!'); window.location.href='login-register';</script>";
         } else {
             echo "<script>alert('Error: " . $conn->error . "');</script>";
         }

@@ -39,13 +39,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             // REDIRECT USER BASED ON THEIR ACCOUNT TYPE
             switch ($account_type) {
                 case 0: // Admin
-                    header("Location: ./admin/index.php");
+                    header("Location: ./admin/index");
                     break;
                 case 1: // Employee
-                    header("Location: ./employee/index.php");
+                    header("Location: ./employee/index");
                     break;
                 case 2: // Customer
-                    header("Location: ./customer/index.php");
+                    header("Location: ./customer/index");
                     break;
                 default:
                     echo "<script>alert('Invalid account type!'); window.location.href='login-register.php';</script>";

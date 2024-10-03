@@ -1,7 +1,7 @@
 <?php
 
 if (!isset($_SESSION['account_type']) || $_SESSION['account_type'] != 0) {
-    header("Location: ../login-register.php");
+    header("Location: ../login-register");
     exit();
 }
 
@@ -39,43 +39,43 @@ $conn->close();
             </a>
             </li>
 
-            <li><a href="schedule.php" aria-expanded="false">
+            <li><a href="schedule" aria-expanded="false">
                 <i class="fa-regular fa-calendar-days"></i>
                 <span class="nav-text">Schedule</span>
             </a>
             </li>
 
-            <li><a href="bookings.php" aria-expanded="false">
+            <li><a href="bookings" aria-expanded="false">
                 <i class="fa-regular fa-envelope"></i>
                 <span class="nav-text">Booking Requests</span>
             </a>
             </li>
 
-            <li><a href="inventory.php" aria-expanded="false">
+            <li><a href="inventory" aria-expanded="false">
                 <i class="fa-solid fa-truck-ramp-box"></i>
                 <span class="nav-text">Inventory</span>
             </a>
             </li>
 
-            <li><a href="transaction.php" aria-expanded="false">
+            <li><a href="transaction" aria-expanded="false">
                 <i class="fa-solid fa-dollar-sign"></i>
                 <span class="nav-text">Transaction History</span>
             </a>
             </li>
 
-            <li><a href="user-information.php" aria-expanded="false">
+            <li><a href="user-information" aria-expanded="false">
                 <i class="fa-solid fa-user"></i>
                 <span class="nav-text">User Information</span>
             </a>
             </li>
 
-            <li><a href="manage-account.php" aria-expanded="false">
+            <li><a href="manage-account" aria-expanded="false">
                 <i class="fa-solid fa-user"></i>
                 <span class="nav-text">Manage Account</span>
             </a>
             </li>
             
-            <li><a href="logout.php" class="ai-icon" aria-expanded="false">
+            <li><a href="logout" class="ai-icon" aria-expanded="false">
                 <i class="fa-solid fa-right-from-bracket"></i>
                 <span class="nav-text">Logout</span>
             </a></li>
