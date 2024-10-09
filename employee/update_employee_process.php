@@ -30,8 +30,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if ($conn->query($sql) === TRUE) {
 
         echo "<script>
-                alert('Employee information updated successfully.');
-                window.location.href = 'view_employee.php?id={$employee_id}'; // Redirect to view_employee.php
+                alert('Profile information updated successfully.');
+                window.location.href = 'profile?id={$employee_id}'; // Redirect to view_employee.php
               </script>";
         exit;
     } else {
