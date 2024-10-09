@@ -9,6 +9,8 @@ $page_titles = [
     'bookings.php' => 'Booking',
 		'inventory.php' => 'Inventory',
 		'transaction.php' => 'Transaction History',
+		'profile.php' => 'Profile',
+		'update_profile.php' => 'Update Profile',
 		'user-information.php' => 'User Information',
 		'manage-account.php' => 'Manage Account',
     
