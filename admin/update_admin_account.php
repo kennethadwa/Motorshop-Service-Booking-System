@@ -137,8 +137,9 @@ if (!isset($_SESSION['account_type']) || $_SESSION['account_type'] != 0) {
                                 </select>
                             </div>
                             <div class="text-center">
-                                <button type="submit" class="btn btn-primary">Update</button>
                                 <a href="manage-account.php" class="btn btn-warning"><i class="fas fa-arrow-left"></i> Back</a>
+                                &nbsp;
+                                <button type="submit" class="btn btn-success">Update</button>                           
                             </div>
                         </form>
 
@@ -148,10 +149,6 @@ if (!isset($_SESSION['account_type']) || $_SESSION['account_type'] != 0) {
         </div>
     </div>
     <!-- Content Body End -->
-
-    <!-- Footer Start -->
-    <?php include('footer.php'); ?>
-    <!-- Footer End -->
 </div>
 <!-- Main wrapper end -->
 

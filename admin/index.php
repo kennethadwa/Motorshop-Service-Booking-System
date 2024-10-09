@@ -7,6 +7,10 @@ if (!isset($_SESSION['account_type']) || $_SESSION['account_type'] != 0) {
 
 include('../connection.php');
 
+
+$admin_id = $_SESSION['admin_id'];
+
+
 // Query for total employees
 $query_employees = "SELECT COUNT(*) AS total_employees FROM employees";
 $result_employees = mysqli_query($conn, $query_employees);
@@ -28,9 +32,6 @@ $result_schedules = mysqli_query($conn, $query_schedules);
 $total_schedules = mysqli_fetch_assoc($result_schedules)['total_schedules'];
 ?>
 
-
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -42,75 +43,69 @@ $total_schedules = mysqli_fetch_assoc($result_schedules)['total_schedules'];
 	<link rel="stylesheet" href="vendor/nouislider/nouislider.min.css">
 	<!-- Style CSS -->
     <link href="css/style.css" rel="stylesheet">
-	
 </head>
-<body >
+<body>
 
 <!-- Preloader Start -->
 <?php include('pre-loader.php'); ?>
 <!-- Preloader End-->
 
-
 <!-- Main wrapper Start -->
 <div id="main-wrapper">
-<!-- Nav Header Start -->
-<?php include('nav-header.php'); ?>
-<!-- Nav Header End -->
+    <!-- Nav Header Start -->
+    <?php include('nav-header.php'); ?>
+    <!-- Nav Header End -->
 
-	
-<!-- Header Start -->
-<?php include('header.php'); ?>
-<!-- Header End -->
+    <!-- Header Start -->
+    <?php include('header.php'); ?>
+    <!-- Header End -->
 
+    <!-- Sidebar Start -->
+    <?php include('sidebar.php'); ?>
+    <!-- Sidebar End -->
 
-<!-- Sidebar Start -->
-<?php include('sidebar.php'); ?>
-<!-- Sidebar End -->
+	<!-- Content Body Start -->
+	<div class="content-body">
+		<div class="container-fluid">
+			<div class="row invoice-card-row">
+				<!-- Card 1 --> 
+				<?php include('./cards/card1.php'); ?>
 
-		 
-<!-- Content Body Start -->
-<div class="content-body">
-<div class="container-fluid">
-<div class="row invoice-card-row">
-<!-- Card 1 --> 
-<?php include('./cards/card1.php'); ?>
+				<!-- Card 2 -->
+				<?php include('./cards/card2.php'); ?>
+					 
+				<!-- Card 3 -->
+				<?php include('./cards/card3.php'); ?>
 
-<!-- Card 2 -->
-<?php include('./cards/card2.php'); ?>
-			 
-<!-- Card 3 -->
-<?php include('./cards/card3.php'); ?>
+				<!-- Card 4 -->
+				<?php include('./cards/card4.php'); ?>
+			</div>
 
-<!-- Card 4 -->
-<?php include('./cards/card4.php'); ?>
-</div>
+			<div class="row">
+				<!-- Card 5 -->
+				<?php include('./cards/card5.php'); ?>
 
-<div class="row">
-<!-- Card 5 -->
-<?php include('./cards/card5.php'); ?>
+				<!-- Card 6 -->
+				<?php include('./cards/card6.php'); ?>
 
-<!-- Card 6 -->
-<?php include('./cards/card6.php'); ?>
+				<!-- Card 7 -->
+				<?php include('./cards/card7.php'); ?>
 
-<!-- Card 7 -->
-<?php include('./cards/card7.php'); ?>
+				<!-- Card 8 -->
+				<?php include('./cards/card8.php'); ?>
 
-<!-- Card 8 -->
-<?php include('./cards/card8.php'); ?>
+				<!-- Card 9 -->
+				<?php include('./cards/card9.php'); ?>
 
-<!-- Card 9 -->
-<?php include('./cards/card9.php'); ?>
+				<!-- Card 10 -->
+				<?php include('./cards/card10.php'); ?>
 
-<!-- Card 10 -->
-<?php include('./cards/card10.php'); ?>
-
-<!-- Card 11 -->
-<?php include('./cards/card11.php'); ?>
-</div>
-</div>
-</div>
-<!-- Content Body End -->
-
+				<!-- Card 11 -->
+				<?php include('./cards/card11.php'); ?>
+			</div>
+		</div>
+	</div>
+	<!-- Content Body End -->
 </div>
 <!-- Main wrapper end -->
 
@@ -120,12 +115,12 @@ $total_schedules = mysqli_fetch_assoc($result_schedules)['total_schedules'];
 <script src="vendor/chart.js/Chart.bundle.min.js"></script>
 <script src="vendor/jquery-nice-select/js/jquery.nice-select.min.js"></script>
 <script src="https://kit.fontawesome.com/b931534883.js" crossorigin="anonymous"></script>
-	
+
 <!-- Apex Chart -->
 <script src="vendor/apexchart/apexchart.js"></script>
 <script src="vendor/nouislider/nouislider.min.js"></script>
 <script src="vendor/wnumb/wNumb.js"></script>
-	
+
 <!-- Dashboard 1 -->
 <script src="js/dashboard/dashboard-1.js"></script>
 

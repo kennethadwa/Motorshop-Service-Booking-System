@@ -2,34 +2,43 @@
 
 include('../connection.php');
 
+// Start session and verify employee login
 if (!isset($_SESSION['account_type']) || $_SESSION['account_type'] != 1) {
     header("Location: ../login-register");
     exit();
 }
 
+// Set default session variables
 $firstName = isset($_SESSION['first_name']) ? $_SESSION['first_name'] : 'Guest';
 $lastName = isset($_SESSION['last_name']) ? $_SESSION['last_name'] : '';
 $email = isset($_SESSION['email']) ? $_SESSION['email'] : 'No email available';
 
-
+// Check database connection
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-// Fetch Employee Data
-$employee_query = "SELECT employee_id, first_name, last_name, contact_no, address, account_type, profile, age, birthday, sex FROM employees";
-$employee_result = mysqli_query($conn, $employee_query);
+// Fetch employee data based on session employee_id
+$employee_id = isset($_SESSION['employee_id']) ? $_SESSION['employee_id'] : null; 
+$full_name = 'Guest';
+$profile_picture = 'path/to/default/profile/picture.jpg'; // Default profile picture
 
-while ($row = mysqli_fetch_assoc($employee_result)) { 
-                $employee_id = $row['employee_id'];
-                $full_name = $row['first_name'] . ' ' . $row['last_name'];
-                $profile_picture = $row['profile'] ? $row['profile'] : 'path/to/default/profile/picture.jpg'; 
+if ($employee_id) {
+    $employee_query = "SELECT employee_id, first_name, last_name, profile FROM employees WHERE employee_id = ?";
+    $stmt = $conn->prepare($employee_query);
+    $stmt->bind_param("i", $employee_id);
+    $stmt->execute();
+    $employee_result = $stmt->get_result();
+
+    if ($row = $employee_result->fetch_assoc()) {
+        $full_name = $row['first_name'] . ' ' . $row['last_name'];
+        $profile_picture = $row['profile'] ? $row['profile'] : $profile_picture;
+    }
 }
-
 ?>
 
 <style>
-    .my-profile{
+    .my-profile {
         width: 100%;
         height: auto;
         padding: 10px 0 0 0;
@@ -38,19 +47,25 @@ while ($row = mysqli_fetch_assoc($employee_result)) {
         align-items: center;
     }
 
-    .profileBtn{
+    .profileBtn {
         width: auto;
         height: auto;
         padding: 5px;
         border: 1px solid transparent;
-        background-color: #E85C0D;;
+        background-color: #E85C0D;
         color: white;
         transition: 0.5s ease-in;
     }
 
-    .profileBtn:hover{
-        background:  #FF6500;
+    .profileBtn:hover {
+        background: #FF6500;
         color: white;
+    }
+
+    .profile-picture {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
     }
 </style>
 
@@ -71,25 +86,22 @@ while ($row = mysqli_fetch_assoc($employee_result)) {
                 </div>
 
             </li>
-            
+
             <li><a href="index.php" aria-expanded="false">
                 <i class="flaticon-025-dashboard"></i>
                 <span class="nav-text">Home</span>
-            </a>
-            </li>
+            </a></li>
 
             <li><a href="schedule" aria-expanded="false">
                 <i class="fa-regular fa-calendar-days"></i>
                 <span class="nav-text">My Schedule</span>
-            </a>
-            </li>
+            </a></li>
 
             <li><a href="bookings" aria-expanded="false">
                 <i class="fa-solid fa-dollar-sign"></i>
                 <span class="nav-text">Booking History</span>
-            </a>
-            </li>
-            
+            </a></li>
+
             <li><a href="logout" class="ai-icon" aria-expanded="false">
                 <i class="fa-solid fa-right-from-bracket"></i>
                 <span class="nav-text">Logout</span>

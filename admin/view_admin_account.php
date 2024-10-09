@@ -112,7 +112,6 @@ if (!isset($_SESSION['account_type']) || (int)$_SESSION['account_type'] !== 0) {
                             <div class="col-12 text-center mt-4">
                                 <a href="manage-account.php" class="btn btn-warning action-btn"> <i class="fas fa-arrow-left"></i> Back</a>
                                 <a href="update_admin_account.php?id=<?php echo $admin_id; ?>" class="btn btn-success action-btn"><i class="fa-solid fa-pencil" style="color: #ffffff;"></i> Update</a>
-                                <a href="delete_admin.php?id=<?php echo $admin_id; ?>" class="btn btn-danger action-btn" onclick="return confirm('Are you sure you want to delete this admin?')"><i class="fa-solid fa-trash" style="color: #ffffff;"></i> Delete</a>
                             </div>
                         </div>
                     </div>

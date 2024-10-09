@@ -116,7 +116,7 @@ if (!isset($_SESSION['account_type']) || $_SESSION['account_type'] != 1) {
                             <img src="<?php echo $profile_picture; ?>" alt="Profile Picture" class="profile-picture">
                         </div>
 
-                        <form action="update_employee_process.php" method="POST" enctype="multipart/form-data">
+                        <form action="update_profile_process.php" method="POST" enctype="multipart/form-data">
                             <input type="hidden" name="employee_id" value="<?php echo $employee_id; ?>">
                             <div class="form-group">
                                 <label for="first_name">First Name:</label>
