@@ -1,5 +1,5 @@
 <div class="col-xl-6 col-xxl-7">
-						<div class="card">
+						<div class="card" style="box-shadow: none;">
 							<div class="card-header d-flex flex-wrap border-0 pb-0">
 								<div class="me-auto mb-sm-0 mb-3">
 									<h4 class="card-title mb-2">Transaction Overview</h4>

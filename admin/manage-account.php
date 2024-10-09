@@ -55,6 +55,28 @@ $customer_result = mysqli_query($conn, $customer_query);
         .admin { color: red; font-weight: bold;}
         .employee { color: green; font-weight: bold;}
         .customer { color: blue; font-weight: bold;}
+
+        body{
+	  background-color: #17153B;
+	}
+
+			::-webkit-scrollbar {
+         width: 18px; 
+      }
+
+      ::-webkit-scrollbar-track {
+          background: #17153B;
+      }
+      
+      ::-webkit-scrollbar-thumb {
+          background-color: #DA0C81; 
+          border-radius: 10px; 
+          border: 2px solid #DA0C81; 
+      }
+
+      ::-webkit-scrollbar-thumb:hover {
+          background-color: #555;
+      }
     </style>
 </head>
 <body>
@@ -80,7 +102,7 @@ $customer_result = mysqli_query($conn, $customer_query);
             <div class="row invoice-card-row">
                 <!-- Manage Account Card Start -->
                 <div class="col-12"> <!-- Full width for all devices -->
-                    <div class="card">
+                    <div class="card" style="box-shadow: 2px 2px 2px black; background-color: rgba(0, 0, 0, 0.151);">
                         <div class="card-body">                                     
                             <div class="row align-items-center mb-3">
                                 <div class="col-md-12 text-md-end"> <!-- Align text to the end on larger screens -->
@@ -94,13 +116,13 @@ $customer_result = mysqli_query($conn, $customer_query);
                             <div class="table-responsive"> <!-- Makes table responsive -->
                                 <ul class="nav nav-tabs" id="userTabs" role="tablist">
                                     <li class="nav-item" role="presentation">
-                                        <button class="nav-link active" id="admin-tab" data-bs-toggle="tab" data-bs-target="#admin" type="button" role="tab" aria-controls="admin" aria-selected="true">Admin</button>
+                                        <button class="nav-link active" id="admin-tab" data-bs-toggle="tab" data-bs-target="#admin" type="button" role="tab" aria-controls="admin" aria-selected="true" style="background: transparent; color: pink; font-weight: 600; ">Admin</button>
                                     </li>
                                     <li class="nav-item" role="presentation">
-                                        <button class="nav-link" id="employee-tab" data-bs-toggle="tab" data-bs-target="#employee" type="button" role="tab" aria-controls="employee" aria-selected="false">Employee</button>
+                                        <button class="nav-link" id="employee-tab" data-bs-toggle="tab" data-bs-target="#employee" type="button" role="tab" aria-controls="employee" aria-selected="false" style="background: transparent; color: pink; font-weight: 600; ">Employee</button>
                                     </li>
                                     <li class="nav-item" role="presentation">
-                                        <button class="nav-link" id="customer-tab" data-bs-toggle="tab" data-bs-target="#customer" type="button" role="tab" aria-controls="customer" aria-selected="false">Customer</button>
+                                        <button class="nav-link" id="customer-tab" data-bs-toggle="tab" data-bs-target="#customer" type="button" role="tab" aria-controls="customer" aria-selected="false" style="background: transparent; color: pink; font-weight: 600; ">Customer</button>
                                     </li>
                                 </ul>
 
@@ -110,7 +132,7 @@ $customer_result = mysqli_query($conn, $customer_query);
                                     <div class="tab-pane fade show active" id="admin" role="tabpanel" aria-labelledby="admin-tab">
                                         <table class="table mt-3">
                                             <thead>
-                                                <tr>
+                                                <tr style="color: white;">
                                                     <th>Profile</th> 
                                                     <th>Email</th>
                                                     <th>Password</th>
@@ -123,12 +145,12 @@ $customer_result = mysqli_query($conn, $customer_query);
                                                 $profile_picture = $row['profile'] ? $row['profile'] : 'path/to/default/profile/picture.jpg';
                                                 $account_type = $row['account_type'];
                                                 ?>
-                                                    <tr>
+                                                    <tr style="color: white;">
                                                         <td><img src="<?php echo $profile_picture; ?>" alt="Profile Picture" class="profile-picture"></td>
                                                         <td><?php echo $row['email']; ?></td>
                                                         <td><?php echo $row['password']; ?></td>
                                                         <td class="admin">Admin</td>
-                                                        <td><a href="view_admin_account.php?id=<?php echo $row['admin_id']; ?>" class="btn btn-info btn-sm">View</a></td>
+                                                        <td><a href="view_admin_account.php?id=<?php echo $row['admin_id']; ?>" class="btn btn-info btn-sm" style="background-color: #E3651D; border: none; border-radius: 10px;">View</a></td>
                                                     </tr>
                                                 <?php } ?>
                                             </tbody>
@@ -139,7 +161,7 @@ $customer_result = mysqli_query($conn, $customer_query);
                                     <div class="tab-pane fade" id="employee" role="tabpanel" aria-labelledby="employee-tab">
                                         <table class="table mt-3">
                                             <thead>
-                                                <tr>
+                                                <tr style="color: white;">
                                                     <th>Profile</th> 
                                                     <th>Email</th>
                                                     <th>Password</th>
@@ -152,12 +174,12 @@ $customer_result = mysqli_query($conn, $customer_query);
                                                 $profile_picture = $row['profile'] ? $row['profile'] : 'path/to/default/profile/picture.jpg';
                                                 $account_type = $row['account_type'];
                                                 ?>
-                                                    <tr>
+                                                    <tr style="color: white;">
                                                         <td><img src="<?php echo $profile_picture; ?>" alt="Profile Picture" class="profile-picture"></td>
                                                         <td><?php echo $row['email']; ?></td>
                                                         <td><?php echo $row['password']; ?></td>
                                                         <td class="employee">Employee</td>
-                                                        <td><a href="view_employee_account.php?id=<?php echo $row['employee_id']; ?>" class="btn btn-info btn-sm">View</a></td>
+                                                        <td><a href="view_employee_account.php?id=<?php echo $row['employee_id']; ?>" class="btn btn-info btn-sm" style="background-color: #E3651D; border: none; border-radius: 10px;">View</a></td>
                                                     </tr>
                                                 <?php } ?>
                                             </tbody>
@@ -168,7 +190,7 @@ $customer_result = mysqli_query($conn, $customer_query);
                                     <div class="tab-pane fade" id="customer" role="tabpanel" aria-labelledby="customer-tab">
                                         <table class="table mt-3">
                                             <thead>
-                                                <tr>
+                                                <tr style="color: white;">
                                                     <th>Profile</th> 
                                                     <th>Email</th>
                                                     <th>Password</th>
@@ -180,12 +202,12 @@ $customer_result = mysqli_query($conn, $customer_query);
                                                 <?php while ($row = mysqli_fetch_assoc($customer_result)) { 
                                                 $profile_picture = $row['profile'] ? $row['profile'] : 'path/to/default/profile/picture.jpg';
                                                 ?>
-                                                    <tr>
+                                                    <tr style="color: white;">
                                                         <td><img src="<?php echo $profile_picture; ?>" alt="Profile Picture" class="profile-picture"></td>
                                                         <td><?php echo $row['email']; ?></td>
                                                         <td><?php echo $row['password']; ?></td>
                                                         <td class="customer">Customer</td>
-                                                        <td><a href="view_customer_account.php?id=<?php echo $row['customer_id']; ?>" class="btn btn-info btn-sm">View</a></td>
+                                                        <td><a href="view_customer_account.php?id=<?php echo $row['customer_id']; ?>" class="btn btn-info btn-sm" style="background-color: #E3651D; border: none; border-radius: 10px;">View</a></td>
                                                     </tr>
                                                 <?php } ?>
                                             </tbody>

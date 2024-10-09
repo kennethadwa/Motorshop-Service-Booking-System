@@ -1,6 +1,4 @@
 <?php
-// Start session
-session_start();
 
 // Check if account type is admin (0), redirect to login if not
 if (!isset($_SESSION['account_type']) || $_SESSION['account_type'] != 0) {
@@ -79,7 +77,7 @@ if ($admin_id) {
     .my-profile {
         width: 100%;
         height: auto;
-        padding: 10px 0 0 0;
+        padding: 0 0 10px 0;
         display: flex;
         justify-content: center;
         align-items: center;
@@ -90,7 +88,7 @@ if ($admin_id) {
         height: auto;
         padding: 5px;
         border: 1px solid transparent;
-        background-color: #E85C0D;
+        background-color: #FF3EA5;
         color: white;
         transition: 0.5s ease-in;
     }
@@ -105,64 +103,154 @@ if ($admin_id) {
         height: 50px;
         border-radius: 50%;
     }
+
+    .drp_btn{
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+    }
+
+    .dlabnav{
+        background-color: #6528F7;
+        box-shadow: none;
+    }
+
+    .nav-text{
+        color: white;
+    }
+
+    .nav-text:hover{
+        color: white;
+    }
+
+    .nav-text:active{
+        color: white;
+    }
+
+    i{
+        color: white;
+    }
+
+    i:active{
+        color: white;
+    }
+
+    .nav-link{
+        border: none;
+    }
+    .nav9link img{
+        box-shadow: none;
+    }
+
+    .hamburger{
+        color: white;
+    }
+
+    .header-profile{
+        background-color: #6528C9;
+        margin: 0;
+    }
+
+    .header-profile .nav-link{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .header-profile .nav-link img{
+        width: 80px;
+        height: 80px;
+    }
+
+    .header-profile .nav-link .header-info{
+        width: auto;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .header-profile .nav-link .prof{
+       display: flex;
+       justify-content: center;
+       align-items: center;
+    }
 </style>
 
 <div class="dlabnav">
     <div class="dlabnav-scroll">
         <ul class="metismenu" id="menu">
-            <li class="dropdown header-profile">
-                <a class="nav-link" href="javascript:void(0);" role="button" data-bs-toggle="dropdown">
-                    <img src="<?php echo $profile_picture; ?>" alt="Profile Picture" class="profile-picture">
+            <li class="header-profile">
+                <a class="nav-link" href="javascript:void(0);" style="border: none;">
+                    <div class="prof">
+                        <img src="<?php echo $profile_picture; ?>" alt="Profile Picture" class="profile-picture" style="border: none; box-shadow: none; object-fit: cover;">
+                    </div>
+                    
                     <div class="header-info ms-3">
-                        <span class="font-w600">Hi, <b><?php echo htmlspecialchars($firstName . ' ' . $lastName); ?></b></span>
-                        <small class="text-end font-w400"><?php echo htmlspecialchars($email); ?></small>
+                        <span class="font-w600" style="color: white; font-size: 1.2rem;">Hi, <b><?php echo htmlspecialchars($firstName); ?></b></span>
+                        <p class="text-end font-w400" style="color: white; font-size: 0.9rem;"><?php echo htmlspecialchars($email); ?></p>
                     </div>
                 </a>
-
                 <div class="my-profile">
                     <a class="profileBtn" style="color: white;" href="profile?id=<?php echo $admin_id ? $admin_id : ($employee_id ? $employee_id : $customer_id); ?>">View Profile</a>
                 </div>
             </li>
             
+            <!-- Other Menu Items -->
             <li><a href="index.php" aria-expanded="false">
-                <i class="flaticon-025-dashboard"></i>
-                <span class="nav-text">Dashboard</span>
+                <i class="flaticon-025-dashboard" style="color:white;"></i>
+                <span class="nav-text" style="color:white;">Dashboard</span>
             </a></li>
 
             <li><a href="schedule" aria-expanded="false">
-                <i class="fa-regular fa-calendar-days"></i>
+                <i class="fa-regular fa-calendar-days" style="color:white;"></i>
                 <span class="nav-text">Schedule</span>
             </a></li>
 
             <li><a href="bookings" aria-expanded="false">
-                <i class="fa-regular fa-envelope"></i>
+                <i class="fa-regular fa-envelope" style="color:white;"></i>
                 <span class="nav-text">Booking Requests</span>
             </a></li>
 
+            <!-- Inventory Menu -->
             <li><a href="inventory" aria-expanded="false">
-                <i class="fa-solid fa-truck-ramp-box"></i>
+                <i class="fa-solid fa-truck-ramp-box" style="color:white;"></i>
                 <span class="nav-text">Inventory</span>
             </a></li>
 
+            <!-- Transaction History Menu -->
             <li><a href="transaction" aria-expanded="false">
-                <i class="fa-solid fa-dollar-sign"></i>
+                <i class="fa-solid fa-dollar-sign" style="color:white;"></i>
                 <span class="nav-text">Transaction History</span>
             </a></li>
 
-            <li><a href="user-information" aria-expanded="false">
-                <i class="fa-solid fa-user"></i>
-                <span class="nav-text">User Information</span>
-            </a></li>
+            <!-- Account -->
+            <li style="background-color: transparent;">
+                <a class="nav-link" href="javascript:void(0);" role="button" data-bs-toggle="collapse" data-bs-target="#userDropdown" aria-expanded="false" style="background-color: transparent;">
+                    <i class="fa-solid fa-user" style="color:white;"></i>
+                    <span class="nav-text">User</span>
+                    <i class="fa fa-caret-down ms-auto"></i>
+                </a>
 
-            <li><a href="manage-account" aria-expanded="false">
-                <i class="fa-solid fa-user"></i>
-                <span class="nav-text">Manage Account</span>
-            </a></li>
-            
-            <li><a href="logout" class="ai-icon" aria-expanded="false">
-                <i class="fa-solid fa-right-from-bracket"></i>
-                <span class="nav-text">Logout</span>
-            </a></li>
+                <!-- Dropdown content (collapsible) -->
+                <ul id="userDropdown" class="drp_btn collapse list-unstyled" style="background-color: transparent;">
+
+                    <li>
+                        <a class="drp_btn" href="user-information" style="color: white; font-size: 1rem;">
+                            User Information
+                        </a>
+                    </li>
+
+                    <li>
+                        <a class="drp_btn" href="manage-account" style="color: white; font-size: 1rem;">
+                            Manage Account
+                        </a>
+                    </li>
+
+                </ul>
+            </li>
         </ul>
     </div>
 </div>
+

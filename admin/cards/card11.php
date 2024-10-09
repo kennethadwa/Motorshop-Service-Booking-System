@@ -1,7 +1,7 @@
 <div class="col-xl-6 col-xxl-12">
 						<div class="row">
 							<div class="col-xl-12">
-								<div class="card coin-card">
+								<div class="card coin-card" style="box-shadow: none;">
 									<div class="card-body d-sm-flex d-block align-items-center">
 										<span class="coin-icon">
 											<svg width="38" height="41" viewBox="0 0 38 41" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -17,7 +17,7 @@
 								</div>
 							</div>
 							<div class="col-md-6">
-								<div class="card progress-card">
+								<div class="card progress-card" style="box-shadow: none;">
 									<div class="card-body d-flex">
 										<div class="me-auto">
 											<h4 class="card-title">Total Transactions</h4>
@@ -53,7 +53,7 @@
 								</div>
 							</div>
 							<div class="col-md-6">
-								<div class="card">
+								<div class="card" style="box-shadow: none;">
 									<div class="card-body">
 										<h4 class="card-title">Invoice Remaining</h4>
 										<div class="d-flex align-items-center">
@@ -71,7 +71,7 @@
 								</div>
 							</div>
 							<div class="col-sm-6">
-								<div class="card">
+								<div class="card" style="box-shadow: none;">
 									<div class="card-body">
 										<h4 class="card-title mt-2">Invoice Sent</h4>
 										<div class="d-flex align-items-center mt-3 mb-2">
@@ -82,7 +82,7 @@
 								</div>
 							</div>
 							<div class="col-sm-6">
-								<div class="card">
+								<div class="card" style="box-shadow: none;">
 									<div class="card-body">
 										<h4 class="card-title mt-2">Invoice Compeleted</h4>
 										<div class="d-flex align-items-center mt-3 mb-2">

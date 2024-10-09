@@ -30,6 +30,29 @@ $requests = $conn->query($requestSql);
 	<link rel="stylesheet" href="vendor/nouislider/nouislider.min.css">
 	<!-- Style CSS -->
     <link href="css/style.css" rel="stylesheet">
+    <style>
+			body{
+				background-color: #17153B;
+			}
+
+			::-webkit-scrollbar {
+         width: 18px; 
+      }
+
+      ::-webkit-scrollbar-track {
+          background: #17153B;
+      }
+      
+      ::-webkit-scrollbar-thumb {
+          background-color: #DA0C81; 
+          border-radius: 10px; 
+          border: 2px solid #DA0C81; 
+      }
+
+      ::-webkit-scrollbar-thumb:hover {
+          background-color: #555;
+      }
+	</style>
 </head>
 <body >
 
@@ -52,12 +75,12 @@ $requests = $conn->query($requestSql);
     <div class="container-fluid">
         <div class="row invoice-card-row">
             <div class="col-12">
-                <div class="card mb-4">
+                <div class="card mb-4" style="box-shadow: 2px 2px 2px black; background-color: rgba(0, 0, 0, 0.151);">
                     <div class="card-body">
                         <div class="table-responsive">
                             <table class="table table-bordered table-striped">
                                 <thead>
-                                    <tr>
+                                    <tr style="color: white;">
                                         <th>Request ID</th>
                                         <th>Customer Name</th>
                                         <th>Vehicle Model</th>
@@ -83,8 +106,8 @@ $requests = $conn->query($requestSql);
                                           </tr>
                                       <?php endwhile; ?>
                                   <?php else: ?>
-                                      <tr>
-                                          <td colspan="6" class="text-center">No Booking Requests Available</td> <!-- Message when no requests are found -->
+                                      <tr style="background-color: transparent;">
+                                          <td colspan="6" class="text-center" style="color: white;">No Booking Requests Available</td> <!-- Message when no requests are found -->
                                       </tr>
                                   <?php endif; ?>
                                 </tbody>

@@ -43,6 +43,30 @@ $total_schedules = mysqli_fetch_assoc($result_schedules)['total_schedules'];
 	<link rel="stylesheet" href="vendor/nouislider/nouislider.min.css">
 	<!-- Style CSS -->
     <link href="css/style.css" rel="stylesheet">
+
+		<style>
+			body{
+				background-color: #17153B;
+			}
+
+			::-webkit-scrollbar {
+         width: 18px; 
+      }
+
+      ::-webkit-scrollbar-track {
+          background: #17153B;
+      }
+      
+      ::-webkit-scrollbar-thumb {
+          background-color: #DA0C81; 
+          border-radius: 10px; 
+          border: 2px solid #DA0C81; 
+      }
+
+      ::-webkit-scrollbar-thumb:hover {
+          background-color: #555;
+      }
+		</style>
 </head>
 <body>
 

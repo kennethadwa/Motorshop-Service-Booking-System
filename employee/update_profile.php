@@ -151,6 +151,19 @@ if (!isset($_SESSION['account_type']) || $_SESSION['account_type'] != 1) {
                                 <input type="text" name="address" value="<?php echo $address; ?>" class="form-control" required>
                             </div>
                             <div class="form-group">
+                                <label for="email">Email:</label>
+                                <input type="email" name="email" value="<?php echo $email; ?>" class="form-control" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="password">Password:</label>
+                                <input type="password" name="password" class="form-control">
+                                <small>Leave blank to keep the current password.</small>
+                            </div>
+                            <div class="form-group">
+                                <label for="confirm_password">Confirm Password:</label>
+                                <input type="password" name="confirm_password" class="form-control">
+                            </div>
+                            <div class="form-group">
                                 <label for="profile">Profile Picture:</label>
                                 <input type="file" name="profile" class="form-control-file">
                             </div>
