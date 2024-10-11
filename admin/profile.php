@@ -78,6 +78,28 @@ $conn->close();
         .action-btn {
             margin: 10px;
         }
+
+    body{
+	  background-color: #17153B;
+	}
+
+			::-webkit-scrollbar {
+         width: 18px; 
+      }
+
+      ::-webkit-scrollbar-track {
+          background: #17153B;
+      }
+      
+      ::-webkit-scrollbar-thumb {
+          background-color: #DA0C81; 
+          border-radius: 10px; 
+          border: 2px solid #DA0C81; 
+      }
+
+      ::-webkit-scrollbar-thumb:hover {
+          background-color: #555;
+      }
     </style>
 </head>
 <body>
@@ -102,7 +124,7 @@ $conn->close();
         <div class="container-fluid">
             <div class="row justify-content-center align-items-center">
                 <div class="col-lg-7 col-md-10 col-sm-12"> <!-- Responsive columns -->
-                    <div class="card">
+                    <div class="card" style="box-shadow: 2px 2px 2px black; background-color: rgba(0, 0, 0, 0.151);">
                         <div class="card-body row justify-content-center">
                             <?php if (isset($error_message)): ?>
                                 <p><?php echo $error_message; ?></p>
@@ -110,21 +132,21 @@ $conn->close();
                                 <div class='employee-info'>
                                     <img src='<?php echo $profile_picture; ?>' alt='Profile Picture' class='profile-image'>
                                     <div class='info-container'>
-                                        <p><strong>Full Name:</strong> <?php echo $full_name; ?></p>
-                                        <p><strong>Age:</strong> <?php echo $age; ?></p>
-                                        <p><strong>Birthday:</strong> <?php echo $birthday; ?></p>
-                                        <p><strong>Sex:</strong> <?php echo $sex; ?></p>
-                                        <p><strong>Contact Number:</strong> <?php echo $contact_no; ?></p>
-                                        <p><strong>Address:</strong> <?php echo $address; ?></p>
+                                        <p style="color: white; font-size: 1rem; font-family:Verdana, Geneva, Tahoma, sans-serif;"><strong style="color: gray;">Full Name:</strong> <?php echo $full_name; ?></p>
+                                        <p style="color: white; font-size: 1rem; font-family:Verdana, Geneva, Tahoma, sans-serif;"><strong style="color: gray;">Age:</strong> <?php echo $age; ?></p>
+                                        <p style="color: white; font-size: 1rem; font-family:Verdana, Geneva, Tahoma, sans-serif;"><strong style="color: gray;">Birthday:</strong> <?php echo $birthday; ?></p>
+                                        <p style="color: white; font-size: 1rem; font-family:Verdana, Geneva, Tahoma, sans-serif;"><strong style="color: gray;">Sex:</strong> <?php echo $sex; ?></p>
+                                        <p style="color: white; font-size: 1rem; font-family:Verdana, Geneva, Tahoma, sans-serif;"><strong style="color: gray;">Contact:</strong> <?php echo $contact_no; ?></p>
+                                        <p style="color: white; font-size: 1rem; font-family:Verdana, Geneva, Tahoma, sans-serif;"><strong style="color: gray;">Address:</strong> <?php echo $address; ?></p>
                                     </div>
                                 </div>
                             <?php endif; ?>
 
                             <!-- Action Buttons -->
                             <div class="col-12 text-center mt-4">
-                                <a href="index" class="btn btn-warning action-btn"><i class="fas fa-arrow-left"></i> Back</a>
+                                <a href="index" class="btn btn-warning action-btn" style="box-shadow: none; border: none; background: orange;"><i class="fas fa-arrow-left"></i></a>
                                 <?php if (isset($admin_id)): ?>
-                                    <a href="update_profile?id=<?php echo $admin_id; ?>" class="btn btn-success action-btn"><i class="fa-solid fa-pencil" style="color: #ffffff;"></i> Update</a>
+                                    <a href="update_profile?id=<?php echo $admin_id; ?>" class="btn btn-success action-btn" style="box-shadow: none; border: none; background: green;"><i class="fa-solid fa-pen-nib" style="color: #ffffff;"></i></a>
                                 <?php endif; ?>
                             </div>
                         </div>

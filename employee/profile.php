@@ -41,6 +41,28 @@ if (!isset($_SESSION['account_type']) || $_SESSION['account_type'] != 1) {
         .action-btn {
             margin: 10px; /* Spacing between buttons */
         }
+
+        body{
+				background-color: #17153B;
+			}
+
+			::-webkit-scrollbar {
+         width: 18px; 
+      }
+
+      ::-webkit-scrollbar-track {
+          background: #17153B;
+      }
+      
+      ::-webkit-scrollbar-thumb {
+          background-color: #DA0C81; 
+          border-radius: 10px; 
+          border: 2px solid #DA0C81; 
+      }
+
+      ::-webkit-scrollbar-thumb:hover {
+          background-color: #555;
+      }
     </style>
 </head>
 <body>
@@ -65,7 +87,7 @@ if (!isset($_SESSION['account_type']) || $_SESSION['account_type'] != 1) {
         <div class="container-fluid">
             <div class="row justify-content-center align-items-center">
                 <div class="col-lg-7 col-md-10 col-sm-12"> <!-- Responsive columns -->
-                    <div class="card">
+                    <div class="card" style="box-shadow: none;">
                         <div class="card-body row justify-content-center">
                             <?php
                             // Database connection

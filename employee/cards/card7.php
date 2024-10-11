@@ -1,5 +1,5 @@
 <div class="col-xl-3 col-xxl-7">
-						<div class="card">
+						<div class="card" style="box-shadow: none;">
 							<div class="card-header border-0 pb-0">
 								<div>
 									<h4 class="card-title mb-2">Quick Transfer</h4>

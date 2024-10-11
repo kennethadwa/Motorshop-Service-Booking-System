@@ -5,7 +5,7 @@ $current_page = basename($_SERVER['PHP_SELF']);
 // Define an array to map page names to display text
 $page_titles = [
     'dashboard.php' => 'Dashboard',
-    'schedule.php' => 'Schedule',
+    'schedule.php' => 'Assign an Employee',
     'bookings.php' => 'Booking',
 		'inventory.php' => 'Inventory',
 		'transaction.php' => 'Transaction History',
@@ -49,7 +49,9 @@ $page_title = isset($page_titles[$current_page]) ? $page_titles[$current_page] :
 							</li>
 
                 <li class="nav-item">
-								<a href="logout.php" class="btn d-sm-inline-block d-none"><i class="fa-solid fa-right-from-bracket" style="background-color: red; color:white;"></i> &nbsp; Logout</a>
+								<a href="logout.php" class="btn d-sm-inline-block d-none" style="background-color: red; padding:15px 20px; border-radius: 10px; color:white;">
+									<i class="fa-solid fa-right-from-bracket"></i>
+								</a>
 							</li>
                         </ul>
                     </div>

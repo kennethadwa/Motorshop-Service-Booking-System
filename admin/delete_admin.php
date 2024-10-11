@@ -58,7 +58,7 @@ exit();
         <div class="container-fluid">
             <div class="row justify-content-center align-items-center">
                 <div class="col-lg-7 col-md-10 col-sm-12"> <!-- Responsive columns -->
-                    <div class="card">
+                    <div class="card" style="box-shadow: 2px 2px 2px black; background-image: linear-gradient(to bottom, #030637, #3C0753);">
                         <div class="card-body row justify-content-center">
                             <h2 class="text-center mb-3">Delete Admin</h2>
                             <?php

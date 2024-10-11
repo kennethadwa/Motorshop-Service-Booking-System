@@ -56,25 +56,46 @@ $customer_result = mysqli_query($conn, $customer_query);
 
 	body{
 	  background-color: #17153B;
+      font-family: Verdana;
 	}
 
-			::-webkit-scrollbar {
+	::-webkit-scrollbar {
          width: 18px; 
       }
 
-      ::-webkit-scrollbar-track {
+    ::-webkit-scrollbar-track {
           background: #17153B;
       }
       
-      ::-webkit-scrollbar-thumb {
+    ::-webkit-scrollbar-thumb {
           background-color: #DA0C81; 
           border-radius: 10px; 
           border: 2px solid #DA0C81; 
       }
 
-      ::-webkit-scrollbar-thumb:hover {
+    ::-webkit-scrollbar-thumb:hover {
           background-color: #555;
       }
+      
+      table {
+    border-collapse: collapse; 
+    width: 100%;
+}
+
+th, td {
+    text-align: center;
+    padding: 10px;
+    border: none; 
+}
+
+tr {
+    border-bottom: 1px solid #ddd; 
+}
+
+th {
+    background-color: #f2f2f2;
+    border-bottom: 2px solid #ddd; 
+}
     </style>
 </head>
 <body>
@@ -100,18 +121,18 @@ $customer_result = mysqli_query($conn, $customer_query);
             <div class="row invoice-card-row">
                 <!-- User Information Card Start -->
                 <div class="col-12">
-                    <div class="card" style="box-shadow: 2px 2px 2px black; background-color: rgba(0, 0, 0, 0.151);">
+                    <div class="card" style="box-shadow: 2px 2px 2px black; background-image: linear-gradient(to bottom, #030637, #3C0753);">
                         <div class="card-body">                                     
                             <div class="table-responsive">
                                 <ul class="nav nav-tabs" id="userTabs" role="tablist">
                                     <li class="nav-item" role="presentation">
-                                        <button class="nav-link active" id="admin-tab" data-bs-toggle="tab" data-bs-target="#admin" type="button" role="tab" aria-controls="admin" aria-selected="true" style="background: transparent; color: pink; font-weight: 600; ">Admin</button>
+                                        <button class="nav-link active" id="admin-tab" data-bs-toggle="tab" data-bs-target="#admin" type="button" role="tab" aria-controls="admin" aria-selected="true" style="background: transparent; font-family: Verdana; color: pink; font-weight: 600; ">Admin</button>
                                     </li>
                                     <li class="nav-item" role="presentation">
-                                        <button class="nav-link" id="employee-tab" data-bs-toggle="tab" data-bs-target="#employee" type="button" role="tab" aria-controls="employee" aria-selected="false" style="background: transparent; color: pink; font-weight: 600; ">Employee</button>
+                                        <button class="nav-link" id="employee-tab" data-bs-toggle="tab" data-bs-target="#employee" type="button" role="tab" aria-controls="employee" aria-selected="false" style="background: transparent; color: pink; font-weight: 600; font-family: Verdana; ">Employee</button>
                                     </li>
                                     <li class="nav-item" role="presentation">
-                                        <button class="nav-link" id="customer-tab" data-bs-toggle="tab" data-bs-target="#customer" type="button" role="tab" aria-controls="customer" aria-selected="false" style="background: transparent; color: pink; font-weight: 600; ">Customer</button>
+                                        <button class="nav-link" id="customer-tab" data-bs-toggle="tab" data-bs-target="#customer" type="button" role="tab" aria-controls="customer" aria-selected="false" style="background: transparent; color: pink; font-weight: 600; font-family: Verdana; ">Customer</button>
                                     </li>
                                 </ul>
 
@@ -134,7 +155,7 @@ $customer_result = mysqli_query($conn, $customer_query);
         </thead>
         <tbody>
             <?php while ($row = mysqli_fetch_assoc($admin_result)) { 
-                $full_name = $row['first_name'] . ' ' . $row['last_name'];
+                $full_name = $row['first_name'] . ' ' . $rows['last_name'];
                 $profile_picture = $row['profile'] ? $row['profile'] : 'path/to/default/profile/picture.jpg'; 
             ?>
                 <tr style="color: white;">
@@ -145,7 +166,7 @@ $customer_result = mysqli_query($conn, $customer_query);
                     <td><?php echo $row['sex']; ?></td>         <!-- Moved Sex data here -->
                     <td><?php echo $row['contact_no']; ?></td>
                     <td><?php echo $row['address']; ?></td>
-                    <td><a href="view_admin.php?id=<?php echo $row['admin_id']; ?>" class="btn btn-info btn-sm" style="background-color: #E3651D; border: none; border-radius: 10px;">View</a></td>
+                    <td><a href="view_admin?id=<?php echo $row['admin_id']; ?>" class="btn btn-info btn-sm" style="background: #FF3EA5; box-shadow: 1px 1px 10px rgba(255, 255, 255, 0.39); border-radius: 5px; color: white;">View</a></td>
                 </tr>
             <?php } ?>
         </tbody>
@@ -180,7 +201,7 @@ $customer_result = mysqli_query($conn, $customer_query);
                     <td><?php echo $row['sex']; ?></td>         <!-- Moved Sex data here -->
                     <td><?php echo $row['contact_no']; ?></td>
                     <td><?php echo $row['address']; ?></td>
-                    <td><a href="view_employee.php?id=<?php echo $row['employee_id']; ?>" class="btn btn-info btn-sm" style="background-color: #E3651D; border: none; border-radius: 10px;">View</a></td>
+                    <td><a href="view_employee?id=<?php echo $row['employee_id']; ?>" class="btn btn-info btn-sm" style="background: #FF3EA5; box-shadow: 1px 1px 10px rgba(255, 255, 255, 0.39); border-radius: 5px; color: white;">View</a></td>
                 </tr>
             <?php } ?>
         </tbody>
@@ -215,7 +236,7 @@ $customer_result = mysqli_query($conn, $customer_query);
                     <td><?php echo $row['sex']; ?></td>         <!-- Moved Sex data here -->
                     <td><?php echo $row['contact_no']; ?></td>
                     <td><?php echo $row['address']; ?></td>
-                    <td><a href="view_customer.php?id=<?php echo $row['customer_id']; ?>" class="btn btn-info btn-sm" style="background-color: #E3651D; border: none; border-radius: 10px;">View</a></td>
+                    <td><a href="view_customer?id=<?php echo $row['customer_id']; ?>" class="btn btn-info btn-sm" style="background: #FF3EA5; box-shadow: 1px 1px 10px rgba(255, 255, 255, 0.39); border-radius: 5px; color: white;">View</a></td>
                 </tr>
             <?php } ?>
         </tbody>

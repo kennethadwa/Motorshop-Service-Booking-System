@@ -53,6 +53,28 @@ if (!isset($_SESSION['account_type']) || $_SESSION['account_type'] != 0) {
             object-fit: cover;
             border: 2px solid #ccc; /* Optional: border for the profile picture */
         }
+
+        body{
+	  background-color: #17153B;
+	}
+
+			::-webkit-scrollbar {
+         width: 18px; 
+      }
+
+      ::-webkit-scrollbar-track {
+          background: #17153B;
+      }
+      
+      ::-webkit-scrollbar-thumb {
+          background-color: #DA0C81; 
+          border-radius: 10px; 
+          border: 2px solid #DA0C81; 
+      }
+
+      ::-webkit-scrollbar-thumb:hover {
+          background-color: #555;
+      }
     </style>
 </head>
 <body>
@@ -75,9 +97,8 @@ if (!isset($_SESSION['account_type']) || $_SESSION['account_type'] != 0) {
     <div class="content-body">
         <div class="container-fluid">
             <div class="col-lg-12 col-md-10 col-sm-12"> 
-                <div class="card">
+                <div class="card" style="box-shadow: 2px 2px 2px black; background-color: rgba(0, 0, 0, 0.151);">
                     <div class="card-body">
-                        <h2 class="text-center mb-4">Update Admin Information</h2>
                         <?php
                         // Database connection
                         $conn = new mysqli("localhost", "root", "", "sairom_service");
@@ -118,46 +139,47 @@ if (!isset($_SESSION['account_type']) || $_SESSION['account_type'] != 0) {
                         </div>
 
                         <form action="update_admin_process.php" method="POST" enctype="multipart/form-data">
-                            <input type="hidden" name="admin_id" value="<?php echo $admin_id; ?>">
+                            <input type="hidden" style="color: black; font-size: 1rem;" name="admin_id" value="<?php echo $admin_id; ?>">
                             <div class="form-group">
                                 <label for="first_name">First Name:</label>
-                                <input type="text" name="first_name" value="<?php echo $row['first_name']; ?>" class="form-control" required>
+                                <input type="text" style="color: black; font-size: 1rem;" name="first_name" value="<?php echo $row['first_name']; ?>" class="form-control" required>
                             </div>
                             <div class="form-group">
                                 <label for="last_name">Last Name:</label>
-                                <input type="text" name="last_name" value="<?php echo $row['last_name']; ?>" class="form-control" required>
+                                <input type="text" style="color: black; font-size: 1rem;" name="last_name" value="<?php echo $row['last_name']; ?>" class="form-control" required>
                             </div>
                             <div class="form-group">
                                 <label for="age">Age:</label>
-                                <input type="number" name="age" value="<?php echo $age; ?>" class="form-control" required>
+                                <input type="number" style="color: black; font-size: 1rem;" name="age" value="<?php echo $age; ?>" class="form-control" required>
                             </div>
                             <div class="form-group">
                                 <label for="birthday">Birthday:</label>
-                                <input type="date" name="birthday" value="<?php echo $birthday; ?>" class="form-control" required>
+                                <input type="date" style="color: black; font-size: 1rem;" name="birthday" value="<?php echo $birthday; ?>" class="form-control" required>
                             </div>
                             <div class="form-group">
                                 <label for="sex">Sex:</label>
-                                <select name="sex" class="form-control" required>
-                                    <option value="Male" <?php echo ($sex == 'Male') ? 'selected' : ''; ?>>Male</option>
-                                    <option value="Female" <?php echo ($sex == 'Female') ? 'selected' : ''; ?>>Female</option>
-                                    <option value="Other" <?php echo ($sex == 'Other') ? 'selected' : ''; ?>>Other</option>
+                                <select name="sex" class="form-control" required style="color: black; font-size: 1rem;">
+                                    <option value="Male" style="color: black; font-size: 1rem;" <?php echo ($sex == 'Male') ? 'selected' : ''; ?>>Male</option>
+                                    <option value="Female" style="color: black; font-size: 1rem;" <?php echo ($sex == 'Female') ? 'selected' : ''; ?>>Female</option>
+                                    <option value="Other" style="color: black; font-size: 1rem;" <?php echo ($sex == 'Other') ? 'selected' : ''; ?>>Other</option>
                                 </select>
                             </div>
                             <div class="form-group">
-                                <label for="contact_no">Contact Number:</label>
-                                <input type="text" name="contact_no" value="<?php echo $contact_no; ?>" class="form-control" required>
+                                <label for="contact_no" >Contact Number:</label>
+                                <input type="text" style="color: black; font-size: 1rem;" name="contact_no" value="<?php echo $contact_no; ?>" class="form-control" required>
                             </div>
                             <div class="form-group">
                                 <label for="address">Address:</label>
-                                <input type="text" name="address" value="<?php echo $address; ?>" class="form-control" required>
+                                <input type="text" style="color: black; font-size: 1rem;" name="address" value="<?php echo $address; ?>" class="form-control" required>
                             </div>
                             <div class="form-group">
                                 <label for="profile">Profile Picture:</label>
-                                <input type="file" name="profile" class="form-control-file">
+                                <input type="file" style="color: white; font-size: 1rem;" name="profile" class="form-control-file">
                             </div>
                             <div class="text-center">
-                                <button type="submit" class="btn btn-primary">Update</button>
-                                <a href="admins.php" class="btn btn-warning"> <i class="fas fa-arrow-left"></i> Back</a>
+                                <a href="view_admin?id=<?php echo $admin_id; ?>" class="btn" style="background-color: red; color: white;"><i class="fas fa-arrow-left"></i></a>
+                                &nbsp;
+                                <button type="submit" class="btn" style="box-shadow: none; background: green;"><i class="fa-solid fa-pen-nib" style="color: #ffffff;"></i></button>
                             </div>
                         </form>
 
@@ -167,10 +189,6 @@ if (!isset($_SESSION['account_type']) || $_SESSION['account_type'] != 0) {
         </div>
     </div>
     <!-- Content Body End -->
-
-    <!-- Footer Start -->
-    <?php include('footer.php'); ?>
-    <!-- Footer End -->
 </div>
 <!-- Main wrapper end -->
 

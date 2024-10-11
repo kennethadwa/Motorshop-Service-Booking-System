@@ -37,6 +37,37 @@ $requests = $conn->query($requestSql);
             max-width: 600px; /* Set max width for the card */
             margin: 0 auto; /* Center the card */
         }
+
+        body {
+            background-color: #17153B;
+        }
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .form-row {
+                flex-direction: column;
+            }
+            .card {
+                max-width: 100%;
+            }
+        }
+
+        ::-webkit-scrollbar {
+            width: 18px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #17153B;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background-color: #DA0C81;
+            border-radius: 10px;
+            border: 2px solid #DA0C81;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background-color: #555;
+        }
     </style>
 </head>
 <body>
@@ -51,25 +82,12 @@ $requests = $conn->query($requestSql);
         <div class="container-fluid">
             <div class="row invoice-card-row justify-content-center">
                 <div class="col-md-6">
-                    <div class="card">
+                    <div class="card" style="box-shadow: 2px 2px 2px black; background-color: rgba(0, 0, 0, 0.151);">
                         <div class="card-body">
                            <div class="d-flex justify-content-center mb-3">
-                            <h3>Add Schedule</h3>
                            </div> 
                             
                             <form action="submit_schedule.php" method="POST"> <!-- Adjust action as necessary -->
-                                <div class="mb-3">
-                                    <label for="customer" class="form-label">Customer Name</label>
-                                    <select id="customer" name="customer_id" class="form-select select2" required>
-                                        <option value="">Select Customer</option>
-                                        <?php while ($row = $customers->fetch_assoc()): ?>
-                                            <option value="<?php echo $row['customer_id']; ?>">
-                                                <?php echo $row['full_name']; ?>
-                                            </option>
-                                        <?php endwhile; ?>
-                                    </select>
-                                </div>
-
                                 <div class="mb-3">
                                     <label for="employee" class="form-label">Assign Employee</label>
                                     <select id="employee" name="employee_id" class="form-select select2" required>
@@ -100,7 +118,9 @@ $requests = $conn->query($requestSql);
                                 </div>
 
                                 <div class="d-flex justify-content-center mb-3 mt-3">
-                                  <button type="submit" class="btn btn-primary ">Submit</button>
+                                  <a href="schedule" class="btn" style="background-color: orange; color: white;"> <i class="fas fa-arrow-left"></i></a>
+                                  &nbsp;
+                                  <button type="submit" class="btn" style="background: green; color: white; box-shadow: none;"><i class="fa-solid fa-pen-nib" style="color: #ffffff;"></i></button>
                                 </div>
                             </form>
                         </div>

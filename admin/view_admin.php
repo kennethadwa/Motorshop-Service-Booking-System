@@ -41,6 +41,28 @@ if (!isset($_SESSION['account_type']) || $_SESSION['account_type'] != 0) {
         .action-btn {
             margin: 10px; /* Spacing between buttons */
         }
+
+        body{
+	  background-color: #17153B;
+	}
+
+			::-webkit-scrollbar {
+         width: 18px; 
+      }
+
+      ::-webkit-scrollbar-track {
+          background: #17153B;
+      }
+      
+      ::-webkit-scrollbar-thumb {
+          background-color: #DA0C81; 
+          border-radius: 10px; 
+          border: 2px solid #DA0C81; 
+      }
+
+      ::-webkit-scrollbar-thumb:hover {
+          background-color: #555;
+      }
     </style>
 </head>
 <body>
@@ -65,9 +87,8 @@ if (!isset($_SESSION['account_type']) || $_SESSION['account_type'] != 0) {
         <div class="container-fluid">
             <div class="row justify-content-center align-items-center">
                 <div class="col-lg-7 col-md-10 col-sm-12"> <!-- Responsive columns -->
-                    <div class="card">
+                    <div class="card" style="box-shadow: 2px 2px 2px black; background-image: linear-gradient(to bottom, #030637, #3C0753);">
                         <div class="card-body row justify-content-center">
-                            <h2 class="text-center mb-3">Admin Information</h2>
                             <?php
                             // Database connection
                             $conn = new mysqli("localhost", "root", "", "sairom_service");
@@ -97,12 +118,12 @@ if (!isset($_SESSION['account_type']) || $_SESSION['account_type'] != 0) {
                                     echo "<div class='admin-info'>";
                                     echo "<img src='$profile_picture' alt='Profile Picture' class='profile-image'>"; // Profile image at the top
                                     echo "<div class='info-container'>";
-                                    echo "<p><strong>Full Name:</strong> $full_name</p>";
-                                    echo "<p><strong>Age:</strong> $age</p>"; // Display age
-                                    echo "<p><strong>Birthday:</strong> $birthday</p>"; // Display birthday
-                                    echo "<p><strong>Sex:</strong> $sex</p>"; // Display sex
-                                    echo "<p><strong>Contact Number:</strong> $contact_no</p>";
-                                    echo "<p><strong>Address:</strong> $address</p>";
+                                    echo "<p style='color: white; font-size: 1rem; font-family:Verdana, Geneva, Tahoma, sans-serif;'><strong style='color: gray;'>Full Name:</strong> $full_name</p>";
+                                    echo "<p style='color: white; font-size: 1rem; font-family:Verdana, Geneva, Tahoma, sans-serif;'><strong style='color: gray;'>Age:</strong> $age</p>"; // Display age
+                                    echo "<p style='color: white; font-size: 1rem; font-family:Verdana, Geneva, Tahoma, sans-serif;'><strong style='color: gray;'>Birthday:</strong> $birthday</p>"; // Display birthday
+                                    echo "<p style='color: white; font-size: 1rem; font-family:Verdana, Geneva, Tahoma, sans-serif;'><strong style='color: gray;'>Sex:</strong> $sex</p>"; // Display sex
+                                    echo "<p style='color: white; font-size: 1rem; font-family:Verdana, Geneva, Tahoma, sans-serif;'><strong style='color: gray;'>Contact:</strong> $contact_no</p>";
+                                    echo "<p style='color: white; font-size: 1rem; font-family:Verdana, Geneva, Tahoma, sans-serif;'><strong style='color: gray;'>Address:</strong> $address</p>";
                                     echo "</div>";
                                     echo "</div>";
                                 } else {
@@ -117,9 +138,7 @@ if (!isset($_SESSION['account_type']) || $_SESSION['account_type'] != 0) {
                             
                             <!-- Action Buttons -->
                             <div class="col-12 text-center mt-4">
-                                <a href="user-information.php" class="btn btn-warning action-btn"> <i class="fas fa-arrow-left"></i> Back</a>
-                                <a href="update_admin.php?id=<?php echo $admin_id; ?>" class="btn btn-success action-btn"><i class="fa-solid fa-pencil" style="color: #ffffff;"></i> Update</a>
-                                <a href="delete_admin.php?id=<?php echo $admin_id; ?>" class="btn btn-danger action-btn" onclick="return confirm('Are you sure you want to delete this admin?')"><i class="fa-solid fa-trash" style="color: #ffffff;"></i> Delete</a>
+                                <a href="user-information" class="btn action-btn" style="box-shadow: none; border: none; background: orange;"> <i class="fas fa-arrow-left"></i></a>
                             </div>
                         </div>
                     </div>
@@ -128,11 +147,6 @@ if (!isset($_SESSION['account_type']) || $_SESSION['account_type'] != 0) {
         </div>
     </div>
     <!-- Content Body End -->
-
-    <!-- Footer Start -->
-    <?php include('footer.php'); ?>
-    <!-- Footer End -->
-
 </div>
 <!-- Main wrapper end -->
 

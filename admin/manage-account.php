@@ -1,6 +1,8 @@
 <?php
-include '../connection.php';
+
 session_start();
+include '../connection.php';
+
 if (!isset($_SESSION['account_type']) || $_SESSION['account_type'] != 0) {
     header("Location: ../login-register.php");
     exit();
@@ -38,14 +40,26 @@ $customer_result = mysqli_query($conn, $customer_query);
         .action-btn i {
             margin-right: 5px;
         }
-        th, td {
-            text-align: center;
-            padding: 10px;
-            border: 1px solid #ddd;
-        }
-        th {
-            background-color: #f2f2f2;
-        }
+        table {
+    border-collapse: collapse; 
+    width: 100%;
+}
+
+th, td {
+    text-align: center;
+    padding: 10px;
+    border: none; 
+}
+
+tr {
+    border-bottom: 1px solid #ddd; 
+}
+
+th {
+    background-color: #f2f2f2;
+    border-bottom: 2px solid #ddd; 
+}
+
         .profile-picture {
             width: 50px; /* Adjust size as needed */
             height: 50px; /* Adjust size as needed */
@@ -58,7 +72,7 @@ $customer_result = mysqli_query($conn, $customer_query);
 
         body{
 	  background-color: #17153B;
-	}
+	  }
 
 			::-webkit-scrollbar {
          width: 18px; 
@@ -102,12 +116,12 @@ $customer_result = mysqli_query($conn, $customer_query);
             <div class="row invoice-card-row">
                 <!-- Manage Account Card Start -->
                 <div class="col-12"> <!-- Full width for all devices -->
-                    <div class="card" style="box-shadow: 2px 2px 2px black; background-color: rgba(0, 0, 0, 0.151);">
+                    <div class="card" style="box-shadow: 2px 2px 2px black; background-image: linear-gradient(to bottom, #030637, #3C0753);">
                         <div class="card-body">                                     
                             <div class="row align-items-center mb-3">
                                 <div class="col-md-12 text-md-end"> <!-- Align text to the end on larger screens -->
                                     <!-- Dynamic Add Button based on selected tab -->
-                                    <button id="addUserBtn" class="btn btn-primary">
+                                    <button id="addUserBtn" class="btn btn-primary" style="background: #FF3EA5; box-shadow: 2px 2px 5px #DA0C81; border: 1px solid white; box-shadow: 1px 1px 10px rgba(255, 255, 255, 0.39); border-radius: 5px; color: white;">
                                         <i class="fa fa-plus"></i> Add User
                                     </button>
                                 </div>
@@ -146,11 +160,11 @@ $customer_result = mysqli_query($conn, $customer_query);
                                                 $account_type = $row['account_type'];
                                                 ?>
                                                     <tr style="color: white;">
-                                                        <td><img src="<?php echo $profile_picture; ?>" alt="Profile Picture" class="profile-picture"></td>
+                                                        <td><img src="<?php echo $profile_picture; ?>" alt="Profile Picture" class="profile-picture" style="border: none; box-shadow: none; object-fit: cover;"></td>
                                                         <td><?php echo $row['email']; ?></td>
                                                         <td><?php echo $row['password']; ?></td>
                                                         <td class="admin">Admin</td>
-                                                        <td><a href="view_admin_account.php?id=<?php echo $row['admin_id']; ?>" class="btn btn-info btn-sm" style="background-color: #E3651D; border: none; border-radius: 10px;">View</a></td>
+                                                        <td><a href="view_admin_account?id=<?php echo $row['admin_id']; ?>" class="btn btn-info btn-sm" style="background: #FF3EA5; box-shadow: 1px 1px 10px rgba(255, 255, 255, 0.39); border-radius: 5px; color: white;">View</a></td>
                                                     </tr>
                                                 <?php } ?>
                                             </tbody>
@@ -179,7 +193,7 @@ $customer_result = mysqli_query($conn, $customer_query);
                                                         <td><?php echo $row['email']; ?></td>
                                                         <td><?php echo $row['password']; ?></td>
                                                         <td class="employee">Employee</td>
-                                                        <td><a href="view_employee_account.php?id=<?php echo $row['employee_id']; ?>" class="btn btn-info btn-sm" style="background-color: #E3651D; border: none; border-radius: 10px;">View</a></td>
+                                                        <td><a href="view_employee_account?id=<?php echo $row['employee_id']; ?>" class="btn btn-info btn-sm" style="background: #FF3EA5; box-shadow: 1px 1px 10px rgba(255, 255, 255, 0.39); border-radius: 5px; color: white;">View</a></td>
                                                     </tr>
                                                 <?php } ?>
                                             </tbody>
@@ -207,7 +221,7 @@ $customer_result = mysqli_query($conn, $customer_query);
                                                         <td><?php echo $row['email']; ?></td>
                                                         <td><?php echo $row['password']; ?></td>
                                                         <td class="customer">Customer</td>
-                                                        <td><a href="view_customer_account.php?id=<?php echo $row['customer_id']; ?>" class="btn btn-info btn-sm" style="background-color: #E3651D; border: none; border-radius: 10px;">View</a></td>
+                                                        <td><a href="view_customer_account?id=<?php echo $row['customer_id']; ?>" class="btn btn-info btn-sm" style="background: #FF3EA5; box-shadow: 1px 1px 10px rgba(255, 255, 255, 0.39); border-radius: 5px; color: white;   ">View</a></td>
                                                     </tr>
                                                 <?php } ?>
                                             </tbody>

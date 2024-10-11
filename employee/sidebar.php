@@ -1,38 +1,71 @@
 <?php
 
-include('../connection.php');
-
-// Start session and verify employee login
 if (!isset($_SESSION['account_type']) || $_SESSION['account_type'] != 1) {
     header("Location: ../login-register");
     exit();
 }
 
-// Set default session variables
-$firstName = isset($_SESSION['first_name']) ? $_SESSION['first_name'] : 'Guest';
-$lastName = isset($_SESSION['last_name']) ? $_SESSION['last_name'] : '';
-$email = isset($_SESSION['email']) ? $_SESSION['email'] : 'No email available';
-
-// Check database connection
+$conn = new mysqli("localhost", "root", "", "sairom_service");
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-// Fetch employee data based on session employee_id
-$employee_id = isset($_SESSION['employee_id']) ? $_SESSION['employee_id'] : null; 
+$firstName = isset($_SESSION['first_name']) ? $_SESSION['first_name'] : 'Guest';
+$lastName = isset($_SESSION['last_name']) ? $_SESSION['last_name'] : '';
+$email = isset($_SESSION['email']) ? $_SESSION['email'] : 'No email available';
+
+$c_admin_id = isset($_SESSION['admin_id']) ? $_SESSION['admin_id'] : null; 
+$c_employee_id = isset($_SESSION['employee_id']) ? $_SESSION['employee_id'] : null;
+$c_customer_id = isset($_SESSION['customer_id']) ? $_SESSION['customer_id'] : null;
+
+
 $full_name = 'Guest';
-$profile_picture = 'path/to/default/profile/picture.jpg'; // Default profile picture
+$profile_pictures = 'path/to/default/profile/picture.jpg'; 
 
-if ($employee_id) {
-    $employee_query = "SELECT employee_id, first_name, last_name, profile FROM employees WHERE employee_id = ?";
-    $stmt = $conn->prepare($employee_query);
-    $stmt->bind_param("i", $employee_id);
+
+if ($c_admin_id) {
+    $admin_queries = "SELECT admin_id, first_name, last_name, profile 
+                    FROM admin 
+                    WHERE admin_id = ?";
+
+    $stmt = $conn->prepare($admin_queries);
+    $stmt->bind_param("i", $c_admin_id);
     $stmt->execute();
-    $employee_result = $stmt->get_result();
+    $admin_results = $stmt->get_result();
 
-    if ($row = $employee_result->fetch_assoc()) {
-        $full_name = $row['first_name'] . ' ' . $row['last_name'];
-        $profile_picture = $row['profile'] ? $row['profile'] : $profile_picture;
+    if ($rows = $admin_results->fetch_assoc()) { 
+        $full_name = $rows['first_name'] . ' ' . $rows['last_name'];
+        $profile_pictures = $rows['profile'] ? $rows['profile'] : $profile_pictures;
+    }
+} elseif ($c_employee_id) {
+    // Fetch Employee Data
+    $employee_queries = "SELECT employee_id, first_name, last_name, profile 
+                       FROM employees 
+                       WHERE employee_id = ?";
+
+    $stmt = $conn->prepare($employee_queries);
+    $stmt->bind_param("i", $c_employee_id);
+    $stmt->execute();
+    $employee_results = $stmt->get_result();
+
+    if ($rows = $employee_results->fetch_assoc()) {
+        $full_name = $rows['first_name'] . ' ' . $rows['last_name'];
+        $profile_pictures = $rows['profile'] ? $rows['profile'] : $profile_pictures;
+    }
+} elseif ($c_customer_id) {
+    // Fetch Customer Data
+    $customer_queries = "SELECT customer_id, first_name, last_name, profile 
+                       FROM customers 
+                       WHERE customer_id = ?";
+
+    $stmt = $conn->prepare($customer_queries);
+    $stmt->bind_param("i", $c_customer_id);
+    $stmt->execute();
+    $customer_results = $stmt->get_result();
+
+    if ($rows= $customer_results->fetch_assoc()) {
+        $full_name = $rows['first_name'] . ' ' . $rows['last_name'];
+        $profile_pictures = $rows['profile'] ? $rows['profile'] : $profile_pictures;
     }
 }
 ?>
@@ -41,7 +74,7 @@ if ($employee_id) {
     .my-profile {
         width: 100%;
         height: auto;
-        padding: 10px 0 0 0;
+        padding: 0 0 10px 0;
         display: flex;
         justify-content: center;
         align-items: center;
@@ -51,14 +84,15 @@ if ($employee_id) {
         width: auto;
         height: auto;
         padding: 5px;
+        border-radius: 5px;
         border: 1px solid transparent;
-        background-color: #E85C0D;
+        background-color: #FF3EA5;
         color: white;
-        transition: 0.5s ease-in;
+        transition: 0.3s ease-in;
     }
 
     .profileBtn:hover {
-        background: #FF6500;
+        background: #FF3FF9;
         color: white;
     }
 
@@ -67,27 +101,101 @@ if ($employee_id) {
         height: 50px;
         border-radius: 50%;
     }
+
+    .drp_btn{
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+    }
+
+    .dlabnav{
+        background-color: #6528F7;
+        box-shadow: none;
+    }
+
+    .nav-text{
+        color: white;
+    }
+
+    .nav-text:hover{
+        color: white;
+    }
+
+    .nav-text:active{
+        color: white;
+    }
+
+    i{
+        color: white;
+    }
+
+    i:active{
+        color: white;
+    }
+
+    .nav-link{
+        border: none;
+    }
+    .nav9link img{
+        box-shadow: none;
+    }
+
+    .hamburger{
+        color: white;
+    }
+
+    .header-profile{
+        background-color: #6528C9;
+        margin: 0;
+    }
+
+    .header-profile .nav-link{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .header-profile .nav-link img{
+        width: 80px;
+        height: 80px;
+    }
+
+    .header-profile .nav-link .header-info{
+        width: auto;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .header-profile .nav-link .prof{
+       display: flex;
+       justify-content: center;
+       align-items: center;
+    }
 </style>
 
 <div class="dlabnav">
     <div class="dlabnav-scroll">
         <ul class="metismenu" id="menu">
-            <li class="dropdown header-profile">
-                <a class="nav-link" href="view_employee.php?id=<?php echo $employee_id; ?>" role="button" data-bs-toggle="dropdown">
-                    <img src="<?php echo $profile_picture; ?>" alt="Profile Picture" class="profile-picture">
+            <li class="header-profile">
+                <a class="nav-link" href="javascript:void(0);" style="border: none;">
+                    <div class="prof">
+                        <img src="<?php echo $profile_pictures; ?>" alt="Profile Picture" class="profile-picture" style="border: none; box-shadow: none; object-fit: cover;">
+                    </div>
+                    
                     <div class="header-info ms-3">
-                        <span class="font-w600">Hi, <b><?php echo htmlspecialchars($firstName . ' ' . $lastName); ?></b></span>
-                        <small class="text-end font-w400"><?php echo htmlspecialchars($email); ?></small>
+                        <span class="font-w600" style="color: white; font-size: 1.2rem;">Hi, <b><?php echo htmlspecialchars($firstName); ?></b></span>
+                        <p class="text-end font-w400" style="color: white; font-size: 0.9rem;"><?php echo htmlspecialchars($email); ?></p>
                     </div>
                 </a>
-
                 <div class="my-profile">
-                    <a class="profileBtn" style="color: white;" href="profile?id=<?php echo $employee_id; ?>">View Profile</a>
+                    <a class="profileBtn" style="color: white;" href="profile?id=<?php echo $c_employee_id ? $c_employee_id : ($c_employee_id ? $c_employee_id : $c_employee_id); ?>">View Profile</a>
                 </div>
-
             </li>
 
-            <li><a href="index.php" aria-expanded="false">
+            <li><a href="index" aria-expanded="false">
                 <i class="flaticon-025-dashboard"></i>
                 <span class="nav-text">Home</span>
             </a></li>
@@ -99,7 +207,7 @@ if ($employee_id) {
 
             <li><a href="bookings" aria-expanded="false">
                 <i class="fa-solid fa-dollar-sign"></i>
-                <span class="nav-text">Booking History</span>
+                <span class="nav-text">Completed</span>
             </a></li>
 
             <li><a href="logout" class="ai-icon" aria-expanded="false">

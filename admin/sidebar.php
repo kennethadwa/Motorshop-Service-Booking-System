@@ -1,74 +1,71 @@
 <?php
 
-// Check if account type is admin (0), redirect to login if not
 if (!isset($_SESSION['account_type']) || $_SESSION['account_type'] != 0) {
     header("Location: ../login-register");
     exit();
 }
 
-// Database connection
 $conn = new mysqli("localhost", "root", "", "sairom_service");
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-// Set default values for session variables
 $firstName = isset($_SESSION['first_name']) ? $_SESSION['first_name'] : 'Guest';
 $lastName = isset($_SESSION['last_name']) ? $_SESSION['last_name'] : '';
 $email = isset($_SESSION['email']) ? $_SESSION['email'] : 'No email available';
 
-$admin_id = isset($_SESSION['admin_id']) ? $_SESSION['admin_id'] : null; 
-$employee_id = isset($_SESSION['employee_id']) ? $_SESSION['employee_id'] : null;
-$customer_id = isset($_SESSION['customer_id']) ? $_SESSION['customer_id'] : null;
+$c_admin_id = isset($_SESSION['admin_id']) ? $_SESSION['admin_id'] : null; 
+$c_employee_id = isset($_SESSION['employee_id']) ? $_SESSION['employee_id'] : null;
+$c_customer_id = isset($_SESSION['customer_id']) ? $_SESSION['customer_id'] : null;
 
-// Variables to store profile info
+
 $full_name = 'Guest';
-$profile_picture = 'path/to/default/profile/picture.jpg'; // Default profile picture
+$profile_pictures = 'path/to/default/profile/picture.jpg'; 
 
-// Fetch Admin Data for the logged-in admin
-if ($admin_id) {
-    $admin_query = "SELECT admin_id, first_name, last_name, profile 
+
+if ($c_admin_id) {
+    $admin_queries = "SELECT admin_id, first_name, last_name, profile 
                     FROM admin 
                     WHERE admin_id = ?";
 
-    $stmt = $conn->prepare($admin_query);
-    $stmt->bind_param("i", $admin_id);
+    $stmt = $conn->prepare($admin_queries);
+    $stmt->bind_param("i", $c_admin_id);
     $stmt->execute();
-    $admin_result = $stmt->get_result();
+    $admin_results = $stmt->get_result();
 
-    if ($row = $admin_result->fetch_assoc()) { 
-        $full_name = $row['first_name'] . ' ' . $row['last_name'];
-        $profile_picture = $row['profile'] ? $row['profile'] : $profile_picture;
+    if ($rows = $admin_results->fetch_assoc()) { 
+        $full_name = $rows['first_name'] . ' ' . $rows['last_name'];
+        $profile_pictures = $rows['profile'] ? $rows['profile'] : $profile_pictures;
     }
-} elseif ($employee_id) {
+} elseif ($c_employee_id) {
     // Fetch Employee Data
-    $employee_query = "SELECT employee_id, first_name, last_name, profile 
+    $employee_queries = "SELECT employee_id, first_name, last_name, profile 
                        FROM employees 
                        WHERE employee_id = ?";
 
-    $stmt = $conn->prepare($employee_query);
-    $stmt->bind_param("i", $employee_id);
+    $stmt = $conn->prepare($employee_queries);
+    $stmt->bind_param("i", $c_employee_id);
     $stmt->execute();
-    $employee_result = $stmt->get_result();
+    $employee_results = $stmt->get_result();
 
-    if ($row = $employee_result->fetch_assoc()) {
-        $full_name = $row['first_name'] . ' ' . $row['last_name'];
-        $profile_picture = $row['profile'] ? $row['profile'] : $profile_picture;
+    if ($rows = $employee_results->fetch_assoc()) {
+        $full_name = $rows['first_name'] . ' ' . $rows['last_name'];
+        $profile_pictures = $rows['profile'] ? $rows['profile'] : $profile_pictures;
     }
-} elseif ($customer_id) {
+} elseif ($c_customer_id) {
     // Fetch Customer Data
-    $customer_query = "SELECT customer_id, first_name, last_name, profile 
+    $customer_queries = "SELECT customer_id, first_name, last_name, profile 
                        FROM customers 
                        WHERE customer_id = ?";
 
-    $stmt = $conn->prepare($customer_query);
-    $stmt->bind_param("i", $customer_id);
+    $stmt = $conn->prepare($customer_queries);
+    $stmt->bind_param("i", $c_customer_id);
     $stmt->execute();
-    $customer_result = $stmt->get_result();
+    $customer_results = $stmt->get_result();
 
-    if ($row = $customer_result->fetch_assoc()) {
-        $full_name = $row['first_name'] . ' ' . $row['last_name'];
-        $profile_picture = $row['profile'] ? $row['profile'] : $profile_picture;
+    if ($rows= $customer_results->fetch_assoc()) {
+        $full_name = $rows['first_name'] . ' ' . $rows['last_name'];
+        $profile_pictures = $rows['profile'] ? $rows['profile'] : $profile_pictures;
     }
 }
 ?>
@@ -87,14 +84,15 @@ if ($admin_id) {
         width: auto;
         height: auto;
         padding: 5px;
+        border-radius: 5px;
         border: 1px solid transparent;
         background-color: #FF3EA5;
         color: white;
-        transition: 0.5s ease-in;
+        transition: 0.3s ease-in;
     }
 
     .profileBtn:hover {
-        background: #FF6500;
+        background: #FF3FF9;
         color: white;
     }
 
@@ -184,7 +182,7 @@ if ($admin_id) {
             <li class="header-profile">
                 <a class="nav-link" href="javascript:void(0);" style="border: none;">
                     <div class="prof">
-                        <img src="<?php echo $profile_picture; ?>" alt="Profile Picture" class="profile-picture" style="border: none; box-shadow: none; object-fit: cover;">
+                        <img src="<?php echo $profile_pictures; ?>" alt="Profile Picture" class="profile-picture" style="border: none; box-shadow: none; object-fit: cover;">
                     </div>
                     
                     <div class="header-info ms-3">
@@ -205,7 +203,7 @@ if ($admin_id) {
 
             <li><a href="schedule" aria-expanded="false">
                 <i class="fa-regular fa-calendar-days" style="color:white;"></i>
-                <span class="nav-text">Schedule</span>
+                <span class="nav-text">Assign an Employee</span>
             </a></li>
 
             <li><a href="bookings" aria-expanded="false">

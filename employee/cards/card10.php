@@ -1,5 +1,5 @@
 <div class="col-xl-6 col-xxl-12">
-						<div class="card">
+						<div class="card" style="box-shadow: none;">
 							<div class="card-header d-block d-sm-flex border-0">
 								<div class="me-3">
 									<h4 class="card-title mb-2">Previous Transactions</h4>

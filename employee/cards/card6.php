@@ -1,5 +1,5 @@
 <div class="col-xl-3 col-xxl-5">
-						<div class="card">
+						<div class="card" style="box-shadow: none;">
 							<div class="card-header pb-0 border-0">
 								<div>
 									<h4 class="card-title mb-2">Activity</h4>

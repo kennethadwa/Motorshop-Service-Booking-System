@@ -1,5 +1,5 @@
 <div class="col-xl-9 col-xxl-12">
-						<div class="card">
+						<div class="card" style="box-shadow: none;">
 							<div class="card-body">
 								<div class="row align-items-center">
 									<div class="col-xl-6">

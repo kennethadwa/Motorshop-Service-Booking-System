@@ -53,6 +53,28 @@ if (!isset($_SESSION['account_type']) || $_SESSION['account_type'] != 0) {
             object-fit: cover;
             border: 2px solid #ccc; /* Optional: border for the profile picture */
         }
+
+        body{
+	  background-color: #17153B;
+	}
+
+			::-webkit-scrollbar {
+         width: 18px; 
+      }
+
+      ::-webkit-scrollbar-track {
+          background: #17153B;
+      }
+      
+      ::-webkit-scrollbar-thumb {
+          background-color: #DA0C81; 
+          border-radius: 10px; 
+          border: 2px solid #DA0C81; 
+      }
+
+      ::-webkit-scrollbar-thumb:hover {
+          background-color: #555;
+      }
     </style>
 </head>
 <body>
@@ -75,7 +97,7 @@ if (!isset($_SESSION['account_type']) || $_SESSION['account_type'] != 0) {
     <div class="content-body">
         <div class="container-fluid">
             <div class="col-lg-12 col-md-10 col-sm-12"> 
-                <div class="card">
+                <div class="card" style="box-shadow: 2px 2px 2px black; background-image: linear-gradient(to bottom, #030637, #3C0753);">
                     <div class="card-body">
                         <?php
                         // Database connection
@@ -122,23 +144,23 @@ if (!isset($_SESSION['account_type']) || $_SESSION['account_type'] != 0) {
                             <!-- Existing Fields -->
                             <div class="form-group">
                                 <label for="first_name">First Name:</label>
-                                <input type="text" name="first_name" value="<?php echo $row['first_name']; ?>" class="form-control" required>
+                                <input type="text" name="first_name" value="<?php echo $row['first_name']; ?>" class="form-control" >
                             </div>
                             <div class="form-group">
                                 <label for="last_name">Last Name:</label>
-                                <input type="text" name="last_name" value="<?php echo $row['last_name']; ?>" class="form-control" required>
+                                <input type="text" name="last_name" value="<?php echo $row['last_name']; ?>" class="form-control" >
                             </div>
                             <div class="form-group">
                                 <label for="age">Age:</label>
-                                <input type="number" name="age" value="<?php echo $age; ?>" class="form-control" required>
+                                <input type="number" name="age" value="<?php echo $age; ?>" class="form-control" >
                             </div>
                             <div class="form-group">
                                 <label for="birthday">Birthday:</label>
-                                <input type="date" name="birthday" value="<?php echo $birthday; ?>" class="form-control" required>
+                                <input type="date" name="birthday" value="<?php echo $birthday; ?>" class="form-control" >
                             </div>
                             <div class="form-group">
                                 <label for="sex">Sex:</label>
-                                <select name="sex" class="form-control" required>
+                                <select name="sex" class="form-control" >
                                     <option value="Male" <?php echo ($sex == 'Male') ? 'selected' : ''; ?>>Male</option>
                                     <option value="Female" <?php echo ($sex == 'Female') ? 'selected' : ''; ?>>Female</option>
                                     <option value="Other" <?php echo ($sex == 'Other') ? 'selected' : ''; ?>>Other</option>
@@ -146,31 +168,31 @@ if (!isset($_SESSION['account_type']) || $_SESSION['account_type'] != 0) {
                             </div>
                             <div class="form-group">
                                 <label for="contact_no">Contact Number:</label>
-                                <input type="text" name="contact_no" value="<?php echo $contact_no; ?>" class="form-control" required>
+                                <input type="text" name="contact_no" value="<?php echo $contact_no; ?>" class="form-control" >
                             </div>
                             
                             <!-- Existing Address Field -->
                             <div class="form-group">
                                 <label for="address">Address:</label>
-                                <input type="text" name="address" value="<?php echo $address; ?>" class="form-control" required>
+                                <input type="text" name="address" value="<?php echo $address; ?>" class="form-control" >
                             </div>
                         
                             <!-- New Email Field -->
                             <div class="form-group">
                                 <label for="email">Email:</label>
-                                <input type="email" name="email" value="<?php echo $email; ?>" class="form-control" required>
+                                <input type="email" name="email" value="<?php echo $email; ?>" class="form-control" >
                             </div>
                         
                             <!-- New Password Field -->
                             <div class="form-group">
                                 <label for="password">Password:</label>
-                                <input type="password" name="password" class="form-control" required>
+                                <input type="password" name="password" class="form-control" >
                             </div>
                         
                             <!-- New Confirm Password Field -->
                             <div class="form-group">
                                 <label for="confirm_password">Confirm Password:</label>
-                                <input type="password" name="confirm_password" class="form-control" required>
+                                <input type="password" name="confirm_password" class="form-control" >
                             </div>
                         
                             <!-- Profile Picture Upload -->
@@ -181,9 +203,9 @@ if (!isset($_SESSION['account_type']) || $_SESSION['account_type'] != 0) {
                         
                             <!-- Submit Button -->
                             <div class="text-center">
-                                <a href="profile?id=<?php echo $admin_id; ?>" class="btn btn-warning"> <i class="fas fa-arrow-left"></i> Back</a>
+                                <a href="profile?id=<?php echo $admin_id; ?>" class="btn" style="box-shadow: none; border: none; background: orange;"> <i class="fas fa-arrow-left"></i></a>
                                 &nbsp;
-                                <button type="submit" class="btn btn-primary">Update</button>
+                                <button type="submit" class="btn" style="box-shadow: none; border: none; background: green;"><i class="fa-solid fa-pen-nib" style="color: #ffffff;"></i></button>
                             </div>
                         </form>
                     </div>

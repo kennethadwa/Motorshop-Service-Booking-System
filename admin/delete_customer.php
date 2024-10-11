@@ -34,6 +34,28 @@ exit();
         .action-btn {
             margin: 10px;
         }
+
+        body{
+	  background-color: #17153B;
+	}
+
+			::-webkit-scrollbar {
+         width: 18px; 
+      }
+
+      ::-webkit-scrollbar-track {
+          background: #17153B;
+      }
+      
+      ::-webkit-scrollbar-thumb {
+          background-color: #DA0C81; 
+          border-radius: 10px; 
+          border: 2px solid #DA0C81; 
+      }
+
+      ::-webkit-scrollbar-thumb:hover {
+          background-color: #555;
+      }
     </style>
 </head>
 <body>
@@ -58,9 +80,8 @@ exit();
         <div class="container-fluid">
             <div class="row justify-content-center align-items-center">
                 <div class="col-lg-7 col-md-10 col-sm-12"> <!-- Responsive columns -->
-                    <div class="card">
-                        <div class="card-body row justify-content-center">
-                            <h2 class="text-center mb-3">Delete Customer</h2>
+                    <div class="card" style="box-shadow: 2px 2px 2px black; background-image: linear-gradient(to bottom, #030637, #3C0753);">
+                        <div class="card-body row justify-content-center">  
                             <?php
                             // Database connection
                             $conn = new mysqli("localhost", "root", "", "sairom_service");
@@ -81,7 +102,7 @@ exit();
 
                                     echo "<div class='confirmation-container'>";
                                     echo "<div class='info-container'>";
-                                    echo "<p>Are you sure you want to delete <strong>$full_name</strong>?</p>";
+                                    echo "<p style = 'font-size: 1.3rem; font-family: Verdana;'>Are you sure you want to delete a <strong style='color: blue;'>Customer</strong> <strong style='color: pink;'><br>$full_name</strong>?</p>";
                                     echo "</div>";
                                 } else {
                                     echo "<p>No customer found.</p>";
@@ -95,10 +116,10 @@ exit();
 
                             <!-- Action Buttons -->
                             <div class="col-12 text-center mt-4">
-                                <a href="customers.php" class="btn btn-warning action-btn"> <i class="fas fa-arrow-left"></i> No</a>
-                                <form action="delete_customer_process.php" method="POST" class="d-inline">
+                                <a href="view_customer?id=<?php echo $customer_id; ?>" class="btn action-btn" style="box-shadow: none; border: none; background: orange;"><i class="fas fa-arrow-left"></i></a>
+                                <form action="delete_customer_process" method="POST" class="d-inline">
                                     <input type="hidden" name="customer_id" value="<?php echo isset($customer_id) ? $customer_id : ''; ?>">
-                                    <button type="submit" class="btn btn-danger action-btn"><i class="fa-solid fa-trash" style="color: #ffffff;"></i> Yes</button>
+                                    <button type="submit" class="btn action-btn" style="box-shadow: none; border: none; background: red;"><i class="fa-solid fa-trash" style="color: #ffffff;"></i></button>
                                 </form>
                             </div>
                         </div>

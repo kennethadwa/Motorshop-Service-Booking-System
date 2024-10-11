@@ -1,5 +1,5 @@
 <div class="col-xl-3 col-xxl-3 col-sm-6">
-    <div class="card bg-secondary invoice-card">
+    <div class="card bg-secondary invoice-card" style="box-shadow: none;">
         <div class="card-body d-flex">
             <div class="icon me-3">
                 <svg width="33px" height="32px">
