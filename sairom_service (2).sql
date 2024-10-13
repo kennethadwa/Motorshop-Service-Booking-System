@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 12, 2024 at 08:10 PM
+-- Generation Time: Oct 13, 2024 at 10:55 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -53,6 +53,36 @@ INSERT INTO `admin` (`admin_id`, `first_name`, `last_name`, `age`, `birthday`, `
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `booking_images`
+--
+
+CREATE TABLE `booking_images` (
+  `image_id` int(11) NOT NULL,
+  `request_id` int(11) NOT NULL,
+  `image_path` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `booking_images`
+--
+
+INSERT INTO `booking_images` (`image_id`, `request_id`, `image_path`) VALUES
+(1, 8, '../uploads/booking_images/dog.jpg'),
+(2, 8, '../uploads/booking_images/mew_profile.jpg'),
+(3, 10, '../uploads/booking_images/bunny.jpg'),
+(4, 11, '../uploads/booking_images/bunny.jpg'),
+(5, 11, '../uploads/booking_images/dog.jpg'),
+(6, 11, '../uploads/booking_images/mew_profile.jpg'),
+(7, 12, '../uploads/booking_images/bunny.jpg'),
+(8, 12, '../uploads/booking_images/mew_profile.jpg'),
+(9, 13, '../uploads/booking_images/bunny.jpg'),
+(10, 13, '../uploads/booking_images/mew_profile.jpg'),
+(11, 14, '../uploads/booking_images/bunny.jpg'),
+(12, 14, '../uploads/booking_images/mew_profile.jpg');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `booking_request`
 --
 
@@ -62,9 +92,30 @@ CREATE TABLE `booking_request` (
   `model_name` varchar(255) DEFAULT NULL,
   `address` varchar(255) DEFAULT NULL,
   `request_date` date DEFAULT NULL,
+  `request_time` time DEFAULT NULL,
   `description` varchar(255) DEFAULT NULL,
   `status` varchar(255) DEFAULT 'pending'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `booking_request`
+--
+
+INSERT INTO `booking_request` (`request_id`, `customer_id`, `model_name`, `address`, `request_date`, `request_time`, `description`, `status`) VALUES
+(1, 3, 'Toyota', 'Banay Banay, Lipa City', '2024-10-18', NULL, 'i need my motorcycle to change oil', 'completed'),
+(2, 3, 'Honda Mitsubishi', 'Balintawak, Lipa City', '2024-10-16', NULL, 'gusto kong magpachange oil ng aking motor, and then ipaayos na rin ang side mirror ko.', 'pending'),
+(3, 3, 'Honda Mitsubishi', 'Balintawak, Lipa City', '2024-10-16', NULL, 'pa change oil, fix side mirror, change wheel', 'pending'),
+(4, 3, 'Honda Mitsubishi', 'Balintawak, Lipa City', '2024-10-16', NULL, 'pa change oil, fix side mirror, change wheel', 'pending'),
+(5, 3, 'Ferari', 'Sabang, Lipa City', '2024-12-02', NULL, 'fix my ferrari', 'pending'),
+(6, 3, 'Ferari', 'Sabang, Lipa City', '2024-12-02', NULL, 'fix my ferrari', 'completed'),
+(7, 3, 'Toyota', 'Balintawak, Lipa City', '2024-10-30', NULL, 'fix my card', 'rejected'),
+(8, 3, 'Toyota', 'Balintawak, Lipa City', '2024-10-30', NULL, 'fix my card', 'completed'),
+(9, 3, 'dasd', 'asdas', '2924-10-20', NULL, 'paayos', 'pending'),
+(10, 3, 'dasd', 'asdas', '2924-10-20', NULL, 'paayos', 'pending'),
+(11, 3, 'Ford', 'Sabang, Lipa City', '2024-10-14', NULL, 'paasyos ng ford ko', 'pending'),
+(12, 3, 'Mio', 'Cat Village', '2024-10-14', '10:30:00', 'pachange oil ng mio ko at pahanginan na rin ng gulong', 'pending'),
+(13, 3, 'Mio', 'Cat Village', '2024-12-11', '00:05:40', '0', 'pending'),
+(14, 3, 'Mio', 'Balintawak, Lipa City', '2024-10-20', '10:30:00', 'paayos po', 'approved');
 
 -- --------------------------------------------------------
 
@@ -130,6 +181,31 @@ INSERT INTO `employees` (`employee_id`, `first_name`, `last_name`, `age`, `birth
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `packages`
+--
+
+CREATE TABLE `packages` (
+  `package_id` int(11) NOT NULL,
+  `package_name` varchar(100) NOT NULL,
+  `price` decimal(10,2) NOT NULL,
+  `duration` int(11) NOT NULL,
+  `description` text DEFAULT NULL,
+  `status` enum('active','inactive') DEFAULT 'active'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `packages`
+--
+
+INSERT INTO `packages` (`package_id`, `package_name`, `price`, `duration`, `description`, `status`) VALUES
+(1, 'Standard Maintenance', 5000.00, 3, 'Inclusions:\r\nOil Change\r\nFluid Check (brake, coolant, transmission)\r\nTire Rotation\r\nBasic Inspection', 'active'),
+(2, 'Express Service Package', 3000.00, 2, 'Inclusions:\r\nOil Change\r\nProducts Needed: Engine Oil, Oil Filter\r\nTire Pressure Check\r\nProducts Needed: Tire Pressure Gauge\r\nWindshield Wiper Replacement\r\nProducts Needed: Wiper Blades\r\nAir Filter Check\r\nProducts Needed: Air Filter', 'active'),
+(3, 'Comprehensive Service', 3500.00, 5, 'Inclusions:\r\nOil Change\r\nProducts Needed: Engine Oil, Oil Filter\r\nTire Rotation and Alignment\r\nProducts Needed: Tire Pressure Gauge, Alignment Tools\r\nBrake Inspection\r\nProducts Needed: Brake Pads, Brake Fluid\r\nBattery Check\r\nProducts Needed: Battery Tester\r\nFluid Flush (coolant, brake, transmission)\r\nProducts Needed: Coolant, Brake Fluid, Transmission Fluid\r\nPremium Repair Package', 'active'),
+(4, 'Advanced Maintenance', 7600.00, 6, 'Engine Diagnostic\r\nProducts Needed: Diagnostic Scanner\r\nOil Change\r\nProducts Needed: Engine Oil, Oil Filter\r\nBrake Replacement\r\nProducts Needed: Brake Pads, Brake Rotors\r\nSuspension Inspection\r\nProducts Needed: Suspension Components\r\nTire Replacement\r\nProducts Needed: New Tires\r\nRoad Ready Package', 'active');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `payments`
 --
 
@@ -153,6 +229,15 @@ CREATE TABLE `schedule` (
   `employee_id` int(11) DEFAULT NULL,
   `booking_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `schedule`
+--
+
+INSERT INTO `schedule` (`schedule_id`, `employee_id`, `booking_id`) VALUES
+(1, 3, 1),
+(2, 2, 6),
+(3, 1, 8);
 
 -- --------------------------------------------------------
 
@@ -184,6 +269,13 @@ ALTER TABLE `admin`
   ADD UNIQUE KEY `email` (`email`);
 
 --
+-- Indexes for table `booking_images`
+--
+ALTER TABLE `booking_images`
+  ADD PRIMARY KEY (`image_id`),
+  ADD KEY `request_id` (`request_id`);
+
+--
 -- Indexes for table `booking_request`
 --
 ALTER TABLE `booking_request`
@@ -203,6 +295,12 @@ ALTER TABLE `customers`
 ALTER TABLE `employees`
   ADD PRIMARY KEY (`employee_id`),
   ADD UNIQUE KEY `email` (`email`);
+
+--
+-- Indexes for table `packages`
+--
+ALTER TABLE `packages`
+  ADD PRIMARY KEY (`package_id`);
 
 --
 -- Indexes for table `payments`
@@ -238,10 +336,16 @@ ALTER TABLE `admin`
   MODIFY `admin_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
+-- AUTO_INCREMENT for table `booking_images`
+--
+ALTER TABLE `booking_images`
+  MODIFY `image_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+
+--
 -- AUTO_INCREMENT for table `booking_request`
 --
 ALTER TABLE `booking_request`
-  MODIFY `request_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `request_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `customers`
@@ -256,6 +360,12 @@ ALTER TABLE `employees`
   MODIFY `employee_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
+-- AUTO_INCREMENT for table `packages`
+--
+ALTER TABLE `packages`
+  MODIFY `package_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
 -- AUTO_INCREMENT for table `payments`
 --
 ALTER TABLE `payments`
@@ -265,7 +375,7 @@ ALTER TABLE `payments`
 -- AUTO_INCREMENT for table `schedule`
 --
 ALTER TABLE `schedule`
-  MODIFY `schedule_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `schedule_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `transactions`
@@ -276,6 +386,12 @@ ALTER TABLE `transactions`
 --
 -- Constraints for dumped tables
 --
+
+--
+-- Constraints for table `booking_images`
+--
+ALTER TABLE `booking_images`
+  ADD CONSTRAINT `booking_images_ibfk_1` FOREIGN KEY (`request_id`) REFERENCES `booking_request` (`request_id`);
 
 --
 -- Constraints for table `booking_request`

@@ -19,9 +19,9 @@ $scheduleSql = "SELECT s.schedule_id,
                 FROM schedule s
                 LEFT JOIN booking_request br ON s.booking_id = br.request_id
                 LEFT JOIN customers c ON br.customer_id = c.customer_id
-                LEFT JOIN employees e ON s.employee_id = e.employee_id";
+                LEFT JOIN employees e ON s.employee_id = e.employee_id
+                WHERE br.status = 'approved'"; // Filter for approved status
 $schedules = $conn->query($scheduleSql);
-
 ?>
 
 <!DOCTYPE html>
@@ -169,3 +169,7 @@ $schedules = $conn->query($scheduleSql);
 
 </body>
 </html>
+
+<?php
+$conn->close();
+?>

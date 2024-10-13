@@ -2,7 +2,7 @@
 include('../connection.php');
 
 $status = isset($_GET['status']) ? $_GET['status'] : 'pending';
-$limit = 10;
+$limit = 5;
 $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
 $offset = ($page - 1) * $limit;
 
@@ -26,7 +26,7 @@ $requests = $conn->query($requestSql);
 // Display the table content
 echo '<table class="table table-bordered table-striped">';
 echo '<thead>';
-echo '<tr style="color: white;">';
+echo '<tr style="color: white; font-weight: bold;">';
 echo '<th>Customer Name</th>';
 echo '<th>Vehicle Model</th>';
 echo '<th>Status</th>';
