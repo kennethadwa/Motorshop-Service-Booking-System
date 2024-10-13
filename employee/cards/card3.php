@@ -1,18 +1,150 @@
-<div class="col-xl-3 col-xxl-3 col-sm-6">
-    <div class="card bg-info invoice-card" style="box-shadow: none;">
-        <div class="card-body d-flex">
-            <div class="icon me-3">
-                <svg width="35px" height="34px">
-                    <path fill-rule="evenodd" fill="rgb(255, 255, 255)"
-                        d="M33.002,9.728 C31.612,6.787 29.411,4.316 26.638,2.583 C22.781,0.179 18.219,-0.584 13.784,0.438 C9.356,1.454 5.585,4.137 3.178,7.989 C0.764,11.840 -0.000,16.396 1.023,20.825 C2.048,25.247 4.734,29.013 8.584,31.417 C11.297,33.110 14.409,34.006 17.594,34.006 L17.800,34.006 C20.973,33.967 24.058,33.050 26.731,31.363 C27.509,30.872 27.735,29.849 27.243,29.072 C26.751,28.296 25.727,28.070 24.949,28.561 C22.801,29.922 20.314,30.660 17.761,30.693 C15.141,30.726 12.581,30.002 10.346,28.614 C7.241,26.675 5.080,23.647 4.262,20.088 C3.444,16.515 4.056,12.850 5.997,9.748 C10.001,3.353 18.473,1.401 24.876,5.399 C27.110,6.793 28.879,8.779 29.996,11.143 C31.087,13.447 31.513,16.004 31.227,18.527 C31.126,19.437 31.778,20.260 32.696,20.360 C33.607,20.459 34.432,19.809 34.531,18.892 C34.884,15.765 34.352,12.591 33.002,9.728 L33.002,9.728 Z"/>
-                    <path fill-rule="evenodd" fill="rgb(255, 255, 255)"
-                        d="M23.380,11.236 C22.728,10.585 21.678,10.585 21.026,11.236 L17.608,14.656 L14.190,11.243 C13.539,10.592 12.488,10.592 11.836,11.243 C11.184,11.893 11.184,12.942 11.836,13.593 L15.254,17.006 L11.836,20.420 C11.184,21.071 11.184,22.120 11.836,22.770 C12.162,23.096 12.588,23.255 13.014,23.255 C13.438,23.255 13.864,23.096 14.190,22.770 L17.608,19.357 L21.026,22.770 C21.352,23.096 21.777,23.255 22.203,23.255 C22.629,23.255 23.054,23.096 23.380,22.770 C24.031,22.120 24.031,21.071 23.380,20.420 L19.962,17.000 L23.380,13.587 C24.031,12.936 24.031,11.887 23.380,11.236 L23.380,11.236 Z"/>
-                </svg>
+<?php
+// Set the timezone to Manila, Philippines
+date_default_timezone_set('Asia/Manila');
+
+// Create a DateTime object for the current month
+$currentDate = new DateTime();
+$firstDayOfMonth = new DateTime($currentDate->format('Y-m-01'));
+$lastDayOfMonth = new DateTime($currentDate->format('Y-m-t'));
+
+// Create an array of days of the week
+$daysOfWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+
+// Get the number of days in the month
+$daysInMonth = $lastDayOfMonth->format('d');
+
+// Get the day of the week for the first day of the month
+$startDay = (int) $firstDayOfMonth->format('w');
+
+// Get the current day
+$currentDay = (int) $currentDate->format('j'); // Day of the month without leading zeros
+
+// Define an array of holiday dates (in 'j' format for day of the month)
+$holidays = [10, 25, 30, 31]; // Example: 10th and 25th of the current month
+
+// Create a calendar array
+$calendar = [];
+$dayCount = 1;
+
+// Fill the calendar array with empty slots for days before the start of the month
+for ($i = 0; $i < $startDay; $i++) {
+    $calendar[0][] = '';
+}
+
+// Fill the calendar array with the days of the month
+for ($dayCount; $dayCount <= $daysInMonth; $dayCount++) {
+    $weekIndex = (int)(($startDay + $dayCount - 1) / 7);
+    $calendar[$weekIndex][] = $dayCount;
+}
+
+// Fill the remaining slots of the last week with empty strings
+while (count($calendar[count($calendar) - 1]) < 7) {
+    $calendar[count($calendar) - 1][] = '';
+}
+?>
+
+<div class="col-xl-6 col-xxl-6 col-sm-12">
+    <div class="card invoice-card" style="box-shadow: none; height: auto; display: flex; flex-direction: column; box-shadow: 2px 2px 2px black; background-image: linear-gradient(to bottom, #030637, #3C0753);">
+        <div class="card-body flex-grow-1" style="padding: 25px;"> <!-- Reduced padding for height -->
+            <h5 class="text-white text-center">Calendar - <?php echo $currentDate->format('F Y'); ?></h5>
+            <div class="calendar" id="calendar">
+                <table class="table text-white table-bordered">
+                    <thead>
+                        <tr>
+                            <?php foreach ($daysOfWeek as $day): ?>
+                                <th><?php echo $day; ?></th>
+                            <?php endforeach; ?>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php foreach ($calendar as $week): ?>
+                            <tr>
+                                <?php foreach ($week as $day): ?>
+                                    <td class="text-center 
+                                        <?php
+                                        if ($day == $currentDay) {
+                                            echo 'current-day';
+                                        } elseif (in_array($day, $holidays)) {
+                                            echo 'holiday';
+                                        }
+                                        ?>" 
+                                        data-day="<?php echo $day; ?>">
+                                        <?php echo $day ? $day : ''; ?>
+                                    </td>
+                                <?php endforeach; ?>
+                            </tr>
+                        <?php endforeach; ?>
+                    </tbody>
+                </table>
             </div>
-            <div>
-                <h2 class="text-white invoice-num"><?php echo $total_bookings; ?></h2>
-                <span class="text-white fs-18">Bookings</span>
+        </div>
+        <div class="text-center" style="margin: 0; padding: 0;">
+            <!-- Legend -->
+            <div class="legend">
+                <span class="legend-box current-day-box"></span> Current Day
+                <span class="legend-box holiday-box"></span> Holiday
             </div>
         </div>
     </div>
 </div>
+
+<style>
+    /* Additional styles for responsiveness */
+    .calendar {
+        overflow-x: auto;
+        flex-grow: 1; /* Allow calendar to take available space */
+    }
+
+    /* Style adjustments for table */
+    .table {
+        width: 100%;
+        table-layout: fixed; /* Ensures equal column width */
+    }
+
+    .table th,
+    .table td {
+        text-align: center;
+        vertical-align: middle; /* Center content vertically */
+        padding: 3px; /* Padding for cells */
+    }
+
+    /* Highlight the current day */
+    .current-day {
+        background-color: #28a745 !important; /* Green background for current day */
+        color: white !important;
+        font-weight: bold;
+    }
+
+    /* Highlight holidays */
+    .holiday {
+        background-color: #dc3545 !important; /* Red background for holidays */
+        color: white !important;
+        font-weight: bold;
+    }
+
+    /* Legend styles */
+    .legend {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 10px; /* Adjusted gap between legend items */
+        color: white;
+        margin-bottom: 10px;
+    }
+
+    .legend-box {
+        width: 15px;
+        height: 15px;
+        display: inline-block;
+        margin-right: 5px;
+        border: 1px solid #ccc;
+    }
+
+    .current-day-box {
+        background-color: #28a745;
+    }
+
+    .holiday-box {
+        background-color: #dc3545;
+    }
+</style>

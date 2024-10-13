@@ -202,12 +202,12 @@ if ($c_admin_id) {
 
             <li><a href="schedule" aria-expanded="false">
                 <i class="fa-regular fa-calendar-days"></i>
-                <span class="nav-text">My Schedule</span>
+                <span class="nav-text">Assigned Task</span>
             </a></li>
 
-            <li><a href="bookings" aria-expanded="false">
+            <li><a href="completed_task" aria-expanded="false">
                 <i class="fa-solid fa-dollar-sign"></i>
-                <span class="nav-text">Completed</span>
+                <span class="nav-text">Completed Task</span>
             </a></li>
 
             <li><a href="logout" class="ai-icon" aria-expanded="false">

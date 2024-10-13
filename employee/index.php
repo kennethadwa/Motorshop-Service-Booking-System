@@ -1,6 +1,5 @@
 <?php
 session_start();
-
 include('../connection.php');
 
 if (!isset($_SESSION['account_type']) || $_SESSION['account_type'] != 1) {
@@ -8,26 +7,46 @@ if (!isset($_SESSION['account_type']) || $_SESSION['account_type'] != 1) {
     exit();
 }
 
-// Query for total employees
-$query_employees = "SELECT COUNT(*) AS total_employees FROM employees";
-$result_employees = mysqli_query($conn, $query_employees);
-$total_employees = mysqli_fetch_assoc($result_employees)['total_employees'];
+$employee_name = $_SESSION['first_name'] . ' ' . $_SESSION['last_name'];
 
-// Query for total customers
-$query_customers = "SELECT COUNT(*) AS total_customers FROM customers";
-$result_customers = mysqli_query($conn, $query_customers);
-$total_customers = mysqli_fetch_assoc($result_customers)['total_customers'];
+$current_employee_id = $_SESSION['employee_id'];
 
-// Query for total bookings
-$query_bookings = "SELECT COUNT(*) AS total_bookings FROM booking_request"; 
-$result_bookings = mysqli_query($conn, $query_bookings);
-$total_bookings = mysqli_fetch_assoc($result_bookings)['total_bookings'];
+function getCompletedBookingsCount($conn, $employee_name) {
+    // Use JOIN to link booking_request and schedule tables
+    $query = "SELECT COUNT(*) AS completed_bookings
+              FROM booking_request br
+              JOIN schedule s ON br.request_id = s.booking_id
+              JOIN employees e ON s.employee_id = e.employee_id
+              WHERE br.status = 'Completed' 
+              AND CONCAT(e.first_name, ' ', e.last_name) = ?";
 
-// Query for total schedules
-$query_schedules = "SELECT COUNT(*) AS total_schedules FROM schedule"; 
-$result_schedules = mysqli_query($conn, $query_schedules);
-$total_schedules = mysqli_fetch_assoc($result_schedules)['total_schedules'];
+    $stmt = mysqli_prepare($conn, $query);
+    mysqli_stmt_bind_param($stmt, 's', $employee_name);
+    mysqli_stmt_execute($stmt);
+    $result = mysqli_stmt_get_result($stmt);
+    $row = mysqli_fetch_assoc($result);
 
+    return $row['completed_bookings'];
+}
+
+$total_completed_bookings = getCompletedBookingsCount($conn, $employee_name);
+
+
+$query = "
+    SELECT COUNT(*) AS total_pending_bookings 
+    FROM booking_request br
+    JOIN schedule s ON br.request_id = s.booking_id 
+    WHERE br.status = 'pending' AND s.employee_id = '$current_employee_id'
+";
+
+$result = mysqli_query($conn, $query);
+
+if ($result) {
+    $row = mysqli_fetch_assoc($result);
+    $total_pending_bookings = $row['total_pending_bookings'];
+} else {
+    echo "Error: " . mysqli_error($conn);
+}
 ?>
 
 <!DOCTYPE html>
@@ -64,6 +83,11 @@ $total_schedules = mysqli_fetch_assoc($result_schedules)['total_schedules'];
       ::-webkit-scrollbar-thumb:hover {
           background-color: #555;
       }
+
+			.btn-light:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
 		</style>
 </head>
 <body>
@@ -98,9 +122,7 @@ $total_schedules = mysqli_fetch_assoc($result_schedules)['total_schedules'];
 					 
 				<!-- Card 3 -->
 				<?php include('./cards/card3.php'); ?>
-
-				<!-- Card 4 -->
-				<?php include('./cards/card4.php'); ?>
+				
 			</div>
 
 			<div class="row">

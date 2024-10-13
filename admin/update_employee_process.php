@@ -17,7 +17,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $address = $conn->real_escape_string($_POST['address']);
 
     $profile_picture = $_FILES['profile']['name'];
-    $target_dir = "uploads/employee_profile/";
+    $target_dir = "../uploads/employee_profile/";
     $target_file = $target_dir . basename($profile_picture);
     
     // Prepare the SQL query based on whether a new profile picture is uploaded

@@ -37,7 +37,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     $profile_picture = $_FILES['profile']['name'];
-    $target_dir = "uploads/admin_profile/";
+    $target_dir = "../uploads/admin_profile/";
     $target_file = $target_dir . basename($profile_picture);
 
     // Check if a new profile picture is uploaded

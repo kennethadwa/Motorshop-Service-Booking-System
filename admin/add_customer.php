@@ -102,7 +102,7 @@ exit();
                               <input type="file" class="form-control-file" id="profile" name="profile" accept="image/*">
                           </div>
                           <div class="text-center">
-                              <button type="submit" class="btn btn-primary">Add Employee</button>
+                              <button type="submit" class="btn btn-primary">Add Customer</button>
                           </div>
                         </form>
                         <!-- FORM END -->

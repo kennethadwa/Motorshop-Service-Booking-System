@@ -33,6 +33,29 @@ $schedules = $conn->query($scheduleSql);
 	<link rel="stylesheet" href="vendor/nouislider/nouislider.min.css">
 	<!-- Style CSS -->
     <link href="css/style.css" rel="stylesheet">
+    <style>
+      body{
+				background-color: #17153B;
+			}
+
+			::-webkit-scrollbar {
+         width: 18px; 
+      }
+
+      ::-webkit-scrollbar-track {
+          background: #17153B;
+      }
+      
+      ::-webkit-scrollbar-thumb {
+          background-color: #DA0C81; 
+          border-radius: 10px; 
+          border: 2px solid #DA0C81;  
+      }
+
+      ::-webkit-scrollbar-thumb:hover {
+          background-color: #555;
+      }    
+</style>
 </head>
 <body>
 
@@ -55,7 +78,7 @@ $schedules = $conn->query($scheduleSql);
     <div class="container-fluid">
         <div class="row invoice-card-row">
             <div class="col-12">
-                <div class="card mb-4">
+                <div class="card mb-4" style="box-shadow: 2px 2px 2px black; background-image: linear-gradient(to bottom, #030637, #3C0753);">
                     <div class="card-body">
                         <div class="table-responsive">
                             <table class="table table-bordered table-striped">
@@ -86,8 +109,8 @@ $schedules = $conn->query($scheduleSql);
                                           </tr>
                                       <?php endwhile; ?>
                                   <?php else: ?>
-                                      <tr>
-                                          <td colspan="6" class="text-center">No Scheduled Appointments Available</td>
+                                      <tr style="background-color: transparent; ">
+                                          <td colspan="6" class="text-center" style="color: white;">No Scheduled Appointments Available</td>
                                       </tr>
                                   <?php endif; ?>
                                 </tbody>

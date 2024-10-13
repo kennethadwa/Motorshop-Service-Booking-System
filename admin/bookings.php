@@ -85,9 +85,9 @@ th {
 	    <div class="container-fluid">
 	        <div class="row">
 	            <div class="col-12" style="box-shadow: 2px 2px 2px black; background-image: linear-gradient(to bottom, #030637, #3C0753); border-radius: 20px; padding: 20px;">
-	                <ul class="nav nav-tabs" id="bookingTabs">
-	                    <li class="nav-item">
-	                        <a class="nav-link active" data-status="pending" style="background: transparent; color: pink; font-weight: 600; " href="#">Pending</a>
+	                <ul class="nav nav-tabs" id="bookingTabs" style="background: transparent; color: pink; font-weight: 600;">
+	                    <li class="nav-item" style="background: transparent; color: pink; font-weight: 600;">
+	                        <a class="nav-link active" data-status="pending" href="#">Pending</a>
 	                    </li>
 	                    <li class="nav-item">
 	                        <a class="nav-link" data-status="approved" style="background: transparent; color: pink; font-weight: 600; " href="#">Approved</a>
@@ -111,26 +111,21 @@ th {
 </div>
 <!-- Main wrapper End -->
 
-<!-- Scripts -->
 <script src="vendor/global/global.min.js"></script>
 <script src="vendor/chart.js/Chart.bundle.min.js"></script>
 <script src="vendor/jquery-nice-select/js/jquery.nice-select.min.js"></script>
 <script src="https://kit.fontawesome.com/b931534883.js" crossorigin="anonymous"></script>
-
 <script src="vendor/apexchart/apexchart.js"></script>
 <script src="vendor/nouislider/nouislider.min.js"></script>
 <script src="vendor/wnumb/wNumb.js"></script>
-
 <script src="js/custom.min.js"></script>
 <script src="js/dlabnav-init.js"></script>
 <script src="js/demo.js"></script>
 <script src="js/styleSwitcher.js"></script>
-<script src="vendor/global/global.min.js"></script>
-<script src="https://kit.fontawesome.com/b931534883.js" crossorigin="anonymous"></script>
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-    loadTabData('pending'); // Load default tab content
+    loadTabData('pending', 1); // Load default tab content
 
     // Handle tab switching
     document.querySelectorAll('#bookingTabs .nav-link').forEach(function(tab) {
@@ -139,17 +134,17 @@ document.addEventListener('DOMContentLoaded', function() {
             document.querySelector('#bookingTabs .nav-link.active').classList.remove('active');
             tab.classList.add('active');
             const status = tab.getAttribute('data-status');
-            loadTabData(status);
+            loadTabData(status, 1); // Reset to page 1 when changing tabs
         });
     });
 });
 
-function loadTabData(status) {
+function loadTabData(status, page) {
     const bookingTable = document.getElementById('bookingTableContent');
 
     // Use AJAX to load booking data without reloading
     const xhr = new XMLHttpRequest();
-    xhr.open('GET', `load_bookings.php?status=${status}`, true);
+    xhr.open('GET', `load_bookings.php?status=${status}&page=${page}`, true);
     xhr.onreadystatechange = function() {
         if (xhr.readyState === 4 && xhr.status === 200) {
             bookingTable.innerHTML = xhr.responseText;
@@ -160,4 +155,5 @@ function loadTabData(status) {
 </script>
 </body>
 </html>
+
 

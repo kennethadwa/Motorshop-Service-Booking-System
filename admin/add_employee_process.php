@@ -16,7 +16,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // Handle file upload for profile picture
     $profile = null;
     if (isset($_FILES['profile']) && $_FILES['profile']['error'] == 0) {
-        $target_dir = "uploads/employee_profile/";  
+        $target_dir = "../uploads/employee_profile/";  
         $file_name = time() . "_" . basename($_FILES['profile']['name']); 
         $target_file = $target_dir . $file_name;
         

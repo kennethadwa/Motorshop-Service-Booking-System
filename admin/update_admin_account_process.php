@@ -16,7 +16,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $hashed_password = !empty($new_password) ? password_hash($new_password, PASSWORD_DEFAULT) : null;
 
     $profile_picture = $_FILES['profile']['name'];
-    $target_dir = "uploads/admin_profile/"; 
+    $target_dir = "../uploads/admin_profile/"; 
     $target_file = $target_dir . basename($profile_picture);
 
     // Prepare the SQL statement

@@ -6,7 +6,7 @@ if (!isset($_SESSION['account_type']) || $_SESSION['account_type'] != 0) {
 }
 
 // Include the database connection
-include('../connection.php'); // Make sure this path is correct
+include('../connection.php');
 
 // Fetch customers
 $customerSql = "SELECT customer_id, CONCAT(first_name, ' ', last_name) AS full_name FROM customers";
@@ -16,8 +16,8 @@ $customers = $conn->query($customerSql);
 $employeeSql = "SELECT employee_id, CONCAT(first_name, ' ', last_name) AS full_name FROM employees";
 $employees = $conn->query($employeeSql);
 
-// Fetch request IDs from service_requests where status is 'Approved'
-$requestSql = "SELECT request_id FROM service_requests WHERE status = 'Approved'";
+// Fetch request IDs from booking_request where status is 'Approved'
+$requestSql = "SELECT request_id FROM booking_request WHERE status = 'Approved'";
 $requests = $conn->query($requestSql);
 ?>
 
@@ -31,17 +31,15 @@ $requests = $conn->query($requestSql);
     <link href="vendor/jquery-nice-select/css/nice-select.css" rel="stylesheet">
     <link rel="stylesheet" href="vendor/nouislider/nouislider.min.css">
     <link href="css/style.css" rel="stylesheet">
-    <link href="vendor/select2/css/select2.min.css" rel="stylesheet"> <!-- Include Select2 CSS -->
+    <link href="vendor/select2/css/select2.min.css" rel="stylesheet">
     <style>
         .card {
-            max-width: 600px; /* Set max width for the card */
-            margin: 0 auto; /* Center the card */
+            max-width: 600px;
+            margin: 0 auto;
         }
-
         body {
             background-color: #17153B;
         }
-        /* Responsive Design */
         @media (max-width: 768px) {
             .form-row {
                 flex-direction: column;
@@ -50,21 +48,17 @@ $requests = $conn->query($requestSql);
                 max-width: 100%;
             }
         }
-
         ::-webkit-scrollbar {
             width: 18px;
         }
-
         ::-webkit-scrollbar-track {
             background: #17153B;
         }
-
         ::-webkit-scrollbar-thumb {
             background-color: #DA0C81;
             border-radius: 10px;
             border: 2px solid #DA0C81;
         }
-
         ::-webkit-scrollbar-thumb:hover {
             background-color: #555;
         }
@@ -72,7 +66,6 @@ $requests = $conn->query($requestSql);
 </head>
 <body>
 
-<!-- Main wrapper Start -->
 <div id="main-wrapper">
     <?php include('nav-header.php'); ?>
     <?php include('header.php'); ?>
@@ -84,10 +77,7 @@ $requests = $conn->query($requestSql);
                 <div class="col-md-6">
                     <div class="card" style="box-shadow: 2px 2px 2px black; background-color: rgba(0, 0, 0, 0.151);">
                         <div class="card-body">
-                           <div class="d-flex justify-content-center mb-3">
-                           </div> 
-                            
-                            <form action="submit_schedule.php" method="POST"> <!-- Adjust action as necessary -->
+                            <form action="assign_employee_process" method="POST">
                                 <div class="mb-3">
                                     <label for="employee" class="form-label">Assign Employee</label>
                                     <select id="employee" name="employee_id" class="form-select select2" required>
@@ -112,15 +102,12 @@ $requests = $conn->query($requestSql);
                                     </select>
                                 </div>
 
-                                <div class="mb-3">
-                                    <label for="scheduled_date" class="form-label">Scheduled Date</label>
-                                    <input type="date" id="scheduled_date" name="scheduled_date" class="form-control" required>
-                                </div>
-
                                 <div class="d-flex justify-content-center mb-3 mt-3">
-                                  <a href="schedule" class="btn" style="background-color: orange; color: white;"> <i class="fas fa-arrow-left"></i></a>
-                                  &nbsp;
-                                  <button type="submit" class="btn" style="background: green; color: white; box-shadow: none;"><i class="fa-solid fa-pen-nib" style="color: #ffffff;"></i></button>
+                                    <a href="schedule" class="btn" style="background-color: orange; color: white;">
+                                        <i class="fas fa-arrow-left"></i></a>
+                                    &nbsp;
+                                    <button type="submit" class="btn" style="background: green; color: white; box-shadow: none;">
+                                        <i class="fa-solid fa-pen-nib" style="color: #ffffff;"></i></button>
                                 </div>
                             </form>
                         </div>

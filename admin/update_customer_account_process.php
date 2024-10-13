@@ -15,7 +15,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $hashed_password = !empty($new_password) ? password_hash($new_password, PASSWORD_DEFAULT) : null;
 
     $profile_picture = $_FILES['profile']['name'];
-    $target_dir = "uploads/customer_profile/";  // Updated to reflect customer profile picture directory
+    $target_dir = "../uploads/customer_profile/";  // Updated to reflect customer profile picture directory
     $target_file = $target_dir . basename($profile_picture);
 
     // Update customer info query

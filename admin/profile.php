@@ -124,7 +124,7 @@ $conn->close();
         <div class="container-fluid">
             <div class="row justify-content-center align-items-center">
                 <div class="col-lg-7 col-md-10 col-sm-12"> <!-- Responsive columns -->
-                    <div class="card" style="box-shadow: 2px 2px 2px black; background-color: rgba(0, 0, 0, 0.151);">
+                    <div class="card" style="box-shadow: 2px 2px 5px black; background-image: linear-gradient(to bottom, #030637, #3C0753);">
                         <div class="card-body row justify-content-center">
                             <?php if (isset($error_message)): ?>
                                 <p><?php echo $error_message; ?></p>
