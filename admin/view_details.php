@@ -124,6 +124,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['status'])) {
             display: flex;
             flex-direction: row;
             flex-wrap: wrap;
+            justify-content: space-evenly;
         }
 
         .img-container img {

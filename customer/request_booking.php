@@ -8,6 +8,17 @@ if (!isset($_SESSION['account_type']) || $_SESSION['account_type'] != 2) {
 // Include the database connection
 include('../connection.php'); 
 
+// Fetch packages for selection
+$packages = [];
+$packageSql = "SELECT package_id, package_name FROM packages"; // Adjust table and column names as necessary
+$packageResult = $conn->query($packageSql);
+
+if ($packageResult) {
+    while ($row = $packageResult->fetch_assoc()) {
+        $packages[] = $row; // Store each package in the array
+    }
+}
+
 // Handle form submission
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $customer_id = $_SESSION['customer_id']; // Assuming customer_id is stored in session
@@ -16,14 +27,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $request_date = $_POST['request_date'];
     $request_time = $_POST['request_time'];
     $description = $_POST['description'];
+    $package_id = $_POST['package_id']; // Get the selected package ID
 
     // Insert into booking_request table
-    $insertSql = "INSERT INTO booking_request (customer_id, model_name, address, request_date, request_time, description)
-                  VALUES (?, ?, ?, ?, ?, ?)";
+    $insertSql = "INSERT INTO booking_request (customer_id, model_name, address, request_date, request_time, description, package_id)
+                  VALUES (?, ?, ?, ?, ?, ?, ?)";
     $stmt = $conn->prepare($insertSql);
     
-    // Corrected bind_param call with 'isssss' to match six parameters
-    $stmt->bind_param('isssss', $customer_id, $model_name, $address, $request_date, $request_time, $description);
+    // Bind parameters (updated to include package_id)
+    $stmt->bind_param('isssssi', $customer_id, $model_name, $address, $request_date, $request_time, $description, $package_id);
 
     if ($stmt->execute()) {
         $request_id = $stmt->insert_id; // Get the inserted request ID
@@ -56,48 +68,40 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 }
 ?>
 
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>Bookings</title>
-	<link href="vendor/jquery-nice-select/css/nice-select.css" rel="stylesheet">
-	<link rel="stylesheet" href="vendor/nouislider/nouislider.min.css">
-	<link href="css/style.css" rel="stylesheet">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Booking Request</title>
+    <link href="css/style.css" rel="stylesheet">
     <style>
         body {
             background-color: #17153B;
         }
-
         .container-fluid {
             display: flex;
             justify-content: center;
             height: 100vh;
         }
-        @media (max-width: 768px) {
-            .form-row {
-                flex-direction: column;
-            }
+        .card {
+            max-width: 600px;
+            width: 90%; 
+            height: auto;
+            box-shadow: 2px 2px 2px black; 
+            background-image: linear-gradient(to bottom, #030637, #3C0753);
+        }
+        @media (min-width: 768px) {
             .card {
-                max-width: 100%;
+                width: 600px;
             }
         }
-        ::-webkit-scrollbar {
-            width: 18px;
-        }
-        ::-webkit-scrollbar-track {
-            background: #17153B;
-        }
-        ::-webkit-scrollbar-thumb {
-            background-color: #DA0C81;
-            border-radius: 10px;
-            border: 2px solid #DA0C81;
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background-color: #555;
+        @media (max-width: 576px) {
+            .card {
+                width: 100%; 
+                margin: 0 10px; 
+            }
         }
     </style>
 </head>
@@ -105,25 +109,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 <!-- Main wrapper Start -->
 <div id="main-wrapper">
-<!-- Nav Header Start -->
-<?php include('nav-header.php'); ?>
-<!-- Nav Header End -->
+    <!-- Include your navigation and header -->
+    <?php include('nav-header.php'); ?>
+    <?php include('header.php'); ?>
+    <?php include('sidebar.php'); ?>
 
-<!-- Header Start -->
-<?php include('header.php'); ?>
-<!-- Header End -->
-
-<!-- Sidebar Start -->
-<?php include('sidebar.php'); ?>
-<!-- Sidebar End -->
-
-<!-- Content Body Start -->
-<div class="content-body">
-    <div class="container-fluid">
-        <div class="row invoice-card-row">
-            <div class="col-12">
-                <div class="card mb-4" style="box-shadow: 2px 2px 2px black; background-image: linear-gradient(to bottom, #030637, #3C0753); max-width: 800px; height:auto; width: 100%;">
-                    <div class="card-body">
+    <!-- Content Body Start -->
+    <div class="content-body">
+        <div class="container-fluid">
+            <div class="row invoice-card-row">
+                <div class="col-12">
+                    <div class="card mb-4">
+                        <div class="card-body">
                         
                         <!-- Booking Request Form -->
                         <form method="POST" action="" enctype="multipart/form-data">
@@ -154,7 +151,19 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                  <label for="description">Description:</label>
                                  <textarea name="description" id="description" class="form-control" rows="4" required></textarea>
                              </div>
+
+                             <!-- Package Selection -->
+                             <div class="form-group mt-3">
+                                 <label for="package_id">Select Package:</label>
+                                 <select name="package_id" id="package_id" class="form-control" required>
+                                     <option value="">Select a package</option>
+                                     <?php foreach ($packages as $package): ?>
+                                         <option value="<?= $package['package_id'] ?>"><?= htmlspecialchars($package['package_name']) ?></option>
+                                     <?php endforeach; ?>
+                                 </select>
+                             </div>
                          
+
                              <!-- Multiple Image Upload Input -->
                              <div class="form-group mt-3">
                                  <label for="images">Upload Images:</label>
@@ -162,9 +171,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                              </div>
 
                              <div class="sub-btn" style="display: flex; justify-content: center;">
-                                <button type="submit" class="btn btn-primary mt-3" style="background: blue; color: white; border: none; box-shadow: 1px 1px 10px rgba(255, 255, 255, 0.39);">Submit Request</button>
+                                <button type="submit" class="btn btn-primary mt-3" style="background: blue; color: white; border: none; box-shadow: 1px 1px 10px black;">Submit Request</button>
                              </div>
                             
+
                         </form>
                     </div>
                 </div>

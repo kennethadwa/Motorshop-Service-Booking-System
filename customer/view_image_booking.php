@@ -86,6 +86,7 @@ $imageResult = $stmt->get_result();
         display: flex;
         flex-direction: row;
         flex-wrap: wrap;
+        justify-content: space-evenly;
     }
 
     .img-container img {

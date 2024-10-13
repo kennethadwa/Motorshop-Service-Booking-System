@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 13, 2024 at 10:55 PM
+-- Generation Time: Oct 13, 2024 at 11:26 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -78,7 +78,12 @@ INSERT INTO `booking_images` (`image_id`, `request_id`, `image_path`) VALUES
 (9, 13, '../uploads/booking_images/bunny.jpg'),
 (10, 13, '../uploads/booking_images/mew_profile.jpg'),
 (11, 14, '../uploads/booking_images/bunny.jpg'),
-(12, 14, '../uploads/booking_images/mew_profile.jpg');
+(12, 14, '../uploads/booking_images/mew_profile.jpg'),
+(13, 16, '../uploads/booking_images/mew_profile.jpg'),
+(14, 17, '../uploads/booking_images/bunny.jpg'),
+(15, 18, '../uploads/booking_images/bunny.jpg'),
+(16, 18, '../uploads/booking_images/dog.jpg'),
+(17, 18, '../uploads/booking_images/mew_profile.jpg');
 
 -- --------------------------------------------------------
 
@@ -89,6 +94,7 @@ INSERT INTO `booking_images` (`image_id`, `request_id`, `image_path`) VALUES
 CREATE TABLE `booking_request` (
   `request_id` int(11) NOT NULL,
   `customer_id` int(11) DEFAULT NULL,
+  `package_id` int(11) DEFAULT NULL,
   `model_name` varchar(255) DEFAULT NULL,
   `address` varchar(255) DEFAULT NULL,
   `request_date` date DEFAULT NULL,
@@ -101,21 +107,25 @@ CREATE TABLE `booking_request` (
 -- Dumping data for table `booking_request`
 --
 
-INSERT INTO `booking_request` (`request_id`, `customer_id`, `model_name`, `address`, `request_date`, `request_time`, `description`, `status`) VALUES
-(1, 3, 'Toyota', 'Banay Banay, Lipa City', '2024-10-18', NULL, 'i need my motorcycle to change oil', 'completed'),
-(2, 3, 'Honda Mitsubishi', 'Balintawak, Lipa City', '2024-10-16', NULL, 'gusto kong magpachange oil ng aking motor, and then ipaayos na rin ang side mirror ko.', 'pending'),
-(3, 3, 'Honda Mitsubishi', 'Balintawak, Lipa City', '2024-10-16', NULL, 'pa change oil, fix side mirror, change wheel', 'pending'),
-(4, 3, 'Honda Mitsubishi', 'Balintawak, Lipa City', '2024-10-16', NULL, 'pa change oil, fix side mirror, change wheel', 'pending'),
-(5, 3, 'Ferari', 'Sabang, Lipa City', '2024-12-02', NULL, 'fix my ferrari', 'pending'),
-(6, 3, 'Ferari', 'Sabang, Lipa City', '2024-12-02', NULL, 'fix my ferrari', 'completed'),
-(7, 3, 'Toyota', 'Balintawak, Lipa City', '2024-10-30', NULL, 'fix my card', 'rejected'),
-(8, 3, 'Toyota', 'Balintawak, Lipa City', '2024-10-30', NULL, 'fix my card', 'completed'),
-(9, 3, 'dasd', 'asdas', '2924-10-20', NULL, 'paayos', 'pending'),
-(10, 3, 'dasd', 'asdas', '2924-10-20', NULL, 'paayos', 'pending'),
-(11, 3, 'Ford', 'Sabang, Lipa City', '2024-10-14', NULL, 'paasyos ng ford ko', 'pending'),
-(12, 3, 'Mio', 'Cat Village', '2024-10-14', '10:30:00', 'pachange oil ng mio ko at pahanginan na rin ng gulong', 'pending'),
-(13, 3, 'Mio', 'Cat Village', '2024-12-11', '00:05:40', '0', 'pending'),
-(14, 3, 'Mio', 'Balintawak, Lipa City', '2024-10-20', '10:30:00', 'paayos po', 'approved');
+INSERT INTO `booking_request` (`request_id`, `customer_id`, `package_id`, `model_name`, `address`, `request_date`, `request_time`, `description`, `status`) VALUES
+(1, 3, NULL, 'Toyota', 'Banay Banay, Lipa City', '2024-10-18', NULL, 'i need my motorcycle to change oil', 'completed'),
+(2, 3, NULL, 'Honda Mitsubishi', 'Balintawak, Lipa City', '2024-10-16', NULL, 'gusto kong magpachange oil ng aking motor, and then ipaayos na rin ang side mirror ko.', 'pending'),
+(3, 3, NULL, 'Honda Mitsubishi', 'Balintawak, Lipa City', '2024-10-16', NULL, 'pa change oil, fix side mirror, change wheel', 'pending'),
+(4, 3, NULL, 'Honda Mitsubishi', 'Balintawak, Lipa City', '2024-10-16', NULL, 'pa change oil, fix side mirror, change wheel', 'pending'),
+(5, 3, NULL, 'Ferari', 'Sabang, Lipa City', '2024-12-02', NULL, 'fix my ferrari', 'pending'),
+(6, 3, NULL, 'Ferari', 'Sabang, Lipa City', '2024-12-02', NULL, 'fix my ferrari', 'completed'),
+(7, 3, NULL, 'Toyota', 'Balintawak, Lipa City', '2024-10-30', NULL, 'fix my card', 'rejected'),
+(8, 3, NULL, 'Toyota', 'Balintawak, Lipa City', '2024-10-30', NULL, 'fix my card', 'completed'),
+(9, 3, NULL, 'dasd', 'asdas', '2924-10-20', NULL, 'paayos', 'pending'),
+(10, 3, NULL, 'dasd', 'asdas', '2924-10-20', NULL, 'paayos', 'pending'),
+(11, 3, NULL, 'Ford', 'Sabang, Lipa City', '2024-10-14', NULL, 'paasyos ng ford ko', 'pending'),
+(12, 3, NULL, 'Mio', 'Cat Village', '2024-10-14', '10:30:00', 'pachange oil ng mio ko at pahanginan na rin ng gulong', 'pending'),
+(13, 3, NULL, 'Mio', 'Cat Village', '2024-12-11', '00:05:40', '0', 'pending'),
+(14, 3, NULL, 'Mio', 'Balintawak, Lipa City', '2024-10-20', '10:30:00', 'paayos po', 'approved'),
+(15, 3, 1, 'Honda Mitsubishi', 'Cat Village', '2024-10-20', '11:11:00', 'hehehehehhe', 'pending'),
+(16, 3, 1, 'Honda Mitsubishi', 'Cat Village', '2024-10-20', '11:11:00', 'hehehehehhe', 'pending'),
+(17, 3, 2, 'Toyota', 'Sabang, Lipa City', '2024-11-21', '02:00:00', 'sadasxasdas', 'pending'),
+(18, 3, 4, 'Miota', 'Balintawak, Lipa City', '2024-10-21', '08:00:00', 'asdaseasdas', 'approved');
 
 -- --------------------------------------------------------
 
@@ -237,7 +247,8 @@ CREATE TABLE `schedule` (
 INSERT INTO `schedule` (`schedule_id`, `employee_id`, `booking_id`) VALUES
 (1, 3, 1),
 (2, 2, 6),
-(3, 1, 8);
+(3, 1, 8),
+(4, 3, 18);
 
 -- --------------------------------------------------------
 
@@ -280,7 +291,8 @@ ALTER TABLE `booking_images`
 --
 ALTER TABLE `booking_request`
   ADD PRIMARY KEY (`request_id`),
-  ADD KEY `customer_id` (`customer_id`);
+  ADD KEY `customer_id` (`customer_id`),
+  ADD KEY `fk_package` (`package_id`);
 
 --
 -- Indexes for table `customers`
@@ -339,13 +351,13 @@ ALTER TABLE `admin`
 -- AUTO_INCREMENT for table `booking_images`
 --
 ALTER TABLE `booking_images`
-  MODIFY `image_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `image_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT for table `booking_request`
 --
 ALTER TABLE `booking_request`
-  MODIFY `request_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `request_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT for table `customers`
@@ -375,7 +387,7 @@ ALTER TABLE `payments`
 -- AUTO_INCREMENT for table `schedule`
 --
 ALTER TABLE `schedule`
-  MODIFY `schedule_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `schedule_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `transactions`
@@ -397,7 +409,8 @@ ALTER TABLE `booking_images`
 -- Constraints for table `booking_request`
 --
 ALTER TABLE `booking_request`
-  ADD CONSTRAINT `booking_request_ibfk_1` FOREIGN KEY (`customer_id`) REFERENCES `customers` (`customer_id`);
+  ADD CONSTRAINT `booking_request_ibfk_1` FOREIGN KEY (`customer_id`) REFERENCES `customers` (`customer_id`),
+  ADD CONSTRAINT `fk_package` FOREIGN KEY (`package_id`) REFERENCES `packages` (`package_id`);
 
 --
 -- Constraints for table `payments`
