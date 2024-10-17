@@ -16,8 +16,13 @@ $customers = $conn->query($customerSql);
 $employeeSql = "SELECT employee_id, CONCAT(first_name, ' ', last_name) AS full_name FROM employees";
 $employees = $conn->query($employeeSql);
 
-// Fetch request IDs from booking_request where status is 'Approved'
-$requestSql = "SELECT request_id FROM booking_request WHERE status = 'Approved'";
+// Fetch request IDs from booking_request where status is 'Approved' and not assigned to any employee
+$requestSql = "
+    SELECT br.request_id 
+    FROM booking_request br 
+    LEFT JOIN schedule s ON br.request_id = s.booking_id 
+    WHERE br.status = 'paid' 
+    AND s.booking_id IS NULL"; // Exclude requests that have already been assigned
 $requests = $conn->query($requestSql);
 ?>
 

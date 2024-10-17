@@ -166,7 +166,7 @@ th {
                     <td><?php echo $row['sex']; ?></td>         <!-- Moved Sex data here -->
                     <td><?php echo $row['contact_no']; ?></td>
                     <td><?php echo $row['address']; ?></td>
-                    <td><a href="view_admin?id=<?php echo $row['admin_id']; ?>" class="btn btn-info btn-sm" style="background: #FF3EA5; box-shadow: 1px 1px 10px rgba(255, 255, 255, 0.39); border-radius: 5px; color: white;">View</a></td>
+                    <td><a href="view_admin?id=<?php echo $row['admin_id']; ?>" class="btn btn-info btn-sm" style="background: #4A249D; box-shadow: 2px 2px 5px black; border-radius: 5px; color: white; border: none;"><i class="fas fa-eye"></i> View</a></td>
                 </tr>
             <?php } ?>
         </tbody>
@@ -201,7 +201,7 @@ th {
                     <td><?php echo $row['sex']; ?></td>         <!-- Moved Sex data here -->
                     <td><?php echo $row['contact_no']; ?></td>
                     <td><?php echo $row['address']; ?></td>
-                    <td><a href="view_employee?id=<?php echo $row['employee_id']; ?>" class="btn btn-info btn-sm" style="background: #FF3EA5; box-shadow: 1px 1px 10px rgba(255, 255, 255, 0.39); border-radius: 5px; color: white;">View</a></td>
+                    <td><a href="view_employee?id=<?php echo $row['employee_id']; ?>" class="btn btn-info btn-sm" style="background: #4A249D; box-shadow: 2px 2px 5px black; border-radius: 5px; color: white; border: none;"><i class="fas fa-eye"></i> View</a></td>
                 </tr>
             <?php } ?>
         </tbody>
@@ -236,7 +236,7 @@ th {
                     <td><?php echo $row['sex']; ?></td>         <!-- Moved Sex data here -->
                     <td><?php echo $row['contact_no']; ?></td>
                     <td><?php echo $row['address']; ?></td>
-                    <td><a href="view_customer?id=<?php echo $row['customer_id']; ?>" class="btn btn-info btn-sm" style="background: #FF3EA5; box-shadow: 1px 1px 10px rgba(255, 255, 255, 0.39); border-radius: 5px; color: white;">View</a></td>
+                    <td><a href="view_customer?id=<?php echo $row['customer_id']; ?>" class="btn" style="background: #4A249D; box-shadow: 2px 2px 5px black; border-radius: 5px; color: white; border: none;"> <i class="fas fa-eye"></i> View</a></td>
                 </tr>
             <?php } ?>
         </tbody>

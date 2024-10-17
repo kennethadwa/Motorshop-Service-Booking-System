@@ -140,7 +140,9 @@ if (!isset($_SESSION['account_type']) || $_SESSION['account_type'] != 0) {
                             <!-- Action Buttons -->
                             <div class="col-12 text-center mt-4">
                                 <a href="user-information" class="btn action-btn" style="box-shadow: none; border: none; background: orange;"> <i class="fas fa-arrow-left"></i></a>
+                                
                                 <a href="update_employee?id=<?php echo $employee_id; ?>" class="btn btn-success action-btn" style="box-shadow: none; border: none; background: green;"><i class="fa-solid fa-pen-nib" style="color: #ffffff;"></i></a>
+
                                 <a href="delete_employee?id=<?php echo $employee_id; ?>" class="btn action-btn" style="box-shadow: none; border: none; background: red;"><i class="fa-solid fa-trash" style="color: #ffffff;"></i></a>
                             </div>
                         </div>

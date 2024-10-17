@@ -121,7 +121,7 @@ th {
                             <div class="row align-items-center mb-3">
                                 <div class="col-md-12 text-md-end"> <!-- Align text to the end on larger screens -->
                                     <!-- Dynamic Add Button based on selected tab -->
-                                    <button id="addUserBtn" class="btn btn-primary" style="background: #FF3EA5; box-shadow: 2px 2px 5px #DA0C81; border: 1px solid white; box-shadow: 1px 1px 10px rgba(255, 255, 255, 0.39); border-radius: 5px; color: white;">
+                                    <button id="addUserBtn" class="btn" style="background: #525CEB; box-shadow: 1px 1px 10px black; border-radius: 5px; color: white;">
                                         <i class="fa fa-plus"></i> Add User
                                     </button>
                                 </div>
@@ -164,7 +164,8 @@ th {
                                                         <td><?php echo $row['email']; ?></td>
                                                         <td><?php echo $row['password']; ?></td>
                                                         <td class="admin">Admin</td>
-                                                        <td><a href="view_admin_account?id=<?php echo $row['admin_id']; ?>" class="btn btn-info btn-sm" style="background: #FF3EA5; box-shadow: 1px 1px 10px rgba(255, 255, 255, 0.39); border-radius: 5px; color: white;">View</a></td>
+                                                        <td><a href="view_admin_account?id=<?php echo $row['admin_id']; ?>" class="btn btn-info btn-sm" style="background: #4A249D; box-shadow: 2px 2px 5px black; border-radius: 5px; color: white; border: none;">
+                                                        <i class="fas fa-eye"></i> View</a></td>
                                                     </tr>
                                                 <?php } ?>
                                             </tbody>
@@ -193,7 +194,8 @@ th {
                                                         <td><?php echo $row['email']; ?></td>
                                                         <td><?php echo $row['password']; ?></td>
                                                         <td class="employee">Employee</td>
-                                                        <td><a href="view_employee_account?id=<?php echo $row['employee_id']; ?>" class="btn btn-info btn-sm" style="background: #FF3EA5; box-shadow: 1px 1px 10px rgba(255, 255, 255, 0.39); border-radius: 5px; color: white;">View</a></td>
+                                                        <td><a href="view_employee_account?id=<?php echo $row['employee_id']; ?>" class="btn btn-info btn-sm" style="background: #4A249D; box-shadow: 2px 2px 5px black; border-radius: 5px; color: white; border: none;">
+                                                            <i class="fas fa-eye"></i> View</a></td>
                                                     </tr>
                                                 <?php } ?>
                                             </tbody>
@@ -221,7 +223,8 @@ th {
                                                         <td><?php echo $row['email']; ?></td>
                                                         <td><?php echo $row['password']; ?></td>
                                                         <td class="customer">Customer</td>
-                                                        <td><a href="view_customer_account?id=<?php echo $row['customer_id']; ?>" class="btn btn-info btn-sm" style="background: #FF3EA5; box-shadow: 1px 1px 10px rgba(255, 255, 255, 0.39); border-radius: 5px; color: white;   ">View</a></td>
+                                                        <td><a href="view_customer_account?id=<?php echo $row['customer_id']; ?>" class="btn btn-info btn-sm" style="background: #4A249D; box-shadow: 2px 2px 5px black; border-radius: 5px; color: white; border: none;">
+                                                        <i class="fas fa-eye"></i> View</a></td>
                                                     </tr>
                                                 <?php } ?>
                                             </tbody>

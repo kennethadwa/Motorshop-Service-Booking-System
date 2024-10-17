@@ -26,7 +26,7 @@ $page_title = isset($page_titles[$current_page]) ? $page_titles[$current_page] :
 
 </style>
 
-<div class="header">
+<div class="header" style="height: 100px;">
     <div class="header-content">
         <nav class="navbar navbar-expand">
             <div class="collapse navbar-collapse justify-content-between">

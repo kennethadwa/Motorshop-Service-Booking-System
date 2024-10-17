@@ -54,24 +54,24 @@ function fetchBookings($status, $limit, $offset, $conn) {
 		}
 
         table {
-    border-collapse: collapse; 
-    width: 100%;
-}
+            border-collapse: collapse; 
+            width: 100%;
+        }
 
-th, td {
-    text-align: center;
-    padding: 10px;
-    border: none; 
-}
+        th, td {
+            text-align: center;
+            padding: 10px;
+            border: none; 
+        }
 
-tr {
-    border-bottom: 1px solid #ddd; 
-}
+        tr {
+            border-bottom: 1px solid #ddd; 
+        }
 
-th {
-    background-color: #f2f2f2;
-    border-bottom: 2px solid #ddd; 
-}
+        th {
+            background-color: #f2f2f2;
+            border-bottom: 2px solid #ddd; 
+        }
 	</style>
 </head>
 <body>
@@ -82,15 +82,30 @@ th {
 	<?php include('sidebar.php'); ?>
 	<!-- Content Body Start -->
 	<div class="content-body">
-	    <div class="container-fluid">
-	        <div class="row">
+	    <div class="container-fluid">		
+        <div class="row">
 	            <div class="col-12" style="box-shadow: 2px 2px 2px black; background-image: linear-gradient(to bottom, #030637, #3C0753); border-radius: 20px; padding: 20px;">
+								             <div class="d-flex justify-content-end">
+                  <form id="sortForm">
+                     <label for="sort">Sort by:</label>
+                     <select id="sort" name="sort" onchange="loadTabData(document.querySelector('.nav-link.active').getAttribute('data-status'), 1)">
+                         <option value="old_requests">Old Requests</option>
+                         <option value="new_requests">New Requests</option>
+                     </select>
+                 </form>
+              </div>
 	                <ul class="nav nav-tabs" id="bookingTabs" style="background: transparent; color: pink; font-weight: 600;">
-	                    <li class="nav-item" style="background: transparent; color: pink; font-weight: 600;">
-	                        <a class="nav-link active" data-status="pending" href="#">Pending</a>
+	                    <li class="nav-item">
+	                        <a class="nav-link active" data-status="pending" style="background: transparent; color: pink; font-weight: 600; " href="#">Pending</a>
 	                    </li>
 	                    <li class="nav-item">
 	                        <a class="nav-link" data-status="approved" style="background: transparent; color: pink; font-weight: 600; " href="#">Approved</a>
+	                    </li>
+                        <li class="nav-item">
+                            <a class="nav-link" style="background: transparent; color: pink; font-weight: 600; " data-status="paid" href="#">Paid</a> 
+                        </li>
+	                    <li class="nav-item">
+	                        <a class="nav-link" data-status="in progress" style="background: transparent; color: pink; font-weight: 600; " href="#">In Progress</a>
 	                    </li>
 	                    <li class="nav-item">
 	                        <a class="nav-link" data-status="completed" style="background: transparent; color: pink; font-weight: 600; " href="#">Completed</a>
@@ -141,10 +156,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
 function loadTabData(status, page) {
     const bookingTable = document.getElementById('bookingTableContent');
+    const sort = document.getElementById('sort').value; // Get selected sorting option
 
-    // Use AJAX to load booking data without reloading
+    // Use AJAX to load booking data with sorting and pagination
     const xhr = new XMLHttpRequest();
-    xhr.open('GET', `load_bookings.php?status=${status}&page=${page}`, true);
+    xhr.open('GET', `load_bookings.php?status=${status}&page=${page}&sort=${sort}`, true);
     xhr.onreadystatechange = function() {
         if (xhr.readyState === 4 && xhr.status === 200) {
             bookingTable.innerHTML = xhr.responseText;
@@ -155,5 +171,3 @@ function loadTabData(status, page) {
 </script>
 </body>
 </html>
-
-

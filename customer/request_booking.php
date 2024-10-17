@@ -5,42 +5,41 @@ if (!isset($_SESSION['account_type']) || $_SESSION['account_type'] != 2) {
     exit();
 }
 
-// Include the database connection
 include('../connection.php'); 
 
 // Fetch packages for selection
 $packages = [];
-$packageSql = "SELECT package_id, package_name FROM packages"; // Adjust table and column names as necessary
+$packageSql = "SELECT package_id, package_name FROM packages WHERE status = 'active'"; 
 $packageResult = $conn->query($packageSql);
 
 if ($packageResult) {
     while ($row = $packageResult->fetch_assoc()) {
-        $packages[] = $row; // Store each package in the array
+        $packages[] = $row; 
     }
 }
 
 // Handle form submission
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $customer_id = $_SESSION['customer_id']; // Assuming customer_id is stored in session
+    $customer_id = $_SESSION['customer_id'];
     $model_name = $_POST['model_name'];
     $address = $_POST['address'];
     $request_date = $_POST['request_date'];
     $request_time = $_POST['request_time'];
     $description = $_POST['description'];
-    $package_id = $_POST['package_id']; // Get the selected package ID
+    $package_id = $_POST['package_id']; 
 
-    // Insert into booking_request table
+
     $insertSql = "INSERT INTO booking_request (customer_id, model_name, address, request_date, request_time, description, package_id)
                   VALUES (?, ?, ?, ?, ?, ?, ?)";
     $stmt = $conn->prepare($insertSql);
     
-    // Bind parameters (updated to include package_id)
+  
     $stmt->bind_param('isssssi', $customer_id, $model_name, $address, $request_date, $request_time, $description, $package_id);
 
     if ($stmt->execute()) {
-        $request_id = $stmt->insert_id; // Get the inserted request ID
+        $request_id = $stmt->insert_id; 
 
-        // Handle multiple image uploads
+   
         if (isset($_FILES['images']) && count($_FILES['images']['name']) > 0) {
             $target_dir = "../uploads/booking_images/";
 
@@ -48,7 +47,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 $image_tmp_name = $_FILES['images']['tmp_name'][$key];
                 $image_target_path = $target_dir . basename($image_name);
 
-                // Validate if it's an actual image
                 $check = getimagesize($image_tmp_name);
                 if ($check !== false) {
                     if (move_uploaded_file($image_tmp_name, $image_target_path)) {
@@ -158,7 +156,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                  <select name="package_id" id="package_id" class="form-control" required>
                                      <option value="">Select a package</option>
                                      <?php foreach ($packages as $package): ?>
-                                         <option value="<?= $package['package_id'] ?>"><?= htmlspecialchars($package['package_name']) ?></option>
+                                         <option value="<?= $package['package_id'] ?>">
+                                            <?php echo 'Package ' . '('. $package['package_id'] . '): '; ?>
+                                            &nbsp;
+                                            <?= htmlspecialchars($package['package_name']) ?></option>
                                      <?php endforeach; ?>
                                  </select>
                              </div>

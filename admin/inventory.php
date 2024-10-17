@@ -44,12 +44,12 @@ include('../connection.php');
             background-color: #555;
         }
 
-        .btn-custom{
-            background-color: #D91656;
+        .btn-customs{
+            background-color: #4F1787;
             color: white;
             box-shadow: 1px 1px 10px black;
             padding: 40px 20px;
-            border-radius: 5px;
+            border-radius: 10px;
             margin: 5px;
             font-size: 1.7rem;
             font-family: Verdana;
@@ -60,29 +60,8 @@ include('../connection.php');
             transition: 0.5s ease;
         }
 
-        .btn-custom:hover{
-            background-color: #FF4E88;
-            color: white;
-        }
-
-        .btn-customs{
-            background-color: #4F1787;
-            color: white;
-            box-shadow: 1px 1px 10px black;
-            padding: 40px 20px;
-            border-radius: 5px;
-            margin: 5px;
-            font-size: 1.8rem;
-            font-family: Verdana;
-            text-transform: uppercase;
-            font-weight: bold;
-            margin-bottom: 20px;
-            width: 100%; 
-            transition: 0.5s ease;
-        }
-
         .btn-customs:hover{
-            background-color: #4A249D;
+            background-color: #7E30E1;
             color: white;
         }
 
@@ -120,10 +99,10 @@ include('../connection.php');
                         <!-- Row 1: Packages -->
                         <div class="row mb-4">
                             <div class="col-lg-6 col-md-12 col-sm-12 mb-3">
-                                <a href="add_package" class="btn btn-custom">Add Package</a>
+                                <a href="add_package" class="btn btn-customs">Add Package</a>
                             </div>
                             <div class="col-lg-6 col-md-12 col-sm-12 mb-3">
-                                <a href="view_packages" class="btn btn-custom">View Packages</a>
+                                <a href="view_packages" class="btn btn-customs">View Packages</a>
                             </div>
                         </div>
 
@@ -134,6 +113,16 @@ include('../connection.php');
                             </div>
                             <div class="col-lg-6 col-md-12 col-sm-12 mb-3">
                                 <a href="view_products" class="btn btn-customs">View Products</a>
+                            </div>
+                        </div>
+
+                        <!-- Row 3: Products -->
+                        <div class="row">
+                            <div class="col-lg-6 col-md-12 col-sm-12 mb-3">
+                                <a href="add_category" class="btn btn-customs">Add Category</a>
+                            </div>
+                            <div class="col-lg-6 col-md-12 col-sm-12 mb-3">
+                                <a href="view_category" class="btn btn-customs">View Category</a>
                             </div>
                         </div>
                     </div>

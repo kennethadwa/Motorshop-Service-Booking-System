@@ -10,6 +10,17 @@ include('../connection.php');
 
 $package_added = false; // Variable to check if the package was added
 
+// Fetch products for the selection
+$product_query = "SELECT product_id, product_name FROM products";
+$product_result = $conn->query($product_query);
+
+$products = [];
+if ($product_result && $product_result->num_rows > 0) {
+    while ($row = $product_result->fetch_assoc()) {
+        $products[] = $row;
+    }
+}
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Get form data
     $package_name = $_POST['package_name'];
@@ -18,21 +29,34 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $duration = $_POST['duration'];
     $duration_unit = $_POST['duration_unit']; // New input for unit
     $status = $_POST['status'];
+    $needed_items = $_POST['needed_items']; // Get selected product IDs
 
     // Convert duration to hours if unit is in days
     if ($duration_unit === 'days') {
         $duration *= 24; // Convert days to hours
     }
 
-    // Prepare and bind
+    // Prepare and bind for packages
     $stmt = $conn->prepare("INSERT INTO packages (package_name, description, price, duration, status) VALUES (?, ?, ?, ?, ?)");
     $stmt->bind_param("ssiss", $package_name, $description, $price, $duration, $status);
 
-    // Execute the statement
+    // Execute the statement for packages
     if ($stmt->execute()) {
+        $package_id = $stmt->insert_id; // Get the last inserted package ID
+        
+        // Now insert the selected products into the package_products table
+        if (!empty($needed_items)) {
+            foreach ($needed_items as $product_id) {
+                $stmt2 = $conn->prepare("INSERT INTO package_products (package_id, product_id) VALUES (?, ?)");
+                $stmt2->bind_param("ii", $package_id, $product_id);
+                $stmt2->execute();
+                $stmt2->close();
+            }
+        }
+
         $package_added = true; // Set to true if package is added successfully
     } else {
-        echo "Error: " . $stmt->error; // This will display the error if there's an issue
+        echo "Error: " . $stmt->error; // Display the error if there's an issue
     }
 
     // Close the statement
@@ -148,6 +172,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                         <option value="inactive">Inactive</option>
                                     </select>
                                 </div>
+                                <div class="form-group mt-3">
+                                    <label>Needed Items:</label><br>
+                                    <?php foreach ($products as $product): ?>
+                                        <div class="form-check">
+                                            <input type="checkbox" class="form-check-input" name="needed_items[]" value="<?php echo $product['product_id']; ?>" id="product_<?php echo $product['product_id']; ?>">
+                                            <label class="form-check-label" for="product_<?php echo $product['product_id']; ?>"><?php echo $product['product_name']; ?></label>
+                                        </div>
+                                    <?php endforeach; ?>
+                                </div>
                                 <div class="add-btn" style="display: flex; justify-content:center">
                                     <button type="submit" class="btn btn-primary mt-3" style="background: blue; color: white; border: none; box-shadow: 1px 1px 10px black; border-radius: 10px;">Add Package</button>
                                 </div>
@@ -156,7 +189,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             <?php if ($package_added): ?>
                             <script>
                                 alert("Package added successfully!");
-                                window.location.href = "inventory.php"; // Change to your actual inventory page
+                                window.location.href = "view_packages";
                             </script>
                             <?php endif; ?>
 

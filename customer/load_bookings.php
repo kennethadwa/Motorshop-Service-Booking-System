@@ -17,10 +17,12 @@ $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
 $page = max(1, $page);
 $offset = ($page - 1) * $limit;
 
+// Update the total bookings query to reflect the selected status
 $totalSql = "SELECT COUNT(*) as total FROM booking_request WHERE status = '$status' AND customer_id = '$customerId'";
 $totalResult = $conn->query($totalSql);
 $totalBookings = $totalResult->fetch_assoc()['total'];
 
+// Update the request SQL to fetch bookings based on the selected status
 $requestSql = "SELECT br.request_id, 
                       CONCAT(c.first_name, ' ', c.last_name) AS customer_name, 
                       br.model_name AS vehicle_model, 
@@ -30,7 +32,9 @@ $requestSql = "SELECT br.request_id,
                FROM booking_request br
                JOIN customers c ON br.customer_id = c.customer_id
                WHERE br.status = '$status' AND br.customer_id = '$customerId'
+               ORDER BY br.request_date DESC
                LIMIT $limit OFFSET $offset";
+
 $requests = $conn->query($requestSql);
 
 // Function to get text color based on status
@@ -40,12 +44,16 @@ function getStatusColor($status) {
             return 'orange';
         case 'approved':
             return 'green';
+        case 'paid': 
+            return 'lightgreen'; 
+        case 'progress':
+            return 'lightblue';
         case 'completed':
-            return '#39FF14'; // Neon green color code
+            return '#39FF14'; 
         case 'rejected':
             return 'red';
         default:
-            return ''; // Default color if status doesn't match
+            return ''; 
     }
 }
 
@@ -76,7 +84,11 @@ if ($requests->num_rows > 0) {
         $statusColor = getStatusColor($row['status']);
         echo '<td style="color: ' . $statusColor . '; font-weight: bold;">' . ucfirst($row['status']) . '</td>';
         
-        echo '<td><a href="view_image_booking.php?request_id=' . $row['request_id'] . '" class="btn" style="box-shadow: none; background: #FF3FF9; color: white;">View</a></td>';
+        if ($row['status'] == 'approved') {
+            echo '<td><a href="view_approved_booking?request_id=' . $row['request_id'] . '" class="btn" style="box-shadow: none; background: #FF3FF9; color: white;">View</a></td>';
+        } else {
+            echo '<td><a href="view_booking?request_id=' . $row['request_id'] . '" class="btn" style="box-shadow: none; background: #FF3FF9; color: white;">View</a></td>';
+        }
         
         echo '</tr>';
     }

@@ -5,89 +5,124 @@ if (!isset($_SESSION['account_type']) || $_SESSION['account_type'] != 2) {
     exit();
 }
 
-// Include the database connection
-include('../connection.php'); 
+include('../connection.php');
 
-// Fetch schedules
-$scheduleSql = "SELECT s.schedule_id, 
-                       CONCAT(c.first_name, ' ', c.last_name) AS customer_name,
-                       CONCAT(e.first_name, ' ', e.last_name) AS employee_name,
-                       br.request_date,
-                       br.address,
-                       br.status
-                FROM schedule s
-                LEFT JOIN booking_request br ON s.booking_id = br.request_id
-                LEFT JOIN customers c ON br.customer_id = c.customer_id
-                LEFT JOIN employees e ON s.employee_id = e.employee_id";
-$schedules = $conn->query($scheduleSql);
+// Fetch packages data with needed items from the database
+$query = "SELECT p.package_id, p.package_name, p.price, pp.product_id, pr.product_name 
+          FROM packages p 
+          LEFT JOIN package_products pp ON p.package_id = pp.package_id 
+          LEFT JOIN products pr ON pp.product_id = pr.product_id"; 
+$result = $conn->query($query);
+
+$packages = [];
+if ($result && $result->num_rows > 0) {
+    while ($row = $result->fetch_assoc()) {
+        $package_name = $row['package_name'];
+        // Create a new package entry if it doesn't exist
+        if (!isset($packages[$package_name])) {
+            $packages[$package_name] = [
+                'id' => $row['package_id'], // Store package ID for editing
+                'price' => '₱' . number_format($row['price'], 2), // Format the price as currency
+                'needed_items' => [] // Initialize needed items
+            ];
+        }
+        // Add the product name to the needed items array
+        if ($row['product_name']) {
+            $packages[$package_name]['needed_items'][] = $row['product_name'];
+        }
+    }
+} else {
+    $packages = []; // No packages found
+}
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>Bookings</title>
-	<link href="vendor/jquery-nice-select/css/nice-select.css" rel="stylesheet">
-	<link rel="stylesheet" href="vendor/nouislider/nouislider.min.css">
-	<!-- Style CSS -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>View Packages</title>
+    <link href="vendor/jquery-nice-select/css/nice-select.css" rel="stylesheet">
+    <link rel="stylesheet" href="vendor/nouislider/nouislider.min.css">
+    <!-- Style CSS -->
     <link href="css/style.css" rel="stylesheet">
     <style>
-         body{
-	  background-color: #17153B;
-	  }
+        body {
+            background-color: #17153B;
+        }
 
-			::-webkit-scrollbar {
-         width: 18px; 
-      }
+        ::-webkit-scrollbar {
+            width: 18px; 
+        }
 
-      ::-webkit-scrollbar-track {
-          background: #17153B;
-      }
-      
-      ::-webkit-scrollbar-thumb {
-          background-color: #DA0C81; 
-          border-radius: 10px; 
-          border: 2px solid #DA0C81; 
-      }
+        ::-webkit-scrollbar-track {
+            background: #17153B;
+        }
 
-      ::-webkit-scrollbar-thumb:hover {
-          background-color: #555;
-      }
+        ::-webkit-scrollbar-thumb {
+            background-color: #DA0C81; 
+            border-radius: 10px; 
+            border: 2px solid #DA0C81; 
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background-color: #555;
+        }
+
+        .card-body {
+            display: flex;
+            flex-wrap: wrap; /* Allow cards to wrap to the next line if needed */
+            justify-content: space-evenly; /* Evenly space the cards */
+        }
+
+        .search-container {
+            margin-bottom: 20px;
+        }
+
+        .search-container input {
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            width: 100%;
+            max-width: 400px;
+        }
     </style>
 </head>
 <body>
 
 <!-- Main wrapper Start -->
 <div id="main-wrapper">
-<!-- Nav Header Start -->
-<?php include('nav-header.php'); ?>
-<!-- Nav Header End -->
+    <!-- Nav Header Start -->
+    <?php include('nav-header.php'); ?>
+    <!-- Nav Header End -->
 
-<!-- Header Start -->
-<?php include('header.php'); ?>
-<!-- Header End -->
+    <!-- Header Start -->
+    <?php include('header.php'); ?>
+    <!-- Header End -->
 
-<!-- Sidebar Start -->
-<?php include('sidebar.php'); ?>
-<!-- Sidebar End -->
+    <!-- Sidebar Start -->
+    <?php include('sidebar.php'); ?>
+    <!-- Sidebar End -->
 
-<!-- Content Body Start -->
-<div class="content-body">
-    <div class="container-fluid">
-        <div class="row invoice-card-row">
-            <div class="col-12">
-                <div class="card mb-4" style="box-shadow: 2px 2px 2px black; background-image: linear-gradient(to bottom, #030637, #3C0753);">
-                    <div class="card-body">
-                        
+    <!-- Content Body Start -->
+    <div class="content-body">
+        <div class="container-fluid">
+            <div class="row invoice-card-row">
+                <div class="col-12">
+                    <div class="search-container d-flex justify-content-center">
+                        <input type="text" id="search-input" placeholder="Search packages..." onkeyup="filterPackages()">
+                    </div>
+                    <div class="card mb-4" style="box-shadow: none; background: transparent;">
+                        <div class="card-body" id="package-list">
+                            <?php include('./cards/package_ajax.php'); ?>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
-<!-- Content Body End -->
+    <!-- Content Body End -->
 
 </div>
 <!-- Main wrapper end -->
@@ -111,6 +146,24 @@ $schedules = $conn->query($scheduleSql);
 <script src="js/dlabnav-init.js"></script>
 <script src="js/demo.js"></script>
 <script src="js/styleSwitcher.js"></script>
+
+<script>
+    function filterPackages() {
+        const input = document.getElementById('search-input');
+        const filter = input.value.toLowerCase();
+        const packageList = document.getElementById('package-list');
+        const cards = packageList.getElementsByClassName('pcard');
+
+        for (let i = 0; i < cards.length; i++) {
+            const packageName = cards[i].querySelector('.title').textContent.toLowerCase();
+            if (packageName.includes(filter)) {
+                cards[i].style.display = '';
+            } else {
+                cards[i].style.display = 'none';
+            }
+        }
+    }
+</script>
 
 </body>
 </html>

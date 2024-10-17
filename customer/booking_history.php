@@ -60,6 +60,12 @@ include('../connection.php');
                                     <a class="nav-link" data-status="approved" href="#" style="background: transparent; color: pink; font-weight: 600; ">Approved</a>
                                 </li>
                                 <li class="nav-item">
+                                    <a class="nav-link" data-status="paid" href="#" style="background: transparent; color: pink; font-weight: 600; ">Paid</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" data-status="in progress" href="#" style="background: transparent; color: pink; font-weight: 600; ">In Progress</a>
+                                </li>
+                                <li class="nav-item">
                                     <a class="nav-link" data-status="completed" href="#" style="background: transparent; color: pink; font-weight: 600; ">Completed</a>
                                 </li>
                                 <li class="nav-item">
@@ -96,6 +102,18 @@ include('../connection.php');
 <!-- Dashboard 1 -->
 <script src="js/dashboard/dashboard-1.js"></script>
 
+<script src="js/custom.min.js"></script>
+<script src="js/dlabnav-init.js"></script>
+<script src="js/demo.js"></script>
+<script src="js/styleSwitcher.js"></script>
+<script src="vendor/global/global.min.js"></script>
+<script src="vendor/chart.js/Chart.bundle.min.js"></script>
+<script src="vendor/jquery-nice-select/js/jquery.nice-select.min.js"></script>
+<script src="https://kit.fontawesome.com/b931534883.js" crossorigin="anonymous"></script>
+<script src="vendor/apexchart/apexchart.js"></script>
+<script src="vendor/nouislider/nouislider.min.js"></script>
+<script src="vendor/wnumb/wNumb.js"></script>
+<script src="js/dashboard/dashboard-1.js"></script>
 <script src="js/custom.min.js"></script>
 <script src="js/dlabnav-init.js"></script>
 <script src="js/demo.js"></script>

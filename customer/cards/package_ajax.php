@@ -173,11 +173,16 @@ $packages = array_values($packages);
             <div class="left-side">
                 <span class="title"><?php echo htmlspecialchars($package['name']); ?></span>
                 <br>
+                <br>
                 <span class="price" style="color: yellow;">
                     <span style="color: white;">Price: </span><?php echo htmlspecialchars($package['price']); ?>
                 </span>
+                <br>
+                <br>
                 <p class="desc"><?php echo htmlspecialchars($package['description']); ?></p>
-                <p class="duration" style="color:lightseagreen;">Duration: <?php echo htmlspecialchars($package['duration']); ?></p>
+                <br>
+                <br>
+                <p class="duration" style="color:lightseagreen; font-weight: bold; font-size: 16px;">Duration: <?php echo htmlspecialchars($package['duration']); ?></p>
             </div>
             <div class="right-side d-flex align-items-center" style="flex-direction: column;">
                 <h5 style="color: #fff;">Included Products:</h5>
@@ -195,6 +200,7 @@ $packages = array_values($packages);
                     <p style="color: rgba(156, 163, 175, 1);">No products included.</p>
                 <?php endif; ?>
                 </div>
+                <br>
                 <div class="d-flex justify-content-center">
                     <a href="request_booking" class="bookbtn" style="font-weight: bold;">Book Now</a>
                 </div>

@@ -8,20 +8,30 @@ if (!isset($_SESSION['account_type']) || $_SESSION['account_type'] != 1) {
 // Include the database connection
 include('../connection.php'); 
 
-// Fetch completed schedules
+$employee_id = $_SESSION['employee_id']; // Get the employee ID from the session
+
+// Fetch completed schedules for the current employee
 $scheduleSql = "SELECT s.schedule_id, 
                        CONCAT(c.first_name, ' ', c.last_name) AS customer_name,
                        CONCAT(e.first_name, ' ', e.last_name) AS employee_name,
                        br.request_date,
                        br.address,
                        br.status,
+                       c.profile as customer_profile,
+                       e.profile as employee_profile,
                        br.request_id
                 FROM schedule s
                 LEFT JOIN booking_request br ON s.booking_id = br.request_id
                 LEFT JOIN customers c ON br.customer_id = c.customer_id
                 LEFT JOIN employees e ON s.employee_id = e.employee_id
-                WHERE br.status = 'Completed'";
-$schedules = $conn->query($scheduleSql);
+                WHERE br.status = 'Completed' AND s.employee_id = ? 
+                ORDER BY br.request_date DESC";
+
+// Prepare and execute the statement
+$stmt = $conn->prepare($scheduleSql);
+$stmt->bind_param("i", $employee_id); // Bind the employee ID as an integer
+$stmt->execute();
+$schedules = $stmt->get_result();
 ?>
 
 <!DOCTYPE html>
@@ -117,14 +127,14 @@ $schedules = $conn->query($scheduleSql);
                                     <tbody>
                                         <?php if ($schedules->num_rows > 0): ?>
                                             <?php while ($row = $schedules->fetch_assoc()): ?>
-                                                <tr>
-                                                    <td><?php echo $row['customer_name']; ?></td>
-                                                    <td><?php echo $row['employee_name']; ?></td>
+                                                <tr style="background: transparent;">
+                                                    <td><img src="<?php echo $row['customer_profile'];?>" alt="customer profile" width="40" height="40"                                     style="border-radius: 50%; margin-right: 10px;">  <?php echo $row['customer_name']; ?></td>
+                                                    <td><img src="<?php echo $row['employee_profile'];?>" alt="employee profile" width="50" height="40"                                     style="border-radius: 50%; margin-right: 10px;"><?php echo $row['employee_name']; ?></td>
                                                     <td><?php echo $row['request_date']; ?></td>
                                                     <td><?php echo $row['address']; ?></td>
-                                                    <td><?php echo ucfirst($row['status']); ?></td>
+                                                    <td style="color: yellowgreen; font-weight: bold;"><?php echo ucfirst($row['status']); ?></td>
                                                     <td class="text-center">
-                                                        <a href="view_details.php?request_id=<?php echo $row['request_id']; ?>" class="btn btn-primary" style="background: #FF3EA5; box-shadow: 2px 2px 5px #DA0C81; border-radius: 5px; color: white;">
+                                                        <a href="view_details.php?request_id=<?php echo $row['request_id']; ?>" class="btn btn-primary" style="background: #4A249D; box-shadow: 2px 2px 5px black; border-radius: 5px; color: white; border: none;">
                                                             <i class="fas fa-eye"></i> View
                                                         </a>
                                                     </td>

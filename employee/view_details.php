@@ -1,6 +1,6 @@
 <?php
 session_start();
-if (!isset($_SESSION['account_type']) || $_SESSION['account_type'] != 0) {
+if (!isset($_SESSION['account_type']) || $_SESSION['account_type'] != 1) {
     header("Location: ../login-register.php");
     exit();
 }
@@ -87,31 +87,6 @@ if ($requestId > 0) {
     exit();
 }
 
-
-// Define the status flow
-$statusFlow = ['pending', 'approved', 'paid', 'in progress', 'completed', 'rejected'];
-
-// Determine the current status index
-$currentIndex = array_search($status, $statusFlow);
-
-// Generate the select options dynamically
-$options = '';
-foreach ($statusFlow as $statusOption) {
-    // Check if the status is 'pending' or 'approved' to show 'rejected'
-    if ($statusOption === 'rejected' && !in_array($status, ['pending', 'approved'])) {
-        continue; // Skip adding the rejected option
-    }
-
-    // Only add the option if it is not the current status or any previous status
-    if ($statusOption !== $status && array_search($statusOption, $statusFlow) > $currentIndex) {
-        $options .= "<option value=\"$statusOption\">".ucfirst($statusOption)."</option>";
-    }
-}
-
-// Add the current status as selected
-$options .= "<option value=\"$status\" selected>".ucfirst($status)."</option>";
-
-
 // Determine the color based on the status
 $statusColor = '';
 switch ($status) {
@@ -121,12 +96,9 @@ switch ($status) {
     case 'approved':
         $statusColor = 'green';
         break;
-    case 'paid':
-        $statusColor = 'lightgreen';
-        break;
     case 'in progress':
         $statusColor = 'lightblue';
-        break;    
+        break;
     case 'completed':
         $statusColor = 'yellowgreen';
         break;
@@ -228,7 +200,8 @@ switch ($status) {
                                 <p>Package Price: ₱<?php echo $price; ?></p>
                                 <br>
                                 <p>Requested Date & Time: <?php echo $request_date . ' : ' . $request_time; ?></p>
-                                <p style="color: lightgreen;">Deposit Required to Process Booking: ₱<?php echo $price / 2; ?><p style="color: orange;"><?php if ($status == 'paid' || $status == 'in progress' || $status == 'completed') echo '(Payment Completed)'; ?></p></p>
+                                <p style="color: lightgreen;">Deposit Required to Process Booking: ₱<?php echo $price / 2; ?></p>
+                                <p style="color: orange;"><?php if($status == 'paid' || $status == 'in progress' || $status == 'completed'){ echo '(Payment Completed)'; } ?></p>
                                 <div class="desc">
                                     <strong class="card-title" style="color: gray; text-align:center; font-size: 0.9rem;">Description</strong>
                                     <p class="card-text"><br><?php echo htmlspecialchars($description); ?></p>
@@ -253,11 +226,11 @@ switch ($status) {
                                 <div class="form-group mt-4">
                                     <label for="status">Change Status:</label>
                                     <select class="form-control" name="status" id="status">
-                                        <?php echo $options; ?>
+                                        <option value="completed" <?php echo ($status == 'completed') ? 'selected' : ''; ?>>Completed</option>
                                     </select>
                                 </div>
                                 <div class="d-flex justify-content-center">
-                                    <button type="submit" class="btn btn-primary mt-3" style="box-shadow: 1px 1px 10px black;">Update Status</button>
+                                  <button type="submit" class="btn btn-primary mt-3" style="box-shadow: 1px 1px 10px black;">Update Status</button>
                                 </div>
                             </form>
                         </div>

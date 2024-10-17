@@ -6,13 +6,12 @@ if (!isset($_SESSION['account_type']) || $_SESSION['account_type'] != 2) {
 }
 
 // Include the database connection
-include('../connection.php'); 
-
+include('../connection.php');
 
 // Assuming you're getting the request ID from a query parameter
 $requestId = isset($_GET['request_id']) ? $_GET['request_id'] : 0;
 
-// Fetch description and images for the booking request
+// Fetch description for the booking request
 $requestSql = "SELECT description FROM booking_request WHERE request_id = ?";
 $requestStmt = $conn->prepare($requestSql);
 $requestStmt->bind_param("i", $requestId);
@@ -25,11 +24,6 @@ if ($requestResult->num_rows > 0) {
     $description = $row['description'];
 }
 
-
-
-// Assuming you're getting the request ID from a query parameter
-$requestId = isset($_GET['request_id']) ? $_GET['request_id'] : 0;
-
 // Fetch images for the booking request
 $imageSql = "SELECT image_path FROM booking_images WHERE request_id = ?";
 $stmt = $conn->prepare($imageSql);
@@ -37,7 +31,40 @@ $stmt->bind_param("i", $requestId);
 $stmt->execute();
 $imageResult = $stmt->get_result();
 
+// Fetch status for the booking request
+$statusSql = "SELECT status FROM booking_request WHERE request_id = ?";
+$statusStmt = $conn->prepare($statusSql);
+$statusStmt->bind_param("i", $requestId);
+$statusStmt->execute();
+$statusResult = $statusStmt->get_result();
 
+$status = '';
+if ($statusResult->num_rows > 0) {
+    $statusRow = $statusResult->fetch_assoc();
+    $status = $statusRow['status'];
+} else {
+    $status = 'No status available';
+}
+
+// Determine the color based on the status
+$statusColor = '';
+switch ($status) {
+    case 'pending':
+        $statusColor = 'orange';
+        break;
+    case 'approved':
+        $statusColor = 'green';
+        break;
+    case 'completed':
+        $statusColor = 'yellowgreen';
+        break;
+    case 'rejected':
+        $statusColor = 'red';
+        break;
+    default:
+        $statusColor = 'white'; 
+        break;
+}
 ?>
 
 <!DOCTYPE html>
@@ -142,6 +169,10 @@ $imageResult = $stmt->get_result();
                 <div class="col-12">
                     <div class="card mb-4" style="box-shadow: 2px 2px 2px black; background-image: linear-gradient(to bottom, #030637, #3C0753);">
                         <div class="card-body">
+
+                        <div class="status-msg d-flex justify-content-center">
+                                <h3 style="color: <?php echo $statusColor; ?>; font-family: Arial; font-weight: 600; margin-bottom: 30px;"><?php echo '<span style="color: white;">Status: </span>' . ucfirst($status); ?></h3> 
+                            </div>
           
                         <div class="desc">
                           <h5 class="card-title" style="font-weight: bold; font-family: Verdana; color: white;">Customer Description</h5>
@@ -161,6 +192,10 @@ $imageResult = $stmt->get_result();
                                     echo '<p>No images available for this booking.</p>';
                                 }
                                 ?>
+                            </div>
+                            
+                            <div style="height: 50px; display: flex; justify-content: center; margin: 30px;">
+                              <a href="pay_deposit?request_id=<?php echo $requestId; ?>" style="background: blue; font-weight: bold;  font-size: 1.1rem; padding: 10px 15px; box-shadow: 1px 1px 7px black; border-radius: 5px;">Pay Deposit</a>
                             </div>
                         </div>
                     </div>

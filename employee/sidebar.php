@@ -12,7 +12,7 @@ if ($conn->connect_error) {
 
 $firstName = isset($_SESSION['first_name']) ? $_SESSION['first_name'] : 'Guest';
 $lastName = isset($_SESSION['last_name']) ? $_SESSION['last_name'] : '';
-$email = isset($_SESSION['email']) ? $_SESSION['email'] : 'No email available';
+$emails = isset($_SESSION['email']) ? $_SESSION['email'] : 'No email available';
 
 $c_admin_id = isset($_SESSION['admin_id']) ? $_SESSION['admin_id'] : null; 
 $c_employee_id = isset($_SESSION['employee_id']) ? $_SESSION['employee_id'] : null;
@@ -109,7 +109,7 @@ if ($c_admin_id) {
     }
 
     .dlabnav{
-        background-color: #6528F7;
+        background-color: #180161;
         box-shadow: none;
     }
 
@@ -145,7 +145,7 @@ if ($c_admin_id) {
     }
 
     .header-profile{
-        background-color: #6528C9;
+        background-color: #2E236C;
         margin: 0;
     }
 
@@ -187,7 +187,7 @@ if ($c_admin_id) {
                     
                     <div class="header-info ms-3">
                         <span class="font-w600" style="color: white; font-size: 1.2rem;">Hi, <b><?php echo htmlspecialchars($firstName); ?></b></span>
-                        <p class="text-end font-w400" style="color: white; font-size: 0.9rem;"><?php echo htmlspecialchars($email); ?></p>
+                        <p class="text-end font-w400" style="color: white; font-size: 0.9rem;"><?php echo htmlspecialchars($emails); ?></p>
                     </div>
                 </a>
                 <div class="my-profile">

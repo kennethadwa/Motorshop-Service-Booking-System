@@ -8,26 +8,6 @@ if (!isset($_SESSION['account_type']) || $_SESSION['account_type'] != 2) {
     exit();
 }
 
-// Query for total employees
-$query_employees = "SELECT COUNT(*) AS total_employees FROM employees";
-$result_employees = mysqli_query($conn, $query_employees);
-$total_employees = mysqli_fetch_assoc($result_employees)['total_employees'];
-
-// Query for total customers
-$query_customers = "SELECT COUNT(*) AS total_customers FROM customers";
-$result_customers = mysqli_query($conn, $query_customers);
-$total_customers = mysqli_fetch_assoc($result_customers)['total_customers'];
-
-// Query for total bookings
-$query_bookings = "SELECT COUNT(*) AS total_bookings FROM booking_request"; 
-$result_bookings = mysqli_query($conn, $query_bookings);
-$total_bookings = mysqli_fetch_assoc($result_bookings)['total_bookings'];
-
-// Query for total schedules
-$query_schedules = "SELECT COUNT(*) AS total_schedules FROM schedule"; 
-$result_schedules = mysqli_query($conn, $query_schedules);
-$total_schedules = mysqli_fetch_assoc($result_schedules)['total_schedules'];
-
 ?>
 
 <!DOCTYPE html>
@@ -90,7 +70,10 @@ $total_schedules = mysqli_fetch_assoc($result_schedules)['total_schedules'];
 	<div class="content-body">
 		<div class="container-fluid">
 			<div class="row invoice-card-row">
-				
+		
+           <!--INSERT HERE -->
+
+			</div>
 		</div>
 	</div>
 	<!-- Content Body End -->
