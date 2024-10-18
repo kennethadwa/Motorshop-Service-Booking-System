@@ -272,6 +272,16 @@ switch ($status) {
                             ?>
                         </div>
 
+                        <br>
+
+                        <div class="delete" style="display: flex; justify-content: center; align-items:center;">
+                             <!-- DELETE BOOKING BUTTON -->
+                            <form action="delete_booking.php" method="POST">
+                                <input type="hidden" name="request_id" value="<?php echo $requestId; ?>">
+                                <button type="submit" class="btn mt-4"
+                                style="background: red; color: white; box-shadow: 1px 1px 10px black;">Delete Booking Request</button>
+                            </form>
+                        </div>
                         </div>
                     </div>
                 </div>

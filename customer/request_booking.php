@@ -5,51 +5,51 @@ if (!isset($_SESSION['account_type']) || $_SESSION['account_type'] != 2) {
     exit();
 }
 
-include('../connection.php'); 
+include('../connection.php');
 
 // Fetch packages for selection
 $packages = [];
-$packageSql = "SELECT package_id, package_name FROM packages WHERE status = 'active'"; 
+$packageSql = "SELECT package_id, package_name FROM packages WHERE status = 'active'";
 $packageResult = $conn->query($packageSql);
 
 if ($packageResult) {
     while ($row = $packageResult->fetch_assoc()) {
-        $packages[] = $row; 
+        $packages[] = $row;
     }
 }
 
 // Handle form submission
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && !isset($_SESSION['form_submitted'])) {
+    $_SESSION['form_submitted'] = true; // Set a flag to indicate form has been submitted
+
     $customer_id = $_SESSION['customer_id'];
     $model_name = $_POST['model_name'];
     $address = $_POST['address'];
     $request_date = $_POST['request_date'];
     $request_time = $_POST['request_time'];
     $description = $_POST['description'];
-    $package_id = $_POST['package_id']; 
-
+    $package_id = $_POST['package_id'];
 
     $insertSql = "INSERT INTO booking_request (customer_id, model_name, address, request_date, request_time, description, package_id)
                   VALUES (?, ?, ?, ?, ?, ?, ?)";
     $stmt = $conn->prepare($insertSql);
-    
-  
     $stmt->bind_param('isssssi', $customer_id, $model_name, $address, $request_date, $request_time, $description, $package_id);
 
     if ($stmt->execute()) {
-        $request_id = $stmt->insert_id; 
+        $request_id = $stmt->insert_id;
 
-   
-        if (isset($_FILES['images']) && count($_FILES['images']['name']) > 0) {
+        // Handle image uploads
+        if (isset($_FILES['images']) && !empty($_FILES['images']['name'][0])) {
             $target_dir = "../uploads/booking_images/";
 
             foreach ($_FILES['images']['name'] as $key => $image_name) {
                 $image_tmp_name = $_FILES['images']['tmp_name'][$key];
-                $image_target_path = $target_dir . basename($image_name);
 
-                $check = getimagesize($image_tmp_name);
-                if ($check !== false) {
-                    if (move_uploaded_file($image_tmp_name, $image_target_path)) {
+                if (!empty($image_tmp_name) && is_uploaded_file($image_tmp_name)) {
+                    $image_target_path = $target_dir . basename($image_name);
+                    $check = getimagesize($image_tmp_name);
+
+                    if ($check !== false && move_uploaded_file($image_tmp_name, $image_target_path)) {
                         $imageSql = "INSERT INTO booking_images (request_id, image_path) VALUES (?, ?)";
                         $imageStmt = $conn->prepare($imageSql);
                         $imageStmt->bind_param('is', $request_id, $image_target_path);
@@ -59,12 +59,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             }
         }
 
-        echo "<script>alert('Booking request submitted successfully!');</script>";
+        // Redirect to avoid form resubmission
+        header('Location: booking_history');
+        exit();
     } else {
         echo "<script>alert('Error submitting booking request: " . $stmt->error . "');</script>";
     }
 }
+
+// Remove the form submission flag after successful redirection or on next page load
+unset($_SESSION['form_submitted']);
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -174,8 +180,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                              <div class="sub-btn" style="display: flex; justify-content: center;">
                                 <button type="submit" class="btn btn-primary mt-3" style="background: blue; color: white; border: none; box-shadow: 1px 1px 10px black;">Submit Request</button>
                              </div>
-                            
-
                         </form>
                     </div>
                 </div>
