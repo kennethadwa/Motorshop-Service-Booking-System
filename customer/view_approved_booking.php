@@ -337,7 +337,7 @@ paypal.Buttons({
         return actions.order.capture().then(function(details) {
             // Send an AJAX request to update the booking status to 'paid'
             var xhr = new XMLHttpRequest();
-            xhr.open("POST", "process_payment.php", true);
+            xhr.open("POST", "save_transaction.php", true);
             xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
             xhr.onload = function() {
                 window.location.href = "success.php?request_id=<?php echo $requestId; ?>";

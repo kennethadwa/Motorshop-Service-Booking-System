@@ -37,27 +37,54 @@ paypal.Buttons({
         return actions.order.create({
             purchase_units: [{
                 amount: {
-                    value: '<?php echo $price; ?>' // Set the deposit value
+                    value: <?php echo number_format($deposit_price, 2, '.', ''); ?> // Use the deposit amount
                 }
             }]
         });
     },
-
-    // Finalize the transaction after payment approval
+    // Finalize the transaction
     onApprove: function(data, actions) {
         return actions.order.capture().then(function(details) {
-            // Send an AJAX request to update the booking status to 'paid'
-            var xhr = new XMLHttpRequest();
-            xhr.open("POST", "process_payment.php", true);
-            xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-            xhr.onload = function() {
-                window.location.href = "success.php?request_id=<?php echo $requestId; ?>";
-            };
-            xhr.send("request_id=<?php echo $requestId; ?>");
+            // Payment was successful
+            console.log('Transaction completed by ' + details.payer.name.given);
+
+            // AJAX call to save the transaction in the database
+            var requestId = <?php echo json_encode($requestId); ?>; // Get the request ID
+            var depositAmount = <?php echo json_encode($deposit_price); ?>; // Get the deposit amount
+            var paymentMethod = 'PayPal'; // Payment method
+            var transactionStatus = 'completed'; // Transaction status
+
+            // AJAX request to save the transaction
+            $.ajax({
+                url: 'save_transaction.php',
+                method: 'POST',
+                data: {
+                    request_id: requestId,
+                    deposit_amount: depositAmount,
+                    payment_method: paymentMethod,
+                    transaction_status: transactionStatus
+                },
+                success: function(response) {
+                    // Handle success response
+                    console.log(response);
+                    alert('Transaction was successful and saved to the database.');
+                    // Optionally redirect or update the UI
+                },
+                error: function(xhr, status, error) {
+                    // Handle error response
+                    console.error(error);
+                    alert('An error occurred while saving the transaction. Please try again.');
+                }
+            });
         });
+    },
+    onError: function(err) {
+        console.error(err);
+        alert('An error occurred during the transaction. Please try again.');
     }
-}).render('#paypal-button-container'); // Display the PayPal button in the container
+}).render('#paypal-button-container');
 </script>
+
 
 </body>
 </html>
