@@ -50,6 +50,26 @@ if ($packageResult->num_rows > 0) {
     $price = $packageRow['price'];
 }
 
+
+// Fetch the employee name assigned to the booking
+$employeeSql = "SELECT e.first_name, e.last_name
+                FROM schedule s
+                JOIN employees e ON s.employee_id = e.employee_id
+                JOIN booking_request br ON s.booking_id = br.request_id
+                WHERE br.request_id = ?";
+$employeeStmt = $conn->prepare($employeeSql);
+$employeeStmt->bind_param("i", $requestId);
+$employeeStmt->execute();
+$employeeResult = $employeeStmt->get_result();
+
+$employee_name = '';
+if ($employeeResult->num_rows > 0) {
+    $employeeRow = $employeeResult->fetch_assoc();
+    $employee_name = $employeeRow['first_name'] . ' ' . $employeeRow['last_name'];
+} else {
+    $employee_name = 'No employee assigned yet';
+}
+
 // Fetch description and status for the booking request
 $requestSql = "SELECT request_date, request_time, description, status FROM booking_request WHERE request_id = ?";
 $requestStmt = $conn->prepare($requestSql);
@@ -205,10 +225,11 @@ switch ($status) {
                     <div class="card mb-4" style="box-shadow: 2px 2px 2px black; background-image: linear-gradient(to bottom, #030637, #3C0753);">
                         <div class="card-body">
 
-                        <div class="status-msg d-flex justify-content-center">
+                        <div class="status-msg" style="display: flex; flex-direction: column; justify-content:center; align-items: center;">
                             <h3 style="color: <?php echo $statusColor; ?>; font-family: Arial; font-weight: 600; margin-bottom: 30px;">
                                 <?php echo '<span style="color: white;">Status: </span>' . ucfirst($status); ?>
-                            </h3> 
+                            </h3>
+                            <p style="font-size: 1.2rem; font-weight: 600; color:lightblue;"><?php echo '<span style= "color: white">Assigned Employee: </span>' . $employee_name; ?></p> 
                         </div>
 
                         <div class="desc" style="display:flex; flex-direction: column; font-size: 1rem;">
@@ -228,9 +249,9 @@ switch ($status) {
 
                             <!-- Request fate & Time -->
                             <p>Requested Date & Time: <?php echo $request_date . ' : ' . $request_time; ?></p>
-                            <p style="color: lightgreen;">Deposit Required to Process Booking: ₱<?php echo $price / 2; ?></p>
-                            <p style="color: orange;"><?php if($status == 'paid' || $status == 'in progress' || $status == 'completed'){ echo '(Payment Completed)'; } ?></p>
-
+                            <p style="color: orange;"><?php echo '<span style="color: white;">Deposit Required to Process Booking: </span>₱' . $price / 2; ?></p>
+                            <p style="color: orange;"><?php if($status == 'paid' || $status == 'in progress' || $status == 'completed'){ echo '(Payment Completed)'; } ?>
+                            </p>                        
                             <div class="desc">
                             <strong class="card-title" style="color: gray; text-align:center; font-size: 0.9rem;">Description</strong>
                             <p class="card-text"><br><?php echo htmlspecialchars($description); ?></p>

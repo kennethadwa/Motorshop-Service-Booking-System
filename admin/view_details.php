@@ -80,7 +80,10 @@ if ($requestId > 0) {
         $updateStmt = $conn->prepare($updateSql);
         $updateStmt->bind_param("si", $newStatus, $requestId);
         $updateStmt->execute();
+        header("Location: bookings.php");
     }
+
+    
 
 } else {
     echo "Invalid request ID.";
@@ -228,7 +231,7 @@ switch ($status) {
                                 <p>Package Price: ₱<?php echo $price; ?></p>
                                 <br>
                                 <p>Requested Date & Time: <?php echo $request_date . ' : ' . $request_time; ?></p>
-                                <p style="color: lightgreen;">Deposit Required to Process Booking: ₱<?php echo $price / 2; ?><p style="color: orange;"><?php if ($status == 'paid' || $status == 'in progress' || $status == 'completed') echo '(Payment Completed)'; ?></p></p>
+                                <p style="color: orange;"><?php echo '<span style="color: white;">Deposit Required to Process Booking: </span>₱' . $price / 2; ?></p><p style="color: orange;"><?php if ($status == 'paid' || $status == 'in progress' || $status == 'completed') echo '(Payment Completed)'; ?></p></p>
                                 <div class="desc">
                                     <strong class="card-title" style="color: gray; text-align:center; font-size: 0.9rem;">Description</strong>
                                     <p class="card-text"><br><?php echo htmlspecialchars($description); ?></p>
