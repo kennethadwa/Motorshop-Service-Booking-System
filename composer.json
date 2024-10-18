@@ -1,5 +1,8 @@
 {
     "require": {
-        "phpmailer/phpmailer": "^6.9"
+        "phpmailer/phpmailer": "^6.9",
+        "paypal/rest-api-sdk-php": "^1.14",
+        "paypal/paypal-checkout-sdk": "^1.0",
+        "guzzlehttp/guzzle": "^7.9"
     }
 }

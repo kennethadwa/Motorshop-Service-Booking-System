@@ -8,6 +8,8 @@ if (!isset($_SESSION['account_type']) || $_SESSION['account_type'] != 2) {
 // Include the database connection
 include('../connection.php');
 
+include('../config.php');
+
 // Assuming you're getting the request ID from a query parameter
 $requestId = isset($_GET['request_id']) ? $_GET['request_id'] : 0;
 
@@ -120,6 +122,15 @@ switch ($status) {
         $statusColor = 'white'; 
         break;
 }
+
+
+// Fetch required deposit amount from booking_request (50% of the package price)
+$sql = "SELECT p.price FROM booking_request br JOIN packages p ON br.package_id = p.package_id WHERE br.request_id = ?";
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("i", $requestId);
+$stmt->execute();
+$result = $stmt->get_result();
+$deposit_price = $result->fetch_assoc()['price'] / 2;  // 50% deposit
 ?>
 
 <!DOCTYPE html>
@@ -129,6 +140,7 @@ switch ($status) {
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Bookings</title>
+    <script src="https://www.paypal.com/sdk/js?client-id=ARsvm_38-yeIedzC88hRFVV9Jwt1QDaAUx59s1IPinhjuJtaRSkshQ_b9gEQ2Weqi_nCThTpC8reg2d0&currency=PHP"></script>
     <link href="vendor/jquery-nice-select/css/nice-select.css" rel="stylesheet">
     <link rel="stylesheet" href="vendor/nouislider/nouislider.min.css">
     <link href="css/style.css" rel="stylesheet">
@@ -249,7 +261,6 @@ switch ($status) {
 
                             <!-- Request fate & Time -->
                             <p>Requested Date & Time: <?php echo $request_date . ' : ' . $request_time; ?></p>
-                            <p style="color: orange;"><?php echo '<span style="color: white;">Deposit Required to Process Booking: </span>₱' . $price / 2; ?></p>
                             <p style="color: orange;"><?php if($status == 'paid' || $status == 'in progress' || $status == 'completed'){ echo '(Payment Completed)'; } ?>
                             </p>                        
                             <div class="desc">
@@ -272,8 +283,15 @@ switch ($status) {
                             ?>
                         </div>
 
-                            <div style="height: 50px; display: flex; justify-content: center; margin: 30px;">
-                              <a href="pay_deposit?request_id=<?php echo $requestId; ?>" style="background: blue;   font-size: 1.1rem; color:white; padding: 10px 15px; box-shadow: 1px 1px 7px black; border-radius: 5px;">Pay Deposit</a>
+                            <div style="height: auto; display: flex; flex-direction: column; justify-content: center; align-items: center; margin: 30px;">
+                              
+                               <h3 style="color: white;"><?php echo 'In order to proceed with your booking request, we kindly request a deposit of at least' . '<span style="color: orange;"> ₱' . number_format($deposit_price, 2) . '</span>'; ?>.</h3>
+
+                               <br>
+
+                               <!-- PayPal Button Container -->
+                               <div id="paypal-button-container" style="color: white;"></div>
+
                             </div>
 
                         </div>
@@ -299,6 +317,36 @@ switch ($status) {
 <script src="js/dlabnav-init.js"></script>
 <script src="js/demo.js"></script>
 <script src="js/styleSwitcher.js"></script>
+
+
+<script>
+paypal.Buttons({
+    // Set up the transaction
+    createOrder: function(data, actions) {
+        return actions.order.create({
+            purchase_units: [{
+                amount: {
+                    value: '<?php echo $deposit_price; ?>'
+                }
+            }]
+        });
+    },
+
+    // Finalize the transaction after payment approval
+    onApprove: function(data, actions) {
+        return actions.order.capture().then(function(details) {
+            // Send an AJAX request to update the booking status to 'paid'
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", "process_payment.php", true);
+            xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+            xhr.onload = function() {
+                window.location.href = "success.php?request_id=<?php echo $requestId; ?>";
+            };
+            xhr.send("request_id=<?php echo $requestId; ?>");
+        });
+    }
+}).render('#paypal-button-container');
+</script>
 
 </body>
 </html>

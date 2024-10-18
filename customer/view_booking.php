@@ -249,7 +249,6 @@ switch ($status) {
 
                             <!-- Request fate & Time -->
                             <p>Requested Date & Time: <?php echo $request_date . ' : ' . $request_time; ?></p>
-                            <p style="color: orange;"><?php echo '<span style="color: white;">Deposit Required to Process Booking: </span>₱' . $price / 2; ?></p>
                             <p style="color: orange;"><?php if($status == 'paid' || $status == 'in progress' || $status == 'completed'){ echo '(Payment Completed)'; } ?>
                             </p>                        
                             <div class="desc">

@@ -1,104 +1,63 @@
 <?php
 session_start();
-
 include('../connection.php');
 
-if (!isset($_SESSION['account_type']) || $_SESSION['account_type'] != 2) {
-    header("Location: ../login-register.php");
-    exit();
-}
+// Get request ID
+$requestId = isset($_GET['request_id']) ? $_GET['request_id'] : 0;
 
+// Fetch required deposit amount from booking_request (50% of the package price)
+$sql = "SELECT p.price FROM booking_request br JOIN packages p ON br.package_id = p.package_id WHERE br.request_id = ?";
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("i", $requestId);
+$stmt->execute();
+$result = $stmt->get_result();
+$price = $result->fetch_assoc()['price'] / 2;  // 50% deposit
+
+// PayPal Script
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>Sairom Dashboard</title>
-	<link href="vendor/jquery-nice-select/css/nice-select.css" rel="stylesheet">
-	<link rel="stylesheet" href="vendor/nouislider/nouislider.min.css">
-	<!-- Style CSS -->
-    <link href="css/style.css" rel="stylesheet">
-
-		<style>
-			body{
-				background-color: #17153B;
-			}
-
-			::-webkit-scrollbar {
-         width: 18px; 
-      }
-
-      ::-webkit-scrollbar-track {
-          background: #17153B;
-      }
-      
-      ::-webkit-scrollbar-thumb {
-          background-color: #DA0C81; 
-          border-radius: 10px; 
-          border: 2px solid #DA0C81; 
-      }
-
-      ::-webkit-scrollbar-thumb:hover {
-          background-color: #555;
-      }
-		</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pay Deposit</title>
+    <script src="https://www.paypal.com/sdk/js?client-id=ARsvm_38-yeIedzC88hRFVV9Jwt1QDaAUx59s1IPinhjuJtaRSkshQ_b9gEQ2Weqi_nCThTpC8reg2d0&currency=PHP"></script>
 </head>
 <body>
 
-<!-- Preloader Start -->
-<?php include('pre-loader.php'); ?>
-<!-- Preloader End-->
+<h3>Pay Deposit of ₱<?php echo number_format($price, 2); ?></h3>
 
-<!-- Main wrapper Start -->
-<div id="main-wrapper">
-    <!-- Nav Header Start -->
-    <?php include('nav-header.php'); ?>
-    <!-- Nav Header End -->
+<!-- PayPal Button Container -->
+<div id="paypal-button-container"></div>
 
-    <!-- Header Start -->
-    <?php include('header.php'); ?>
-    <!-- Header End -->
+<script>
+paypal.Buttons({
+    // Set up the transaction
+    createOrder: function(data, actions) {
+        return actions.order.create({
+            purchase_units: [{
+                amount: {
+                    value: '<?php echo $price; ?>' // Set the deposit value
+                }
+            }]
+        });
+    },
 
-    <!-- Sidebar Start -->
-    <?php include('sidebar.php'); ?>
-    <!-- Sidebar End -->
+    // Finalize the transaction after payment approval
+    onApprove: function(data, actions) {
+        return actions.order.capture().then(function(details) {
+            // Send an AJAX request to update the booking status to 'paid'
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", "process_payment.php", true);
+            xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+            xhr.onload = function() {
+                window.location.href = "success.php?request_id=<?php echo $requestId; ?>";
+            };
+            xhr.send("request_id=<?php echo $requestId; ?>");
+        });
+    }
+}).render('#paypal-button-container'); // Display the PayPal button in the container
+</script>
 
-	<!-- Content Body Start -->
-	<div class="content-body">
-		<div class="container-fluid">
-			<div class="row invoice-card-row">
-		
-           <!--INSERT HERE -->
-
-			</div>
-		</div>
-	</div>
-	<!-- Content Body End -->
-</div>
-<!-- Main wrapper end -->
-
-<!-- Scripts -->
-<!-- Required vendors -->
-<script src="vendor/global/global.min.js"></script>
-<script src="vendor/chart.js/Chart.bundle.min.js"></script>
-<script src="vendor/jquery-nice-select/js/jquery.nice-select.min.js"></script>
-<script src="https://kit.fontawesome.com/b931534883.js" crossorigin="anonymous"></script>
-
-<!-- Apex Chart -->
-<script src="vendor/apexchart/apexchart.js"></script>
-<script src="vendor/nouislider/nouislider.min.js"></script>
-<script src="vendor/wnumb/wNumb.js"></script>
-
-<!-- Dashboard 1 -->
-<script src="js/dashboard/dashboard-1.js"></script>
-
-<script src="js/custom.min.js"></script>
-<script src="js/dlabnav-init.js"></script>
-<script src="js/demo.js"></script>
-<script src="js/styleSwitcher.js"></script>
-	
 </body>
 </html>
