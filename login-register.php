@@ -20,10 +20,8 @@
     <span>please enter a valid email for registration</span>
     <input type="text" name="first_name" placeholder="First Name" required>
     <input type="text" name="last_name" placeholder="Last Name" required>
-    <input type="email" name="email" placeholder="Email" required>
+    <input type="email" name="email" placeholder="Valid Email Address" required>
     <input type="number" name="contact" placeholder="Phone Number" required>
-    <input type="password" name="password" placeholder="Password" required>
-    <input type="password" name="confirm_password" placeholder="Confirm Password" required>
     <button type="submit">Sign Up</button>
   </form>
 </div>
@@ -35,13 +33,11 @@
     <div class="social-icons">
       <a href="#" class="icon"><i class="fa-brands fa-google-plus-g"></i></a>
       <a href="#" class="icon"><i class="fa-brands fa-facebook-f"></i></a>
-      <a href="#" class="icon"><i class="fa-brands fa-github"></i></a>
-      <a href="#" class="icon"><i class="fa-brands fa-linkedin-in"></i></a>
     </div>
     <span>or use your email password</span>
     <input type="email" name="email" placeholder="Email" required>
     <input type="password" name="password" placeholder="Password" required>
-    <a href="#">Forget Your Password?</a>
+    <a href="forget_password.php">Forget Your Password?</a>
     <button type="submit">Sign In</button>
   </form>
 </div>

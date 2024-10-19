@@ -12,7 +12,7 @@ if (!isset($_SESSION['account_type']) || $_SESSION['account_type'] != 2) {
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Update Employee</title>
+    <title>Update Customer</title>
     <link href="vendor/jquery-nice-select/css/nice-select.css" rel="stylesheet">
     <link rel="stylesheet" href="vendor/nouislider/nouislider.min.css">
     <link href="css/style.css" rel="stylesheet">
@@ -85,10 +85,22 @@ if (!isset($_SESSION['account_type']) || $_SESSION['account_type'] != 2) {
                             die("Connection failed: " . $conn->connect_error);
                         }
 
-                        // Fetch employee data based on employee_id
+                        // Initialize variables
+                        $row = [];
+                        $full_name = '';
+                        $contact_no = '';
+                        $address = '';
+                        $email = '';
+                        $profile_picture = 'uploads/customer_profile/default_profile.jpg'; // Default profile picture
+                        $account_type = '';
+                        $age = '';
+                        $birthday = '';
+                        $sex = '';
+
+                        // Fetch customer data based on customer_id
                         if (isset($_GET['id'])) {
-                            $employee_id = intval($_GET['id']);
-                            $sql = "SELECT first_name, last_name, contact_no, address, email, profile, account_type, age, birthday, sex FROM employees WHERE employee_id = '$employee_id'";
+                            $customer_id = intval($_GET['id']);
+                            $sql = "SELECT first_name, last_name, contact_no, address, email, profile, account_type, age, birthday, sex FROM customers WHERE customer_id = '$customer_id'";
                             $result = $conn->query($sql);
 
                             if ($result->num_rows > 0) {
@@ -97,16 +109,16 @@ if (!isset($_SESSION['account_type']) || $_SESSION['account_type'] != 2) {
                                 $contact_no = $row['contact_no'];
                                 $address = $row['address'];
                                 $email = $row['email'];
-                                $profile_picture = !empty($row['profile']) ? $row['profile'] : 'uploads/employee_profile/default_profile.jpg'; 
+                                $profile_picture = !empty($row['profile']) ? $row['profile'] : $profile_picture; 
                                 $account_type = $row['account_type']; 
                                 $age = $row['age'];
                                 $birthday = $row['birthday'];
                                 $sex = $row['sex'];
                             } else {
-                                echo "<p>No employee found.</p>";
+                                echo "<p>No customer found.</p>";
                             }
                         } else {
-                            echo "<p>Invalid employee ID.</p>";
+                            echo "<p>Invalid customer ID.</p>";
                         }
 
                         $conn->close();
@@ -117,26 +129,26 @@ if (!isset($_SESSION['account_type']) || $_SESSION['account_type'] != 2) {
                         </div>
 
                         <form action="update_profile_process.php" method="POST" enctype="multipart/form-data">
-                            <input type="hidden" name="employee_id" value="<?php echo $employee_id; ?>">
+                            <input type="hidden" name="customer_id" value="<?php echo isset($customer_id) ? $customer_id : ''; ?>">
                             <div class="form-group">
                                 <label for="first_name">First Name:</label>
-                                <input type="text" name="first_name" value="<?php echo $row['first_name']; ?>" class="form-control" required>
+                                <input type="text" name="first_name" value="<?php echo isset($row['first_name']) ? $row['first_name'] : ''; ?>" class="form-control">
                             </div>
                             <div class="form-group">
                                 <label for="last_name">Last Name:</label>
-                                <input type="text" name="last_name" value="<?php echo $row['last_name']; ?>" class="form-control" required>
+                                <input type="text" name="last_name" value="<?php echo isset($row['last_name']) ? $row['last_name'] : ''; ?>" class="form-control">
                             </div>
                             <div class="form-group">
                                 <label for="age">Age:</label>
-                                <input type="number" name="age" value="<?php echo $age; ?>" class="form-control" required>
+                                <input type="number" name="age" value="<?php echo $age; ?>" class="form-control">
                             </div>
                             <div class="form-group">
                                 <label for="birthday">Birthday:</label>
-                                <input type="date" name="birthday" value="<?php echo $birthday; ?>" class="form-control" required>
+                                <input type="date" name="birthday" value="<?php echo $birthday; ?>" class="form-control">
                             </div>
                             <div class="form-group">
                                 <label for="sex">Sex:</label>
-                                <select name="sex" class="form-control" required>
+                                <select name="sex" class="form-control">
                                     <option value="Male" <?php echo $sex == 'Male' ? 'selected' : ''; ?>>Male</option>
                                     <option value="Female" <?php echo $sex == 'Female' ? 'selected' : ''; ?>>Female</option>
                                     <option value="Other" <?php echo $sex == 'Other' ? 'selected' : ''; ?>>Other</option>
@@ -144,15 +156,15 @@ if (!isset($_SESSION['account_type']) || $_SESSION['account_type'] != 2) {
                             </div>
                             <div class="form-group">
                                 <label for="contact_no">Contact Number:</label>
-                                <input type="text" name="contact_no" value="<?php echo $contact_no; ?>" class="form-control" required>
+                                <input type="text" name="contact_no" value="<?php echo $contact_no; ?>" class="form-control">
                             </div>
                             <div class="form-group">
                                 <label for="address">Address:</label>
-                                <input type="text" name="address" value="<?php echo $address; ?>" class="form-control" required>
+                                <input type="text" name="address" value="<?php echo $address; ?>" class="form-control">
                             </div>
                             <div class="form-group">
                                 <label for="email">Email:</label>
-                                <input type="email" name="email" value="<?php echo $email; ?>" class="form-control" required>
+                                <input type="email" name="email" value="<?php echo $email; ?>" class="form-control">
                             </div>
                             <div class="form-group">
                                 <label for="password">Password:</label>
@@ -168,7 +180,7 @@ if (!isset($_SESSION['account_type']) || $_SESSION['account_type'] != 2) {
                                 <input type="file" name="profile" class="form-control-file">
                             </div>
                             <div class="text-center">
-                                <a href="profile?id=<?php echo $employee_id; ?>" class="btn btn-warning"> <i class="fas fa-arrow-left"></i> Back</a>
+                                <a href="profile?id=<?php echo isset($customer_id) ? $customer_id : ''; ?>" class="btn btn-warning"> <i class="fas fa-arrow-left"></i> Back</a>
                                 &nbsp;
                                 <button type="submit" class="btn btn-success">Update</button>
                             </div>

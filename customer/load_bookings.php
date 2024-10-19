@@ -47,7 +47,7 @@ function getStatusColor($status) {
         case 'paid': 
             return 'lightgreen'; 
         case 'progress':
-            return 'lightblue';
+            return 'blue';
         case 'completed':
             return '#39FF14'; 
         case 'rejected':

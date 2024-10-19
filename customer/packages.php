@@ -50,6 +50,10 @@ if ($result && $result->num_rows > 0) {
     <style>
         body {
             background-color: #17153B;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: #343a40;
+            margin: 0;
+            padding: 0;
         }
 
         ::-webkit-scrollbar {

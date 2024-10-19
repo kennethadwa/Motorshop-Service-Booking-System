@@ -6,55 +6,79 @@ if (!isset($_SESSION['account_type']) || $_SESSION['account_type'] != 2) {
 }
 
 // Include the database connection
-include('../connection.php'); 
+include('../connection.php');
 
-// Fetch schedules
-$scheduleSql = "SELECT s.schedule_id, 
-                       CONCAT(c.first_name, ' ', c.last_name) AS customer_name,
-                       CONCAT(e.first_name, ' ', e.last_name) AS employee_name,
-                       br.request_date,
-                       br.address,
-                       br.status
-                FROM schedule s
-                LEFT JOIN booking_request br ON s.booking_id = br.request_id
-                LEFT JOIN customers c ON br.customer_id = c.customer_id
-                LEFT JOIN employees e ON s.employee_id = e.employee_id";
-$schedules = $conn->query($scheduleSql);
+// Get the customer_id from the session (assuming it's stored in session)
+$customerId = $_SESSION['customer_id'];
+
+// Fetch transactions for the logged-in customer
+$sql = "SELECT CONCAT(c.first_name, ' ', c.last_name) AS customer_name, 
+               t.deposit_amount, 
+               t.payment_method, 
+               t.transaction_status, 
+               t.created_at 
+        FROM transactions t
+        JOIN booking_request br ON t.request_id = br.request_id
+        JOIN customers c ON br.customer_id = c.customer_id  -- Joining with the customers table
+        WHERE br.customer_id = ?";
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("i", $customerId);
+$stmt->execute();
+$result = $stmt->get_result();
+
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>Bookings</title>
-	<link href="vendor/jquery-nice-select/css/nice-select.css" rel="stylesheet">
-	<link rel="stylesheet" href="vendor/nouislider/nouislider.min.css">
-	<!-- Style CSS -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Bookings</title>
+    <link href="vendor/jquery-nice-select/css/nice-select.css" rel="stylesheet">
+    <link rel="stylesheet" href="vendor/nouislider/nouislider.min.css">
+    <!-- Style CSS -->
     <link href="css/style.css" rel="stylesheet">
     <style>
-         body{
-	  background-color: #17153B;
-	  }
-
-			::-webkit-scrollbar {
-         width: 18px; 
-      }
-
-      ::-webkit-scrollbar-track {
-          background: #17153B;
-      }
-      
-      ::-webkit-scrollbar-thumb {
-          background-color: #DA0C81; 
-          border-radius: 10px; 
-          border: 2px solid #DA0C81; 
-      }
-
-      ::-webkit-scrollbar-thumb:hover {
-          background-color: #555;
-      }
+        body {
+            background-color: #17153B;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: #343a40;
+            margin: 0;
+            padding: 0;
+        }
+        ::-webkit-scrollbar {
+            width: 18px; 
+        }
+        ::-webkit-scrollbar-track {
+            background: #17153B;
+        }
+        ::-webkit-scrollbar-thumb {
+            background-color: #DA0C81; 
+            border-radius: 10px; 
+            border: 2px solid #DA0C81; 
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background-color: #555;
+        }
+        .table {
+            border: none; /* Remove default table border */
+        }
+        .table th,
+        .table td {
+            border: none; /* Remove default border for cells */
+            padding: 15px; /* Add some padding */
+        }
+        .table tr {
+            border-bottom: 1px solid white; /* Add a bottom border for each row */
+        }
+        .table tr:last-child {
+            border-bottom: none; /* Remove the bottom border for the last row */
+        }
+        .new-badge {
+            color: orange;
+            font-weight: bold;
+        }
     </style>
 </head>
 <body>
@@ -80,7 +104,43 @@ $schedules = $conn->query($scheduleSql);
             <div class="col-12">
                 <div class="card mb-4" style="box-shadow: 2px 2px 2px black; background-image: linear-gradient(to bottom, #030637, #3C0753);">
                     <div class="card-body">
-                        
+                        <div class="table-responsive">
+                            <table class="table text-white">
+                                <thead>
+                                    <tr style="text-align: center;">
+                                        <th>Customer Name</th>
+                                        <th>Deposit Amount</th>
+                                        <th>Payment Method</th>
+                                        <th>Transaction Status</th>
+                                        <th>Created At</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                  <?php if ($result->num_rows > 0): ?>
+                                      <?php while ($row = $result->fetch_assoc()): ?>
+                                          <tr style="text-align: center;">
+                                              <td>
+                                                  <?php echo htmlspecialchars($row['customer_name']); ?>
+                                                  <?php 
+                                                  $isNewTransaction = (strtotime($row['created_at']) > strtotime('-1 day'));
+                                                  if ($isNewTransaction): ?>
+                                                      <span style="color: orange;">(New)</span>
+                                                  <?php endif; ?>
+                                              </td>
+                                              <td><?php echo htmlspecialchars($row['deposit_amount']); ?></td>
+                                              <td><?php echo htmlspecialchars($row['payment_method']); ?></td>
+                                              <td><?php echo htmlspecialchars($row['transaction_status']); ?></td>
+                                              <td><?php echo htmlspecialchars($row['created_at']); ?></td>
+                                          </tr>
+                                      <?php endwhile; ?>
+                                  <?php else: ?>
+                                      <tr>
+                                          <td colspan="5" class="text-center">No transactions found.</td>
+                                      </tr>
+                                  <?php endif; ?>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -114,3 +174,8 @@ $schedules = $conn->query($scheduleSql);
 
 </body>
 </html>
+
+<?php
+$stmt->close();
+$conn->close();
+?>

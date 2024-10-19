@@ -69,7 +69,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && !isset($_SESSION['form_submitted']))
 
 // Remove the form submission flag after successful redirection or on next page load
 unset($_SESSION['form_submitted']);
-?>
+?>  
 
 
 <!DOCTYPE html>
@@ -83,22 +83,61 @@ unset($_SESSION['form_submitted']);
     <style>
         body {
             background-color: #17153B;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: #343a40;
+            margin: 0;
+            padding: 0;
         }
         .container-fluid {
             display: flex;
             justify-content: center;
+            align-items: center;
+            padding: 50px;
             height: 100vh;
         }
         .card {
-            max-width: 600px;
+            max-width: 700px;
             width: 90%; 
             height: auto;
-            box-shadow: 2px 2px 2px black; 
-            background-image: linear-gradient(to bottom, #030637, #3C0753);
+            box-shadow: 0 12px 30px rgba(0,0,0,0.15);
+            background-color: #ffffff;
+            border-radius: 12px;
+            padding: 40px;
+            border: 1px solid #dee2e6;
+        }
+        .form-control {
+            border-radius: 5px;
+            border: 1px solid #ced4da;
+            padding: 12px;
+            transition: border-color 0.3s;
+            width: 100%;
+        }
+        .form-control:focus {
+            border-color: #007bff;
+            box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+        }
+        label {
+            font-weight: bold;
+            margin-bottom: 8px;
+            display: block;
+        }
+        .btn {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            font-size: 16px;
+            width: 100%;
+        }
+        .btn:hover {
+            background-color: #0056b3;
         }
         @media (min-width: 768px) {
             .card {
-                width: 600px;
+                width: 700px;
             }
         }
         @media (max-width: 576px) {
@@ -111,14 +150,11 @@ unset($_SESSION['form_submitted']);
 </head>
 <body>
 
-<!-- Main wrapper Start -->
 <div id="main-wrapper">
-    <!-- Include your navigation and header -->
     <?php include('nav-header.php'); ?>
     <?php include('header.php'); ?>
     <?php include('sidebar.php'); ?>
 
-    <!-- Content Body Start -->
     <div class="content-body">
         <div class="container-fluid">
             <div class="row invoice-card-row">
@@ -126,24 +162,23 @@ unset($_SESSION['form_submitted']);
                     <div class="card mb-4">
                         <div class="card-body">
                         
-                        <!-- Booking Request Form -->
                         <form method="POST" action="" enctype="multipart/form-data">
-                            <div class="form-group mt-3">
+                            <div class="form-group">
                                 <label for="model_name">Motorcycle Model:</label>
                                 <input type="text" name="model_name" id="model_name" class="form-control" required>
                             </div>
-                            <div class="form-group mt-3">
+                            <div class="form-group">
                                 <label for="address">Address:</label>
                                 <input type="text" name="address" id="address" class="form-control" required>
                             </div>
                             <div class="row">
-                            <div class="col-md-6 col-sm-12 mt-3">
-                                <div class="form-group">
-                                    <label for="request_date">Booking Date:</label>
-                                    <input type="date" name="request_date" id="request_date" class="form-control" required>
+                                <div class="col-md-6 col-sm-12">
+                                    <div class="form-group">
+                                        <label for="request_date">Booking Date:</label>
+                                        <input type="date" name="request_date" id="request_date" class="form-control" required>
+                                    </div>
                                 </div>
-                                </div>
-                                <div class="col-md-6 col-sm-12 mt-3">
+                                <div class="col-md-6 col-sm-12">
                                     <div class="form-group">
                                         <label for="request_time">Booking Time:</label>
                                         <input type="time" name="request_time" id="request_time" class="form-control" required>
@@ -151,35 +186,32 @@ unset($_SESSION['form_submitted']);
                                 </div>
                             </div>
 
-                            <div class="form-group mt-3">
-                                 <label for="description">Description:</label>
-                                 <textarea name="description" id="description" class="form-control" rows="4" required></textarea>
-                             </div>
+                            <div class="form-group">
+                                <label for="description">Description:</label>
+                                <textarea name="description" id="description" class="form-control" rows="4" required></textarea>
+                            </div>
 
-                             <!-- Package Selection -->
-                             <div class="form-group mt-3">
-                                 <label for="package_id">Select Package:</label>
-                                 <select name="package_id" id="package_id" class="form-control" required>
-                                     <option value="">Select a package</option>
-                                     <?php foreach ($packages as $package): ?>
-                                         <option value="<?= $package['package_id'] ?>">
+                            <div class="form-group">
+                                <label for="package_id">Select Package:</label>
+                                <select name="package_id" id="package_id" class="form-control" required>
+                                    <option value="">Select a package</option>
+                                    <?php foreach ($packages as $package): ?>
+                                        <option value="<?= $package['package_id'] ?>">
                                             <?php echo 'Package ' . '('. $package['package_id'] . '): '; ?>
                                             &nbsp;
                                             <?= htmlspecialchars($package['package_name']) ?></option>
-                                     <?php endforeach; ?>
-                                 </select>
-                             </div>
-                         
+                                    <?php endforeach; ?>
+                                </select>
+                            </div>
 
-                             <!-- Multiple Image Upload Input -->
-                             <div class="form-group mt-3">
-                                 <label for="images">Upload Images:</label>
-                                 <input type="file" name="images[]" id="images" class="form-control" multiple accept="image/*">
-                             </div>
+                            <div class="form-group">
+                                <label for="images">Upload Images:</label>
+                                <input type="file" name="images[]" id="images" class="form-control" multiple accept="image/*">
+                            </div>
 
-                             <div class="sub-btn" style="display: flex; justify-content: center;">
-                                <button type="submit" class="btn btn-primary mt-3" style="background: blue; color: white; border: none; box-shadow: 1px 1px 10px black;">Submit Request</button>
-                             </div>
+                            <div class="sub-btn">
+                                <button type="submit" class="btn mt-3">Submit Request</button>
+                            </div>
                         </form>
                     </div>
                 </div>
@@ -187,12 +219,7 @@ unset($_SESSION['form_submitted']);
         </div>
     </div>
 </div>
-<!-- Content Body End -->
 
-</div>
-<!-- Main wrapper end -->
-
-<!-- Scripts -->
 <script src="vendor/global/global.min.js"></script>
 <script src="vendor/chart.js/Chart.bundle.min.js"></script>
 <script src="vendor/jquery-nice-select/js/jquery.nice-select.min.js"></script>
@@ -208,3 +235,7 @@ unset($_SESSION['form_submitted']);
 
 </body>
 </html>
+
+
+
+

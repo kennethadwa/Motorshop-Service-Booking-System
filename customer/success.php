@@ -55,6 +55,7 @@ $data = $result->fetch_assoc();
     </style>
 </head>
 <body>
+    
     <div class="receipt-card">
         <div class="receipt-header">
             <h4>Payment Receipt</h4>
@@ -66,13 +67,37 @@ $data = $result->fetch_assoc();
         <p><strong>Package No:</strong> <?php echo htmlspecialchars($data['package_id']); ?></p>
         <p><strong>Package Name:</strong> <?php echo htmlspecialchars($data['package_name']); ?></p>
         <p><strong>Duration:</strong> <?php echo htmlspecialchars($data['duration']); ?></p>
-        <p><strong>Package Price:</strong> ₱<?php echo htmlspecialchars($data['price']); ?></p>
+        <p><strong>Package Price:</strong> ₱<?php echo htmlspecialchars(number_format($data['price'], 2)); ?></p>
         <p><strong>Deposit Amount:</strong> ₱<?php echo htmlspecialchars($data['price'] / 2); ?></p>
         <p><strong>Status:</strong> Paid</p>
+        
         <div class="receipt-footer">
-            <p>Thank you for your purchase!</p>
+            <p>Thank you for your booking!</p>
             <p>*** Please keep this receipt for your records ***</p>
         </div>
+        
+        <!-- Countdown Timer -->
+        <div id="loading" class="text-center" style="margin-top: 20px;">
+            <div class="spinner-border" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+            <p>Redirecting in <span id="countdown">10</span> seconds...</p>
+        </div>
     </div>
+
+    <script>
+        let countdown = 30; // Set countdown time in seconds
+        const countdownElement = document.getElementById('countdown');
+
+        const countdownInterval = setInterval(() => {
+            countdown--;
+            countdownElement.textContent = countdown; // Update the countdown display
+            
+            if (countdown <= 0) {
+                clearInterval(countdownInterval); // Clear the interval
+                window.location.href = 'booking_history'; // Redirect to booking_history.php
+            }
+        }, 1000); // Decrement every 1000 milliseconds (1 second)
+    </script>
 </body>
 </html>

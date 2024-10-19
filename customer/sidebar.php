@@ -42,6 +42,9 @@ if ($c_customer_id) {
 ?>
 
 <style>
+    body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
     .my-profile {
         width: 100%;
         height: auto;
@@ -56,6 +59,7 @@ if ($c_customer_id) {
         height: auto;
         padding: 5px;
         border-radius: 5px;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         border: 1px solid transparent;
         background-color: #FF3EA5;
         color: white;
@@ -82,6 +86,7 @@ if ($c_customer_id) {
     .dlabnav{
         background-color: #180161;
         box-shadow: none;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     }
 
     .nav-text{

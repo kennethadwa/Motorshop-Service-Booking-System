@@ -7,7 +7,7 @@ if ($conn->connect_error) {
 }
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $employee_id = intval($_POST['employee_id']);
+    $customer_id = intval($_POST['customer_id']); // Changed from employee_id to customer_id
     $first_name = $conn->real_escape_string($_POST['first_name']);
     $last_name = $conn->real_escape_string($_POST['last_name']);
     $age = intval($_POST['age']);
@@ -18,11 +18,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $email = $conn->real_escape_string($_POST['email']);
     
     // Password handling
-    $password = $_POST['password']; // Assuming this is the new password
+    $password = $_POST['password']; // New password
     $confirm_password = $_POST['confirm_password'];
 
     // Check if password and confirm password match
-    if ($password !== $confirm_password) {
+    if (!empty($password) && $password !== $confirm_password) {
         echo "<script>
                 alert('Passwords do not match.');
                 window.history.back();
@@ -31,31 +31,35 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     // Hash the password before saving (optional but recommended)
-    $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+    $hashed_password = !empty($password) ? password_hash($password, PASSWORD_DEFAULT) : null;
 
     $profile_picture = $_FILES['profile']['name'];
-    $target_dir = "../uploads/employee_profile/";
+    $target_dir = "../uploads/customer_profile/"; // Corrected directory for customer profiles
     $target_file = $target_dir . basename($profile_picture);
 
     // Prepare the SQL query based on whether a new profile picture is uploaded
+    $sql = "UPDATE customers SET first_name='$first_name', last_name='$last_name', age='$age', birthday='$birthday', sex='$sex', 
+            contact_no='$contact_no', address='$address', email='$email'";
+
     if (!empty($profile_picture) && move_uploaded_file($_FILES['profile']['tmp_name'], $target_file)) {
-        $sql = "UPDATE employees SET first_name='$first_name', last_name='$last_name', age='$age', birthday='$birthday', sex='$sex', 
-                contact_no='$contact_no', address='$address', email='$email', profile='$target_file', password='$hashed_password' 
-                WHERE employee_id='$employee_id'";
-    } else {
-        $sql = "UPDATE employees SET first_name='$first_name', last_name='$last_name', age='$age', birthday='$birthday', sex='$sex', 
-                contact_no='$contact_no', address='$address', email='$email', password='$hashed_password' 
-                WHERE employee_id='$employee_id'";
+        $sql .= ", profile='$target_file'"; // Include profile picture only if it's uploaded
     }
+
+    // Only update password if a new one is provided
+    if ($hashed_password) {
+        $sql .= ", password='$hashed_password'"; // Add password only if it's being updated
+    }
+
+    $sql .= " WHERE customer_id='$customer_id'"; // Ensure you use the correct ID for the customers table
 
     if ($conn->query($sql) === TRUE) {
         echo "<script>
                 alert('Profile information updated successfully.');
-                window.location.href = 'profile?id={$employee_id}'; // Redirect to view_employee.php
+                window.location.href = 'profile?id={$customer_id}'; // Redirect to view_customer.php
               </script>";
         exit;
     } else {
-        echo "Error updating employee: " . $conn->error;
+        echo "Error updating customer: " . $conn->error; // Add more details if there's an error
     }
 }
 

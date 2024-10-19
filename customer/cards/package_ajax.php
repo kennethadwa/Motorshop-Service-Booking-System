@@ -4,6 +4,7 @@
     flex-wrap: wrap;
     gap: 1.5rem; /* Gap between cards */
     justify-content: center;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 .pcard {

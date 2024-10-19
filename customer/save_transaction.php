@@ -7,8 +7,10 @@ include('../connection.php');
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // Retrieve posted data
     $requestId = isset($_POST['request_id']) ? $_POST['request_id'] : 0;
-    $paymentMethod = isset($_POST['payment_method']) ? $_POST['payment_method'] : '';
-    $transactionStatus = isset($_POST['transaction_status']) ? $_POST['transaction_status'] : 'pending'; // Default status
+
+    // Set payment method to 'PayPal' by default
+    $paymentMethod = 'PayPal'; // Default value
+    $transactionStatus = 'pending'; // Default status
 
     // Fetch package price based on request_id
     $sql = "SELECT p.price FROM booking_request br 
@@ -31,8 +33,22 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $stmt->bind_param("idss", $requestId, $depositAmount, $paymentMethod, $transactionStatus);
 
         if ($stmt->execute()) {
-            // Successfully inserted
-            echo json_encode(['success' => true, 'message' => 'Transaction saved successfully.']);
+            // Successfully inserted, now update the transaction status to 'paid'
+            $transactionId = $stmt->insert_id; // Get the ID of the inserted transaction
+            
+            $updateSql = "UPDATE transactions SET transaction_status = 'paid' WHERE transaction_id = ?";
+            $updateStmt = $conn->prepare($updateSql);
+            $updateStmt->bind_param("i", $transactionId);
+
+            if ($updateStmt->execute()) {
+                // Redirect to success page after updating
+                header("Location: success.php");
+                exit();
+            } else {
+                // Handle update error
+                echo json_encode(['success' => false, 'message' => 'Error updating transaction status: ' . $updateStmt->error]);
+            }
+            $updateStmt->close();
         } else {
             // Error occurred
             echo json_encode(['success' => false, 'message' => 'Error: ' . $stmt->error]);
