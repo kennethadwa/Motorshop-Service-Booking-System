@@ -116,6 +116,7 @@ $schedules = $stmt->get_result();
                                 <table class="table table-bordered table-striped">
                                     <thead>
                                         <tr style="color: white;">
+                                            <th>Booking No.</th>
                                             <th>Customer Name</th>
                                             <th>Assigned Employee</th>
                                             <th>Scheduled Date</th>
@@ -125,27 +126,41 @@ $schedules = $stmt->get_result();
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <?php if ($schedules->num_rows > 0): ?>
-                                            <?php while ($row = $schedules->fetch_assoc()): ?>
-                                                <tr style="background: transparent;">
-                                                    <td><img src="<?php echo $row['customer_profile'];?>" alt="customer profile" width="40" height="40"                                     style="border-radius: 50%; margin-right: 10px;">  <?php echo $row['customer_name']; ?></td>
-                                                    <td><img src="<?php echo $row['employee_profile'];?>" alt="employee profile" width="50" height="40"                                     style="border-radius: 50%; margin-right: 10px;"><?php echo $row['employee_name']; ?></td>
-                                                    <td><?php echo $row['request_date']; ?></td>
-                                                    <td><?php echo $row['address']; ?></td>
-                                                    <td style="color: yellowgreen; font-weight: bold;"><?php echo ucfirst($row['status']); ?></td>
-                                                    <td class="text-center">
-                                                        <a href="view_details.php?request_id=<?php echo $row['request_id']; ?>" class="btn btn-primary" style="background: #4A249D; box-shadow: 2px 2px 5px black; border-radius: 5px; color: white; border: none;">
-                                                            <i class="fas fa-eye"></i> View
-                                                        </a>
-                                                    </td>
-                                                </tr>
-                                            <?php endwhile; ?>
-                                        <?php else: ?>
-                                            <tr style="background-color: transparent;">
-                                                <td colspan="6" class="text-center" style="color: white;">No Completed Tasks Available</td>
-                                            </tr>
-                                        <?php endif; ?>
-                                    </tbody>
+                                      <?php if ($schedules->num_rows > 0): ?>
+                                          <?php while ($row = $schedules->fetch_assoc()): ?>
+                                              <tr style="background: transparent;">
+                                                  <!-- Booking No -->
+                                                  <td><strong><?php echo $row['request_id']; ?></strong></td>
+                                  
+                                                  <!-- Customer Name -->
+                                                  <td><img src="<?php echo $row['customer_profile'];?>" alt="customer profile" width="40" height="40"                                   style="border-radius: 50%; margin-right: 10px;"> <?php echo $row['customer_name']; ?></td>
+                                  
+                                                  <!-- Assigned Employee -->
+                                                  <td><img src="<?php echo $row['employee_profile'];?>" alt="employee profile" width="50" height="40"                                   style="border-radius: 50%; margin-right: 10px;"><?php echo $row['employee_name']; ?></td>
+                                  
+                                                  <!-- Scheduled Date -->
+                                                  <td><?php echo $row['request_date']; ?></td>
+                                  
+                                                  <!-- Address -->
+                                                  <td><?php echo $row['address']; ?></td>
+                                  
+                                                  <!-- Status -->
+                                                  <td style="color: yellowgreen; font-weight: bold;"><?php echo ucfirst($row['status']); ?></td>
+                                  
+                                                  <!-- View Details Button -->
+                                                  <td class="text-center">
+                                                      <a href="view_details.php?request_id=<?php echo $row['request_id']; ?>" class="btn btn-primary"                                   style="background: #4A249D; box-shadow: 2px 2px 5px black; border-radius: 5px; color: white; border:                                   none;">
+                                                          <i class="fas fa-eye"></i> View
+                                                      </a>
+                                                  </td>
+                                              </tr>
+                                           <?php endwhile; ?>
+                                       <?php else: ?>
+                                           <tr style="background-color: transparent;">
+                                               <td colspan="6" class="text-center" style="color: white;">No Completed Tasks Available</td>
+                                           </tr>
+                                       <?php endif; ?>
+                                   </tbody>
                                 </table>
                             </div>
                         </div>

@@ -41,11 +41,22 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $updateStmt->bind_param("i", $transactionId);
 
             if ($updateStmt->execute()) {
-                // Redirect to success page after updating
-                header("Location: success.php");
-                exit();
+                // Update the booking_request table to mark the request as 'paid'
+                $updateBookingSql = "UPDATE booking_request SET status = 'paid' WHERE request_id = ?";
+                $updateBookingStmt = $conn->prepare($updateBookingSql);
+                $updateBookingStmt->bind_param("i", $requestId);
+
+                if ($updateBookingStmt->execute()) {
+                    // Redirect to success page after updating
+                    header("Location: success.php");
+                    exit();
+                } else {
+                    // Handle update error for booking_request
+                    echo json_encode(['success' => false, 'message' => 'Error updating booking status: ' . $updateBookingStmt->error]);
+                }
+                $updateBookingStmt->close();
             } else {
-                // Handle update error
+                // Handle update error for transactions
                 echo json_encode(['success' => false, 'message' => 'Error updating transaction status: ' . $updateStmt->error]);
             }
             $updateStmt->close();

@@ -92,7 +92,7 @@ if ($requestId > 0) {
 
 
 // Define the status flow
-$statusFlow = ['pending', 'approved', 'paid', 'in progress', 'completed', 'rejected'];
+$statusFlow = ['pending', 'approved', 'in progress', 'completed', 'rejected'];
 
 // Determine the current status index
 $currentIndex = array_search($status, $statusFlow);

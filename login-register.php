@@ -61,6 +61,8 @@
 </div>
 
   <script src="./js/login.js"></script>
+  <script src="https://apis.google.com/js/platform.js" async defer></script>
+
 </body>
 
 </html>

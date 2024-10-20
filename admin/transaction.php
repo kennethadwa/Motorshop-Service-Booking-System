@@ -8,7 +8,21 @@ if (!isset($_SESSION['account_type']) || $_SESSION['account_type'] != 0) {
 // Include the database connection
 include('../connection.php');
 
-// Fetch all transactions for admin, ordered by transaction date descending
+// Pagination setup
+$limit = 10; // Number of entries per page
+$page = isset($_GET['page']) ? intval($_GET['page']) : 1; // Get the current page or set default to 1
+$offset = ($page - 1) * $limit; // Calculate offset for the query
+
+// Fetch total number of rows to calculate total pages
+$total_query = "SELECT COUNT(*) AS total FROM transactions t
+                JOIN booking_request br ON t.request_id = br.request_id
+                JOIN customers c ON br.customer_id = c.customer_id";
+$total_result = $conn->query($total_query);
+$total_row = $total_result->fetch_assoc();
+$total_records = $total_row['total'];
+$total_pages = ceil($total_records / $limit);
+
+// Fetch transactions with pagination
 $sql = "SELECT 
             CONCAT(c.first_name, ' ', c.last_name) AS customer_name, 
             t.request_id, 
@@ -19,8 +33,10 @@ $sql = "SELECT
         FROM transactions t
         JOIN booking_request br ON t.request_id = br.request_id
         JOIN customers c ON br.customer_id = c.customer_id 
-        ORDER BY t.created_at DESC"; // Order by created_at descending
+        ORDER BY t.created_at DESC
+        LIMIT ? OFFSET ?"; // Limit the number of rows per page
 $stmt = $conn->prepare($sql);
+$stmt->bind_param("ii", $limit, $offset); // Bind limit and offset parameters
 $stmt->execute();
 $result = $stmt->get_result();
 ?>
@@ -103,7 +119,7 @@ $result = $stmt->get_result();
                                             <th>Payment Method</th>
                                             <th>Status</th>
                                             <th>Transaction Date</th>
-                                            <th>Action</th> <!-- Added Action column -->
+                                            <th>Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -129,6 +145,34 @@ $result = $stmt->get_result();
                                     </tbody>
                                 </table>
                             </div>
+
+                            <!-- Pagination Links -->
+                            <nav aria-label="Page navigation example">
+                                <ul class="pagination justify-content-center">
+                                    <?php if ($page > 1): ?>
+                                        <li class="page-item">
+                                            <a class="page-link" href="?page=<?php echo $page - 1; ?>" aria-label="Previous">
+                                                <span aria-hidden="true">&laquo;</span>
+                                            </a>
+                                        </li>
+                                    <?php endif; ?>
+
+                                    <?php for ($i = 1; $i <= $total_pages; $i++): ?>
+                                        <li class="page-item <?php if ($page == $i) echo 'active'; ?>">
+                                            <a class="page-link" href="?page=<?php echo $i; ?>"><?php echo $i; ?></a>
+                                        </li>
+                                    <?php endfor; ?>
+
+                                    <?php if ($page < $total_pages): ?>
+                                        <li class="page-item">
+                                            <a class="page-link" href="?page=<?php echo $page + 1; ?>" aria-label="Next">
+                                                <span aria-hidden="true">&raquo;</span>
+                                            </a>
+                                        </li>
+                                    <?php endif; ?>
+                                </ul>
+                            </nav>
+
                         </div>
                     </div>
                 </div>

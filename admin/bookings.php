@@ -53,7 +53,21 @@ function fetchBookings($status, $limit, $offset, $conn) {
 			background-color: #555;
 		}
 
-        table {
+        .card {
+            margin: 10px 0;
+            background-color: #3C0753;
+            color: white;
+            border-radius: 15px;
+            padding: 15px;
+            box-shadow: 2px 2px 5px black;
+        }
+
+        .card-header {
+            font-weight: bold;
+            border-bottom: 1px solid #DA0C81;
+        }
+
+        .table {
             border-collapse: collapse; 
             width: 100%;
         }
@@ -85,33 +99,33 @@ function fetchBookings($status, $limit, $offset, $conn) {
 	    <div class="container-fluid">		
         <div class="row">
 	            <div class="col-12" style="box-shadow: 2px 2px 2px black; background-image: linear-gradient(to bottom, #030637, #3C0753); border-radius: 20px; padding: 20px;">
-								             <div class="d-flex justify-content-end">
-                  <form id="sortForm">
-                     <label for="sort">Sort by:</label>
-                     <select id="sort" name="sort" onchange="loadTabData(document.querySelector('.nav-link.active').getAttribute('data-status'), 1)">
-                         <option value="old_requests">Old Requests</option>
-                         <option value="new_requests">New Requests</option>
-                     </select>
-                 </form>
-              </div>
+                    <div class="d-flex justify-content-end">
+                        <form id="sortForm">
+                            <label for="sort">Sort by:</label>
+                            <select id="sort" name="sort" onchange="loadTabData(document.querySelector('.nav-link.active').getAttribute('data-status'), 1)">
+                                <option value="old_requests">Old Requests</option>
+                                <option value="new_requests">New Requests</option>
+                            </select>
+                        </form>
+                    </div>
 	                <ul class="nav nav-tabs" id="bookingTabs" style="background: transparent; color: pink; font-weight: 600;">
 	                    <li class="nav-item">
-	                        <a class="nav-link active" data-status="pending" style="background: transparent; color: pink; font-weight: 600; " href="#">Pending</a>
+	                        <a class="nav-link active" data-status="pending" style="background: transparent; color: pink; font-weight: 600;" href="#">Pending</a>
 	                    </li>
 	                    <li class="nav-item">
-	                        <a class="nav-link" data-status="approved" style="background: transparent; color: pink; font-weight: 600; " href="#">Approved</a>
+	                        <a class="nav-link" data-status="approved" style="background: transparent; color: pink; font-weight: 600;" href="#">Approved</a>
 	                    </li>
                         <li class="nav-item">
-                            <a class="nav-link" style="background: transparent; color: pink; font-weight: 600; " data-status="paid" href="#">Paid</a> 
+                            <a class="nav-link" style="background: transparent; color: pink; font-weight: 600;" data-status="paid" href="#">Paid</a> 
                         </li>
 	                    <li class="nav-item">
-	                        <a class="nav-link" data-status="in progress" style="background: transparent; color: pink; font-weight: 600; " href="#">In Progress</a>
+	                        <a class="nav-link" data-status="in progress" style="background: transparent; color: pink; font-weight: 600;" href="#">In Progress</a>
 	                    </li>
 	                    <li class="nav-item">
-	                        <a class="nav-link" data-status="completed" style="background: transparent; color: pink; font-weight: 600; " href="#">Completed</a>
+	                        <a class="nav-link" data-status="completed" style="background: transparent; color: pink; font-weight: 600;" href="#">Completed</a>
 	                    </li>
 	                    <li class="nav-item">
-	                        <a class="nav-link" data-status="rejected" style="background: transparent; color: pink; font-weight: 600; " href="#">Rejected</a>
+	                        <a class="nav-link" data-status="rejected" style="background: transparent; color: pink; font-weight: 600;" href="#">Rejected</a>
 	                    </li>
 	                </ul>
 

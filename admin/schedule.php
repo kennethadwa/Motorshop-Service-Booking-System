@@ -24,7 +24,6 @@ $scheduleSql = "SELECT s.schedule_id,
                 LEFT JOIN employees e ON s.employee_id = e.employee_id
                 WHERE br.status IN ('in progress')"; 
 $schedules = $conn->query($scheduleSql);
-
 ?>
 
 <!DOCTYPE html>
@@ -100,61 +99,52 @@ $schedules = $conn->query($scheduleSql);
 
     <!-- Content Body Start -->
     <div class="content-body">
-        <div class="container-fluid">
-            <div class="row invoice-card-row">
-                <div class="col-12">
-                    <div class="card mb-4" style="box-shadow: 2px 2px 2px black; background-image: linear-gradient(to bottom, #030637, #3C0753);">
-                        <div class="card-body">
-                            <div class="d-flex justify-content-end mb-3">
-                                <a href="assign_employee" class="btn" style="background: #525CEB; box-shadow: 1px 1px 10px black; border-radius: 5px; color: white;"> <i class="fa fa-plus"></i> Assign Employee</a>
-                            </div>
-                            <div class="table-responsive">
-                                <table class="table table-bordered table-striped">
-                                    <thead>
-    <tr style="color: white; background: transparent;">
-        <th>Customer:</th>
-        <th>Assigned Employee</th>
-        <th>Scheduled Date</th>
-        <th>Address</th>
-        <th>Status</th>
-        <th>View Details</th>
-    </tr>
-</thead>
-<tbody>
-    <?php if ($schedules->num_rows > 0): ?>
-        <?php while ($row = $schedules->fetch_assoc()): ?>
-            <tr style="background: transparent; color: white;">
-                <td>
-                    <img src="<?php echo $row['customer_profile']; ?>" alt="Customer Profile" width="40" height="40" style="border-radius: 50%; margin-right: 10px;">
-                    <?php echo $row['customer_name']; ?>
-                </td>
-                <td>
-                    <img src="<?php echo $row['employee_profile']; ?>" alt="Employee Profile" width="40" height="40" style="border-radius: 50%; margin-right: 10px;">
-                    <?php echo $row['employee_name']; ?>
-                </td>
-                <td><?php echo $row['request_date'] . ' ' . $row['request_time']; ?></td>
-                <td><?php echo $row['address']; ?></td>
-                <td style="color: lightblue;"><?php echo ucfirst($row['status']); ?></td>
-                <td class="text-center">
-                    <a href="view_details.php?request_id=<?php echo $row['request_id']; ?>" class="btn" style="background: #4A249D; box-shadow: 2px 2px 5px black; border-radius: 5px; color: white; border: none;">
-                        <i class="fas fa-eye"></i> View
-                    </a>
-                </td>
-            </tr>
-        <?php endwhile; ?>
-    <?php else: ?>
-        <tr style="background-color: transparent;">
-            <td colspan="6" class="text-center" style="color: white;">No Scheduled Appointments Available</td>
-        </tr>
-    <?php endif; ?>
-</tbody>
-                                </table>
-                            </div>
+    <div class="container-fluid">
+        <div class="row invoice-card-row">
+            <div class="col-12">
+                <div class="card mb-4" style="box-shadow: 2px 2px 2px black; background-image: linear-gradient(to bottom, #030637, #3C0753);">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-end mb-3">
+                            <a href="assign_employee" class="btn" style="background: #525CEB; box-shadow: 1px 1px 10px black; border-radius: 5px; color: white;">
+                                <i class="fa fa-plus"></i> Assign Employee
+                            </a>
+                        </div>
+                        <div class="row">
+                            <?php if ($schedules->num_rows > 0): ?>
+                                <?php while ($row = $schedules->fetch_assoc()): ?>
+                                    <div class="col-lg-4 col-md-6 mb-4">
+                                        <div class="card" style="background: rgba(255, 255, 255, 0.1); border: none; box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.5);">
+                                            <div class="card-body">
+                                                <div class="d-flex align-items-center mb-3">
+                                                    <img src="<?php echo $row['customer_profile']; ?>" alt="Customer Profile" width="120" height="110" style="border-radius: 10px; margin-right: 10px;">
+                                                    <h5 class="card-title text-white"><?php echo $row['customer_name']; ?></h5>
+                                                </div>
+                                                <div class="d-flex align-items-center mb-2">
+                                                    <p class="mb-0 text-white"><strong>Assigned to: </strong><?php echo $row['employee_name']; ?></p>
+                                                </div>
+                                                <p class="text-light" style="color: lightblue;"><strong>Status: </strong> <?php echo ucfirst($row['status']); ?></p>
+                                                <div class="text-center">
+                                                    <a href="view_details.php?request_id=<?php echo $row['request_id']; ?>" class="btn" style="background: #4A249D; box-shadow: 2px 2px 5px black; border-radius: 5px; color: white; border: none;">
+                                                        <i class="fas fa-eye"></i> View
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                <?php endwhile; ?>
+                            <?php else: ?>
+                                <div class="col-12 text-center">
+                                    <div class="alert alert-light" role="alert" style="color: white;">
+                                        No Scheduled Appointments Available
+                                    </div>
+                                </div>
+                            <?php endif; ?>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
     </div>
     <!-- Content Body End -->
 

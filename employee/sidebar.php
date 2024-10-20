@@ -14,30 +14,15 @@ $firstName = isset($_SESSION['first_name']) ? $_SESSION['first_name'] : 'Guest';
 $lastName = isset($_SESSION['last_name']) ? $_SESSION['last_name'] : '';
 $emails = isset($_SESSION['email']) ? $_SESSION['email'] : 'No email available';
 
-$c_admin_id = isset($_SESSION['admin_id']) ? $_SESSION['admin_id'] : null; 
 $c_employee_id = isset($_SESSION['employee_id']) ? $_SESSION['employee_id'] : null;
-$c_customer_id = isset($_SESSION['customer_id']) ? $_SESSION['customer_id'] : null;
+
 
 
 $full_name = 'Guest';
 $profile_pictures = 'path/to/default/profile/picture.jpg'; 
 
 
-if ($c_admin_id) {
-    $admin_queries = "SELECT admin_id, first_name, last_name, profile 
-                    FROM admin 
-                    WHERE admin_id = ?";
-
-    $stmt = $conn->prepare($admin_queries);
-    $stmt->bind_param("i", $c_admin_id);
-    $stmt->execute();
-    $admin_results = $stmt->get_result();
-
-    if ($rows = $admin_results->fetch_assoc()) { 
-        $full_name = $rows['first_name'] . ' ' . $rows['last_name'];
-        $profile_pictures = $rows['profile'] ? $rows['profile'] : $profile_pictures;
-    }
-} elseif ($c_employee_id) {
+if ($c_employee_id) {
     // Fetch Employee Data
     $employee_queries = "SELECT employee_id, first_name, last_name, profile 
                        FROM employees 
@@ -52,22 +37,8 @@ if ($c_admin_id) {
         $full_name = $rows['first_name'] . ' ' . $rows['last_name'];
         $profile_pictures = $rows['profile'] ? $rows['profile'] : $profile_pictures;
     }
-} elseif ($c_customer_id) {
-    // Fetch Customer Data
-    $customer_queries = "SELECT customer_id, first_name, last_name, profile 
-                       FROM customers 
-                       WHERE customer_id = ?";
-
-    $stmt = $conn->prepare($customer_queries);
-    $stmt->bind_param("i", $c_customer_id);
-    $stmt->execute();
-    $customer_results = $stmt->get_result();
-
-    if ($rows= $customer_results->fetch_assoc()) {
-        $full_name = $rows['first_name'] . ' ' . $rows['last_name'];
-        $profile_pictures = $rows['profile'] ? $rows['profile'] : $profile_pictures;
-    }
 }
+
 ?>
 
 <style>

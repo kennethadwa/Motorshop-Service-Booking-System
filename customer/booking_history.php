@@ -36,6 +36,38 @@ include('../connection.php');
             text-align: center;
             padding: 10px;
         }
+
+        /* Flex-wrapped cards */
+        #bookingCardsContent {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px; /* Space between cards */
+            justify-content: center; /* Center cards */
+        }
+
+        .card {
+            width: 100%;
+            margin-bottom: 20px;
+            background-color: #2C2A4A;
+            color: white;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+        }
+
+        .card-body {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .card .btn {
+            background-color: #FF3FF9;
+            color: white;
+            border: none;
+            box-shadow: none;
+        }
+
     </style>
 </head>
 <body>
@@ -79,7 +111,7 @@ include('../connection.php');
 
                             <!-- Tab Content -->
                             <div class="tab-content mt-3">
-                                <div id="bookingTableContent" class="table-responsive"></div>
+                                <div id="bookingCardsContent" class="table-responsive"></div>
                             </div>
                         </div>
                     </div>
@@ -110,18 +142,6 @@ include('../connection.php');
 <script src="js/dlabnav-init.js"></script>
 <script src="js/demo.js"></script>
 <script src="js/styleSwitcher.js"></script>
-<script src="vendor/global/global.min.js"></script>
-<script src="vendor/chart.js/Chart.bundle.min.js"></script>
-<script src="vendor/jquery-nice-select/js/jquery.nice-select.min.js"></script>
-<script src="https://kit.fontawesome.com/b931534883.js" crossorigin="anonymous"></script>
-<script src="vendor/apexchart/apexchart.js"></script>
-<script src="vendor/nouislider/nouislider.min.js"></script>
-<script src="vendor/wnumb/wNumb.js"></script>
-<script src="js/dashboard/dashboard-1.js"></script>
-<script src="js/custom.min.js"></script>
-<script src="js/dlabnav-init.js"></script>
-<script src="js/demo.js"></script>
-<script src="js/styleSwitcher.js"></script>
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
@@ -140,7 +160,7 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 function loadTabData(status) {
-    const bookingTable = document.getElementById('bookingTableContent');
+    const bookingTable = document.getElementById('bookingCardsContent');
 
     // Use AJAX to load booking data without reloading
     const xhr = new XMLHttpRequest();
@@ -151,47 +171,6 @@ function loadTabData(status) {
         }
     };
     xhr.send();
-}
-</script>
-
-<script>
-let currentPage = 1; // Initialize current page
-
-document.addEventListener('DOMContentLoaded', function() {
-    loadTabData('pending', currentPage); // Load default tab content
-
-    // Handle tab switching
-    document.querySelectorAll('#bookingTabs .nav-link').forEach(function(tab) {
-        tab.addEventListener('click', function(event) {
-            event.preventDefault();
-            document.querySelector('#bookingTabs .nav-link.active').classList.remove('active');
-            tab.classList.add('active');
-            const status = tab.getAttribute('data-status');
-            currentPage = 1; // Reset to first page on status change
-            loadTabData(status, currentPage);
-        });
-    });
-});
-
-// Load booking data with status and page number
-function loadTabData(status, page) {
-    const bookingTable = document.getElementById('bookingTableContent');
-
-    // Use AJAX to load booking data without reloading
-    const xhr = new XMLHttpRequest();
-    xhr.open('GET', `load_bookings.php?status=${status}&page=${page}`, true);
-    xhr.onreadystatechange = function() {
-        if (xhr.readyState === 4 && xhr.status === 200) {
-            bookingTable.innerHTML = xhr.responseText;
-        }
-    };
-    xhr.send();
-}
-
-// Function to handle pagination click
-function changePage(status, page) {
-    currentPage = page; // Update current page
-    loadTabData(status, currentPage); // Load new data
 }
 </script>
 

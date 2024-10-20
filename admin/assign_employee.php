@@ -82,7 +82,7 @@ $requests = $conn->query($requestSql);
                 <div class="col-md-6">
                     <div class="card" style="box-shadow: 2px 2px 2px black; background-color: rgba(0, 0, 0, 0.151);">
                         <div class="card-body">
-                            <form action="assign_employee_process" method="POST">
+                            <form action="assign_employee_process.php" method="POST">
                                 <div class="mb-3">
                                     <label for="employee" class="form-label">Assign Employee</label>
                                     <select id="employee" name="employee_id" class="form-select select2" required>
