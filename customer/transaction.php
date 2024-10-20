@@ -12,6 +12,7 @@ include('../connection.php');
 $customerId = $_SESSION['customer_id'];
 
 // Fetch transactions for the logged-in customer
+// Fetch transactions for the logged-in customer
 $sql = "SELECT CONCAT(c.first_name, ' ', c.last_name) AS customer_name, 
                t.deposit_amount, 
                t.payment_method, 
@@ -19,8 +20,10 @@ $sql = "SELECT CONCAT(c.first_name, ' ', c.last_name) AS customer_name,
                t.created_at 
         FROM transactions t
         JOIN booking_request br ON t.request_id = br.request_id
-        JOIN customers c ON br.customer_id = c.customer_id  -- Joining with the customers table
-        WHERE br.customer_id = ?";
+        JOIN customers c ON br.customer_id = c.customer_id
+        WHERE br.customer_id = ?
+        ORDER BY t.created_at DESC";  // Orders by created_at in descending order
+
 $stmt = $conn->prepare($sql);
 $stmt->bind_param("i", $customerId);
 $stmt->execute();
@@ -62,18 +65,18 @@ $result = $stmt->get_result();
             background-color: #555;
         }
         .table {
-            border: none; /* Remove default table border */
+            border: none; 
         }
         .table th,
         .table td {
-            border: none; /* Remove default border for cells */
-            padding: 15px; /* Add some padding */
+            border: none; 
+            padding: 15px; 
         }
         .table tr {
-            border-bottom: 1px solid white; /* Add a bottom border for each row */
+            border-bottom: 1px dashed white; 
         }
         .table tr:last-child {
-            border-bottom: none; /* Remove the bottom border for the last row */
+            border-bottom: none; 
         }
         .new-badge {
             color: orange;
@@ -102,7 +105,7 @@ $result = $stmt->get_result();
     <div class="container-fluid">
         <div class="row invoice-card-row">
             <div class="col-12">
-                <div class="card mb-4" style="box-shadow: 2px 2px 2px black; background-image: linear-gradient(to bottom, #030637, #3C0753);">
+                <div class="card mb-4" style="box-shadow: none; border: 1px dashed white; background: none;">
                     <div class="card-body">
                         <div class="table-responsive">
                             <table class="table text-white">

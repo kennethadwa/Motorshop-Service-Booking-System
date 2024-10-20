@@ -2,6 +2,12 @@
 session_start();
 include('../connection.php');
 
+// Include PHPMailer files
+require '../vendor/autoload.php';
+
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+
 // Get request ID
 $requestId = isset($_GET['request_id']) ? $_GET['request_id'] : 0;
 
@@ -18,6 +24,51 @@ $stmt->bind_param("i", $requestId);
 $stmt->execute();
 $result = $stmt->get_result();
 $data = $result->fetch_assoc();
+
+// Send receipt email
+if ($data) {
+    // PHPMailer for sending the email
+    $mail = new PHPMailer(true);
+
+    try {
+        // Server settings
+        $mail->isSMTP();
+        $mail->Host = 'smtp.gmail.com';
+        $mail->SMTPAuth = true;
+        $mail->Username = 'kennetics1@gmail.com'; // Your email address
+        $mail->Password = 'bcvn mqgw jxlf gmin'; // Your email password
+        $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+        $mail->Port = 587;
+
+        // Recipients
+        $mail->setFrom('kennetics1@gmail.com', 'Sairom Motorshop');
+        $mail->addAddress($data['email']); // Customer's email address
+
+        // Content
+        $mail->isHTML(true);
+        $mail->Subject = 'Payment Receipt - Booking No. ' . $requestId;
+        $mail->Body = "
+            <h4>Payment Receipt</h4>
+            <p><strong>Customer Name:</strong> " . htmlspecialchars($data['first_name'] . ' ' . $data['last_name']) . "</p>
+            <p><strong>Contact No:</strong> " . htmlspecialchars($data['contact_no']) . "</p>
+            <p><strong>Address:</strong> " . htmlspecialchars($data['address']) . "</p>
+            <p><strong>Email Address:</strong> " . htmlspecialchars($data['email']) . "</p>
+            <p><strong>Package No:</strong> " . htmlspecialchars($data['package_id']) . "</p>
+            <p><strong>Package Name:</strong> " . htmlspecialchars($data['package_name']) . "</p>
+            <p><strong>Duration:</strong> " . htmlspecialchars($data['duration']) . "</p>
+            <p><strong>Package Price:</strong> ₱" . htmlspecialchars(number_format($data['price'], 2)) . "</p>
+            <p><strong>Deposit Amount:</strong> ₱" . htmlspecialchars(number_format($data['price'] / 2, 2)) . "</p>
+            <p><strong>Status:</strong> Paid</p>
+            <p>Thank you for your booking!</p>
+            <p>*** Please keep this receipt for your records ***</p>
+        ";
+
+        // Send the email
+        $mail->send();
+    } catch (Exception $e) {
+        echo 'Email could not be sent. Mailer Error: ' . $mail->ErrorInfo;
+    }
+}
 ?>
 
 <!DOCTYPE html>
@@ -68,7 +119,7 @@ $data = $result->fetch_assoc();
         <p><strong>Package Name:</strong> <?php echo htmlspecialchars($data['package_name']); ?></p>
         <p><strong>Duration:</strong> <?php echo htmlspecialchars($data['duration']); ?></p>
         <p><strong>Package Price:</strong> ₱<?php echo htmlspecialchars(number_format($data['price'], 2)); ?></p>
-        <p><strong>Deposit Amount:</strong> ₱<?php echo htmlspecialchars($data['price'] / 2); ?></p>
+        <p><strong>Deposit Amount:</strong> ₱<?php echo htmlspecialchars(number_format($data['price'] / 2, 2)); ?></p>
         <p><strong>Status:</strong> Paid</p>
         
         <div class="receipt-footer">

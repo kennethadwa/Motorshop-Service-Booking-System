@@ -52,12 +52,12 @@ th, td {
 }
 
 tr {
-    border-bottom: 1px solid #ddd; 
+    border-bottom: 1px dashed #ddd; 
 }
 
 th {
     background-color: #f2f2f2;
-    border-bottom: 2px solid #ddd; 
+    border-bottom: 2px dashed #ddd; 
 }
 
         .profile-picture {
@@ -114,13 +114,13 @@ th {
     <div class="content-body">
         <div class="container-fluid">
             <div class="row invoice-card-row">
-                <!-- Manage Account Card Start -->
-                <div class="col-12"> <!-- Full width for all devices -->
-                    <div class="card" style="box-shadow: 2px 2px 2px black; background-image: linear-gradient(to bottom, #030637, #3C0753);">
+               
+                <div class="col-12"> 
+                    <div class="card" style="box-shadow: none; border: 1px dashed white; background: transparent;">
                         <div class="card-body">                                     
                             <div class="row align-items-center mb-3">
-                                <div class="col-md-12 text-md-end"> <!-- Align text to the end on larger screens -->
-                                    <!-- Dynamic Add Button based on selected tab -->
+                                <div class="col-md-12 text-md-end">
+                                    
                                     <button id="addUserBtn" class="btn" style="background: #525CEB; box-shadow: 1px 1px 10px black; border-radius: 5px; color: white;">
                                         <i class="fa fa-plus"></i> Add User
                                     </button>

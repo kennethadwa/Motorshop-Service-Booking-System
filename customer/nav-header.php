@@ -7,7 +7,7 @@ exit();
 
 <style>
     .nav-header{
-        background-color: #180161;
+        background-color: #2B2A4C;
         box-shadow: none;
     }
 </style>

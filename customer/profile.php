@@ -87,7 +87,7 @@ if (!isset($_SESSION['account_type']) || $_SESSION['account_type'] != 2) {
         <div class="container-fluid">
             <div class="row justify-content-center align-items-center">
                 <div class="col-lg-7 col-md-10 col-sm-12"> <!-- Responsive columns -->
-                    <div class="card" style="box-shadow: none;">
+                    <div class="card" style="box-shadow: none; background: #2B2A4C; color: white;">
                         <div class="card-body row justify-content-center">
                             <?php
                             // Database connection

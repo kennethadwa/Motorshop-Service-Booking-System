@@ -124,7 +124,7 @@ $conn->close();
         <div class="container-fluid">
             <div class="row justify-content-center align-items-center">
                 <div class="col-lg-7 col-md-10 col-sm-12"> <!-- Responsive columns -->
-                    <div class="card" style="box-shadow: 2px 2px 5px black; background-image: linear-gradient(to bottom, #030637, #3C0753);">
+                    <div class="card" style="box-shadow: 1px 1px 10px black; background: transparent;">
                         <div class="card-body row justify-content-center">
                             <?php if (isset($error_message)): ?>
                                 <p><?php echo $error_message; ?></p>
@@ -144,9 +144,9 @@ $conn->close();
 
                             <!-- Action Buttons -->
                             <div class="col-12 text-center mt-4">
-                                <a href="index" class="btn btn-warning action-btn" style="box-shadow: none; border: none; background: orange;"><i class="fas fa-arrow-left"></i></a>
+                                <a href="index" class="btn btn-warning action-btn" style="box-shadow: none; border: none; background: orange;"><i class="fas fa-arrow-left"></i> Back</a>
                                 <?php if (isset($admin_id)): ?>
-                                    <a href="update_profile?id=<?php echo $admin_id; ?>" class="btn btn-success action-btn" style="box-shadow: none; border: none; background: green;"><i class="fa-solid fa-pen-nib" style="color: #ffffff;"></i></a>
+                                    <a href="update_profile?id=<?php echo $admin_id; ?>" class="btn btn-success action-btn" style="box-shadow: none; border: none; background: green;"><i class="fa-solid fa-pen-nib" style="color: #ffffff;"></i> Update</a>
                                 <?php endif; ?>
                             </div>
                         </div>

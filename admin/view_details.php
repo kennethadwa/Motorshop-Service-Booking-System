@@ -7,6 +7,7 @@ if (!isset($_SESSION['account_type']) || $_SESSION['account_type'] != 0) {
 
 include('../connection.php');
 
+
 // Fetch booking request data based on request_id
 $requestId = isset($_GET['request_id']) ? intval($_GET['request_id']) : 0;
 
@@ -72,6 +73,8 @@ if ($requestId > 0) {
     $imageStmt->bind_param("i", $requestId);
     $imageStmt->execute();
     $imageResult = $imageStmt->get_result();
+
+    include('booking_confirmation.php');
 
     // Handle status update
     if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['status'])) {

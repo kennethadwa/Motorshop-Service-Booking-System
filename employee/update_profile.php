@@ -25,8 +25,10 @@ if (!isset($_SESSION['account_type']) || $_SESSION['account_type'] != 1) {
         }
         .card {
             width: 100%;
-            max-width: 600px;
+            max-width: 800px; /* Increased max-width for better layout */
             margin: auto;
+            background: #2B2A4C;
+            box-shadow: none;
         }
         .form-group {
             margin-bottom: 15px;
@@ -53,28 +55,24 @@ if (!isset($_SESSION['account_type']) || $_SESSION['account_type'] != 1) {
             object-fit: cover;
             border: 2px solid #ccc;
         }
-
-        body{
-	  background-color: #17153B;
-	}
-
-			::-webkit-scrollbar {
-         width: 18px; 
-      }
-
-      ::-webkit-scrollbar-track {
-          background: #17153B;
-      }
-      
-      ::-webkit-scrollbar-thumb {
-          background-color: #DA0C81; 
-          border-radius: 10px; 
-          border: 2px solid #DA0C81; 
-      }
-
-      ::-webkit-scrollbar-thumb:hover {
-          background-color: #555;
-      }
+        body {
+            background-color: #17153B;
+        }
+        /* Scrollbar styles */
+        ::-webkit-scrollbar {
+            width: 18px; 
+        }
+        ::-webkit-scrollbar-track {
+            background: #17153B;
+        }
+        ::-webkit-scrollbar-thumb {
+            background-color: #DA0C81; 
+            border-radius: 10px; 
+            border: 2px solid #DA0C81; 
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background-color: #555;
+        }
     </style>
 </head>
 <body>
@@ -97,7 +95,7 @@ if (!isset($_SESSION['account_type']) || $_SESSION['account_type'] != 1) {
     <div class="content-body">
         <div class="container-fluid">
             <div class="col-lg-12 col-md-10 col-sm-12"> 
-                <div class="card" style="box-shadow: 2px 2px 2px black; background-image: linear-gradient(to bottom, #030637, #3C0753);">
+                <div class="card" style="background: transparent;">
                     <div class="card-body">
                         <?php
                         // Database connection
@@ -106,6 +104,18 @@ if (!isset($_SESSION['account_type']) || $_SESSION['account_type'] != 1) {
                         if ($conn->connect_error) {
                             die("Connection failed: " . $conn->connect_error);
                         }
+
+                        // Initialize variables
+                        $row = [];
+                        $full_name = '';
+                        $contact_no = '';
+                        $address = '';
+                        $email = '';
+                        $profile_picture = 'uploads/employee_profile/default_profile.jpg'; // Default profile picture
+                        $account_type = '';
+                        $age = '';
+                        $birthday = '';
+                        $sex = '';
 
                         // Fetch employee data based on employee_id
                         if (isset($_GET['id'])) {
@@ -119,7 +129,7 @@ if (!isset($_SESSION['account_type']) || $_SESSION['account_type'] != 1) {
                                 $contact_no = $row['contact_no'];
                                 $address = $row['address'];
                                 $email = $row['email'];
-                                $profile_picture = !empty($row['profile']) ? $row['profile'] : 'uploads/employee_profile/default_profile.jpg'; 
+                                $profile_picture = !empty($row['profile']) ? $row['profile'] : $profile_picture; 
                                 $account_type = $row['account_type']; 
                                 $age = $row['age'];
                                 $birthday = $row['birthday'];
@@ -135,67 +145,79 @@ if (!isset($_SESSION['account_type']) || $_SESSION['account_type'] != 1) {
                         ?>
 
                         <div class="profile-picture-wrapper">
-                            <img src="<?php echo $profile_picture; ?>" alt="Profile Picture" class="profile-picture">
+                            <img src="<?php echo $profile_picture; ?>" alt="Profile Picture" class="profile-picture" style="width: 130px; height: 120px; border-radius: 10px;">
                         </div>
 
                         <form action="update_profile_process.php" method="POST" enctype="multipart/form-data">
-                            <input type="hidden" name="employee_id" value="<?php echo $employee_id; ?>">
-                            <div class="form-group">
-                                <label for="first_name">First Name:</label>
-                                <input type="text" name="first_name" value="<?php echo $row['first_name']; ?>" class="form-control" required>
+                            <input type="hidden" name="employee_id" value="<?php echo isset($employee_id) ? $employee_id : ''; ?>">
+                            <div class="row">
+                                <!-- Left Column -->
+
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="first_name">First Name:</label>
+                                        <input type="text" name="first_name" style="background-color: transparent; color: white;" value="<?php echo isset($row['first_name']) ? $row['first_name'] : ''; ?>" class="form-control">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="last_name">Last Name:</label>
+                                        <input type="text" name="last_name" style="background-color: transparent; color: white;" value="<?php echo isset($row['last_name']) ? $row['last_name'] : ''; ?>" class="form-control">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="age">Age:</label>
+                                        <input type="number" name="age" style="background-color: transparent; color: white;" value="<?php echo $age; ?>" class="form-control">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="birthday">Birthday:</label>
+                                        <input type="date" style="background-color: transparent; color: white;" name="birthday" value="<?php echo $birthday; ?>" class="form-control">
+                                    </div>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="sex">Sex:</label>
+                                        <select name="sex" style="background-color: transparent; color: white;" class="form-control">
+                                            <option value="Male" <?php echo $sex == 'Male' ? 'selected' : ''; ?>>Male</option>
+                                            <option value="Female" <?php echo $sex == 'Female' ? 'selected' : ''; ?>>Female</option>
+                                            <option value="Other" <?php echo $sex == 'Other' ? 'selected' : ''; ?>>Other</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="contact_no">Contact Number:</label>
+                                        <input type="text" style="background-color: transparent; color: white;" name="contact_no" value="<?php echo $contact_no; ?>" class="form-control">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="address">Address:</label>
+                                        <input type="text" style="background-color: transparent; color: white;" name="address" value="<?php echo $address; ?>" class="form-control">
+                                    </div>
+                                </div>
+
+                                <!-- Right Column -->
+                                <div class="col-md-4">       
+                                    <div class="form-group">
+                                        <label for="email">Email:</label>
+                                        <input type="email" style="background-color: transparent; color: white;" name="email" value="<?php echo $email; ?>" class="form-control">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="password">Password:</label>
+                                        <input type="password" style="background-color: transparent; color: white;" name="password" class="form-control">
+                                        <small>Leave blank to keep the current password.</small>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="confirm_password">Confirm Password:</label>
+                                        <input type="password" style="background-color: transparent; color: white;" name="confirm_password" class="form-control">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="profile">Profile Picture:</label>
+                                        <input type="file" style="background-color: transparent; color: white;" name="profile" class="form-control-file">
+                                    </div>
+                                </div>
                             </div>
-                            <div class="form-group">
-                                <label for="last_name">Last Name:</label>
-                                <input type="text" name="last_name" value="<?php echo $row['last_name']; ?>" class="form-control" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="age">Age:</label>
-                                <input type="number" name="age" value="<?php echo $age; ?>" class="form-control" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="birthday">Birthday:</label>
-                                <input type="date" name="birthday" value="<?php echo $birthday; ?>" class="form-control" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="sex">Sex:</label>
-                                <select name="sex" class="form-control" required>
-                                    <option value="Male" <?php echo $sex == 'Male' ? 'selected' : ''; ?>>Male</option>
-                                    <option value="Female" <?php echo $sex == 'Female' ? 'selected' : ''; ?>>Female</option>
-                                    <option value="Other" <?php echo $sex == 'Other' ? 'selected' : ''; ?>>Other</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label for="contact_no">Contact Number:</label>
-                                <input type="text" name="contact_no" value="<?php echo $contact_no; ?>" class="form-control" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="address">Address:</label>
-                                <input type="text" name="address" value="<?php echo $address; ?>" class="form-control" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="email">Email:</label>
-                                <input type="email" name="email" value="<?php echo $email; ?>" class="form-control" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="password">Password:</label>
-                                <input type="password" name="password" class="form-control">
-                                <small>Leave blank to keep the current password.</small>
-                            </div>
-                            <div class="form-group">
-                                <label for="confirm_password">Confirm Password:</label>
-                                <input type="password" name="confirm_password" class="form-control">
-                            </div>
-                            <div class="form-group">
-                                <label for="profile">Profile Picture:</label>
-                                <input type="file" name="profile" class="form-control-file">
-                            </div>
+
                             <div class="text-center">
-                                <a href="profile?id=<?php echo $employee_id; ?>" class="btn" style="box-shadow: none; border: none; background: orange;"> <i class="fas fa-arrow-left"></i></a>
-                                &nbsp;
-                                <button type="submit" class="btn" style="box-shadow: none; border: none; background: green;"><i class="fa-solid fa-pen-nib" style="color: #ffffff;"></i></button>
+                                <a href="profile?id=<?php echo isset($employee_id) ? $employee_id : ''; ?>" class="btn btn-warning"> <i class="fa fa-arrow-left"></i> Back </a>
+                                <button type="submit" class="btn btn-primary">Update</button>
                             </div>
                         </form>
-
                     </div>
                 </div>
             </div>
@@ -203,7 +225,7 @@ if (!isset($_SESSION['account_type']) || $_SESSION['account_type'] != 1) {
     </div>
     <!-- Content Body End -->
 </div>
-<!-- Main wrapper end -->
+<!-- Main wrapper End -->
 
 <!-- Scripts -->
 <script src="vendor/global/global.min.js"></script>

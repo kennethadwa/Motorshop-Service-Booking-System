@@ -61,13 +61,13 @@ if ($c_customer_id) {
         border-radius: 5px;
         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         border: 1px solid transparent;
-        background-color: #FF3EA5;
+        background-color: #F86F03;
         color: white;
         transition: 0.3s ease-in;
     }
 
     .profileBtn:hover {
-        background: #FF3FF9;
+        background: #FF9F29;
         color: white;
     }
 
@@ -84,7 +84,7 @@ if ($c_customer_id) {
     }
 
     .dlabnav{
-        background-color: #180161;
+        background-color: #2B2A4C;
         box-shadow: none;
         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     }
@@ -121,7 +121,7 @@ if ($c_customer_id) {
     }
 
     .header-profile{
-        background-color: #2E236C;
+        background-color: #3C486B;
         margin: 0;
     }
 

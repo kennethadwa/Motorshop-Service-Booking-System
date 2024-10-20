@@ -8,6 +8,21 @@ if (!isset($_SESSION['account_type']) || $_SESSION['account_type'] != 0) {
 // Include the database connection
 include('../connection.php'); 
 
+// Pagination setup
+$limit = 10; // Number of cards per page
+$page = isset($_GET['page']) ? $_GET['page'] : 1; // Current page number
+$offset = ($page - 1) * $limit; // Offset calculation
+
+// Query to get total number of records
+$countSql = "SELECT COUNT(*) AS total_records 
+             FROM schedule s
+             LEFT JOIN booking_request br ON s.booking_id = br.request_id
+             WHERE br.status IN ('in progress')";
+$result = $conn->query($countSql);
+$total_records = $result->fetch_assoc()['total_records'];
+$total_pages = ceil($total_records / $limit);
+
+// Query to fetch schedules with pagination and sorting by descending order
 $scheduleSql = "SELECT s.schedule_id, 
                        c.profile AS customer_profile,
                        CONCAT(c.first_name, ' ', c.last_name) AS customer_name,
@@ -22,7 +37,9 @@ $scheduleSql = "SELECT s.schedule_id,
                 LEFT JOIN booking_request br ON s.booking_id = br.request_id
                 LEFT JOIN customers c ON br.customer_id = c.customer_id
                 LEFT JOIN employees e ON s.employee_id = e.employee_id
-                WHERE br.status IN ('in progress')"; 
+                WHERE br.status IN ('in progress')
+                ORDER BY s.schedule_id DESC
+                LIMIT $limit OFFSET $offset"; 
 $schedules = $conn->query($scheduleSql);
 ?>
 
@@ -78,6 +95,7 @@ $schedules = $conn->query($scheduleSql);
         ::-webkit-scrollbar-thumb:hover {
             background-color: #555;
         }
+        
     </style>
 </head>
 <body>
@@ -102,9 +120,9 @@ $schedules = $conn->query($scheduleSql);
     <div class="container-fluid">
         <div class="row invoice-card-row">
             <div class="col-12">
-                <div class="card mb-4" style="box-shadow: 2px 2px 2px black; background-image: linear-gradient(to bottom, #030637, #3C0753);">
+                <div class="card mb-4" style="box-shadow: none; background: transparent;">
                     <div class="card-body">
-                        <div class="d-flex justify-content-end mb-3">
+                        <div class="d-flex justify-content-end mb-5">
                             <a href="assign_employee" class="btn" style="background: #525CEB; box-shadow: 1px 1px 10px black; border-radius: 5px; color: white;">
                                 <i class="fa fa-plus"></i> Assign Employee
                             </a>
@@ -113,16 +131,16 @@ $schedules = $conn->query($scheduleSql);
                             <?php if ($schedules->num_rows > 0): ?>
                                 <?php while ($row = $schedules->fetch_assoc()): ?>
                                     <div class="col-lg-4 col-md-6 mb-4">
-                                        <div class="card" style="background: rgba(255, 255, 255, 0.1); border: none; box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.5);">
+                                        <div class="card" style="background: rgba(0, 0, 0, 0.473); border: none; box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.5); display: flex; flex-direction: column; align-items: center; justify-content:center;">
                                             <div class="card-body">
-                                                <div class="d-flex align-items-center mb-3">
-                                                    <img src="<?php echo $row['customer_profile']; ?>" alt="Customer Profile" width="120" height="110" style="border-radius: 10px; margin-right: 10px;">
-                                                    <h5 class="card-title text-white"><?php echo $row['customer_name']; ?></h5>
+                                                <div class="d-flex align-items-center mb-3 justify-content-center">
+                                                    <h5 class="card-title text-white">Booking No. <?php echo $row['request_id']; ?></h5>
                                                 </div>
                                                 <div class="d-flex align-items-center mb-2">
-                                                    <p class="mb-0 text-white"><strong>Assigned to: </strong><?php echo $row['employee_name']; ?></p>
+                                                    <p style="color: lightblue;"><strong style="color: white; font-weight: 600;">Assigned to: </strong><?php echo $row['employee_name']; ?></p>
                                                 </div>
-                                                <p class="text-light" style="color: lightblue;"><strong>Status: </strong> <?php echo ucfirst($row['status']); ?></p>
+                                                <p style="color: lightblue;"> <strong style="color: white; font-weight: 600;">Requested Date:</strong> <?php echo $row['request_date'] ?></p>
+                                                <p style="color: lightblue;"><strong style="color: white; font-weight: 600;">Status: </strong> <?php echo ucfirst($row['status']); ?></p>
                                                 <div class="text-center">
                                                     <a href="view_details.php?request_id=<?php echo $row['request_id']; ?>" class="btn" style="background: #4A249D; box-shadow: 2px 2px 5px black; border-radius: 5px; color: white; border: none;">
                                                         <i class="fas fa-eye"></i> View
@@ -139,6 +157,33 @@ $schedules = $conn->query($scheduleSql);
                                     </div>
                                 </div>
                             <?php endif; ?>
+                        </div>
+                        
+                        <!-- Pagination Links -->
+                        <div class="d-flex justify-content-center mt-4">
+                            <nav aria-label="Page navigation">
+                                <ul class="pagination">
+                                    <?php if ($page > 1): ?>
+                                        <li class="page-item">
+                                            <a class="page-link" href="?page=<?php echo $page - 1; ?>" aria-label="Previous">
+                                                <span aria-hidden="true">&laquo;</span>
+                                            </a>
+                                        </li>
+                                    <?php endif; ?>
+                                    <?php for ($i = 1; $i <= $total_pages; $i++): ?>
+                                        <li class="page-item <?php echo ($i == $page) ? 'active' : ''; ?>">
+                                            <a class="page-link" href="?page=<?php echo $i; ?>"><?php echo $i; ?></a>
+                                        </li>
+                                    <?php endfor; ?>
+                                    <?php if ($page < $total_pages): ?>
+                                        <li class="page-item">
+                                            <a class="page-link" href="?page=<?php echo $page + 1; ?>" aria-label="Next">
+                                                <span aria-hidden="true">&raquo;</span>
+                                            </a>
+                                        </li>
+                                    <?php endif; ?>
+                                </ul>
+                            </nav>
                         </div>
                     </div>
                 </div>

@@ -98,7 +98,7 @@ if (!isset($_SESSION['account_type']) || $_SESSION['account_type'] != 0) {
     <div class="content-body">
         <div class="container-fluid">
             <div class="col-lg-12 col-md-10 col-sm-12"> 
-                <div class="card" style="box-shadow: 2px 2px 2px black; background-image: linear-gradient(to bottom, #030637, #3C0753);">
+                <div class="card" style="box-shadow: none; background: transparent;">
                     <div class="card-body">
                         <?php
                         // Database connection
@@ -130,7 +130,7 @@ if (!isset($_SESSION['account_type']) || $_SESSION['account_type'] != 0) {
                         ?>
 
                         <div class="profile-picture-wrapper">
-                            <img src="<?php echo $profile_picture; ?>" alt="Profile Picture" class="profile-picture">
+                            <img src="<?php echo $profile_picture; ?>" alt="Profile Picture" class="profile-picture" style="width: 130px; height: 120px; border-radius: 10px;">
                         </div>
 
                         <form action="update_customer_account_process.php" method="POST" enctype="multipart/form-data">
@@ -138,15 +138,15 @@ if (!isset($_SESSION['account_type']) || $_SESSION['account_type'] != 0) {
 
                             <div class="form-group">
                                 <label for="email">Email:</label>
-                                <input type="email" name="email" value="<?php echo $email; ?>" class="form-control">
+                                <input type="email" style="background-color: transparent; color: white;" name="email" value="<?php echo $email; ?>" class="form-control">
                             </div>
                             <div class="form-group">
                                 <label for="password">Password:</label>
-                                <input type="password" name="password" class="form-control">
+                                <input type="password" style="background-color: transparent; color: white;" name="password" class="form-control">
                             </div>
                             <div class="form-group">
                                 <label for="confirm_password">Confirm Password:</label>
-                                <input type="password" name="confirm_password" class="form-control">
+                                <input type="password" style="background-color: transparent; color: white;" name="confirm_password" class="form-control">
                             </div>
                             <div class="form-group">
                                 <label for="profile">Profile Picture:</label>
@@ -154,15 +154,15 @@ if (!isset($_SESSION['account_type']) || $_SESSION['account_type'] != 0) {
                             </div>
                             <div class="form-group">
                                 <label for="account_type">Account Type:</label>
-                                <select name="account_type" class="form-control">
+                                <select name="account_type" style="background-color: transparent; color: white;" class="form-control">
                                     <option value="2" <?php echo ($account_type == 2) ? 'selected' : ''; ?>>Customer</option>
                                 </select>
                             </div>
                             <div class="text-center">
 
-                                <a href="manage-account.php" class="btn btn-warning" style="box-shadow: none; border: none; background: orange;"> <i class="fas fa-arrow-left"></i></a>
+                                <a href="manage-account.php" class="btn" style="box-shadow: none; border: none; background: orange; color: white;"> <i class="fas fa-arrow-left"></i> Back</a>
                                 &nbsp;
-                                <button type="submit" class="btn btn-primary" style="box-shadow: none; border: none; background: green;"><i class="fa-solid fa-pen-nib" style="color: #ffffff;"></i></button>
+                                <button type="submit" class="btn" style="box-shadow: none; border: none; background: green; color: white;"><i class="fa-solid fa-pen-nib" style="color: #ffffff;"></i> Update</button>
                                 
                         </form>
 

@@ -87,7 +87,7 @@ if (!isset($_SESSION['account_type']) || $_SESSION['account_type'] != 0) {
         <div class="container-fluid">
             <div class="row justify-content-center align-items-center">
                 <div class="col-lg-7 col-md-10 col-sm-12"> <!-- Responsive columns -->
-                    <div class="card" style="box-shadow: 2px 2px 2px black; background-image: linear-gradient(to bottom, #030637, #3C0753);">
+                    <div class="card" style="box-shadow: 1px 1px 10px black; background: transparent;">
                         <div class="card-body row justify-content-center">
                             <?php
                             // Database connection
@@ -138,7 +138,7 @@ if (!isset($_SESSION['account_type']) || $_SESSION['account_type'] != 0) {
                             
                             <!-- Action Buttons -->
                             <div class="col-12 text-center mt-4">
-                                <a href="user-information" class="btn action-btn" style="box-shadow: none; border: none; background: orange;"> <i class="fas fa-arrow-left"></i></a>
+                                <a href="user-information" class="btn action-btn" style="box-shadow: none; border: none; background: orange; color: white;"> <i class="fas fa-arrow-left"></i> Back</a>
                             </div>
                         </div>
                     </div>

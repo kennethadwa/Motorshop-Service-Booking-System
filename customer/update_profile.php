@@ -25,8 +25,10 @@ if (!isset($_SESSION['account_type']) || $_SESSION['account_type'] != 2) {
         }
         .card {
             width: 100%;
-            max-width: 600px;
+            max-width: 100%;
             margin: auto;
+            background: #2B2A4C;
+            box-shadow: none;
         }
         .form-group {
             margin-bottom: 15px;
@@ -53,6 +55,24 @@ if (!isset($_SESSION['account_type']) || $_SESSION['account_type'] != 2) {
             object-fit: cover;
             border: 2px solid #ccc;
         }
+        body {
+            background-color: #17153B;
+        }
+        /* Scrollbar styles */
+        ::-webkit-scrollbar {
+            width: 18px; 
+        }
+        ::-webkit-scrollbar-track {
+            background: #17153B;
+        }
+        ::-webkit-scrollbar-thumb {
+            background-color: #DA0C81; 
+            border-radius: 10px; 
+            border: 2px solid #DA0C81; 
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background-color: #555;
+        }
     </style>
 </head>
 <body>
@@ -75,7 +95,7 @@ if (!isset($_SESSION['account_type']) || $_SESSION['account_type'] != 2) {
     <div class="content-body">
         <div class="container-fluid">
             <div class="col-lg-12 col-md-10 col-sm-12"> 
-                <div class="card">
+                <div class="card" style="background: transparent;">
                     <div class="card-body">
                         <?php
                         // Database connection
@@ -125,60 +145,75 @@ if (!isset($_SESSION['account_type']) || $_SESSION['account_type'] != 2) {
                         ?>
 
                         <div class="profile-picture-wrapper">
-                            <img src="<?php echo $profile_picture; ?>" alt="Profile Picture" class="profile-picture">
+                            <img src="<?php echo $profile_picture; ?>" alt="Profile Picture" class="profile-picture" style="width: 130px; height: 120px; border-radius: 10px;">
                         </div>
 
                         <form action="update_profile_process.php" method="POST" enctype="multipart/form-data">
                             <input type="hidden" name="customer_id" value="<?php echo isset($customer_id) ? $customer_id : ''; ?>">
-                            <div class="form-group">
-                                <label for="first_name">First Name:</label>
-                                <input type="text" name="first_name" value="<?php echo isset($row['first_name']) ? $row['first_name'] : ''; ?>" class="form-control">
+                            <div class="row">
+                                <!-- Left Column -->
+
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="first_name">First Name:</label>
+                                        <input type="text" name="first_name" style="background-color: transparent; color: white;" value="<?php echo isset($row['first_name']) ? $row['first_name'] : ''; ?>" class="form-control">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="last_name">Last Name:</label>
+                                        <input type="text" name="last_name" style="background-color: transparent; color: white;" value="<?php echo isset($row['last_name']) ? $row['last_name'] : ''; ?>" class="form-control">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="age">Age:</label>
+                                        <input type="number" name="age" style="background-color: transparent; color: white;" value="<?php echo $age; ?>" class="form-control">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="birthday">Birthday:</label>
+                                        <input type="date" style="background-color: transparent; color: white;" name="birthday" value="<?php echo $birthday; ?>" class="form-control">
+                                    </div>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="sex">Sex:</label>
+                                        <select name="sex" style="background-color: transparent; color: white;" class="form-control">
+                                            <option value="Male" <?php echo $sex == 'Male' ? 'selected' : ''; ?>>Male</option>
+                                            <option value="Female" <?php echo $sex == 'Female' ? 'selected' : ''; ?>>Female</option>
+                                            <option value="Other" <?php echo $sex == 'Other' ? 'selected' : ''; ?>>Other</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="contact_no">Contact Number:</label>
+                                        <input type="text" style="background-color: transparent; color: white;" name="contact_no" value="<?php echo $contact_no; ?>" class="form-control">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="address">Address:</label>
+                                        <input type="text" style="background-color: transparent; color: white;" name="address" value="<?php echo $address; ?>" class="form-control">
+                                    </div>
+                                </div>
+
+
+                                <!-- Right Column -->
+                                <div class="col-md-4">       
+                                    <div class="form-group">
+                                        <label for="email">Email:</label>
+                                        <input type="email" style="background-color: transparent; color: white;" name="email" value="<?php echo $email; ?>" class="form-control">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="password">Password:</label>
+                                        <input type="password" style="background-color: transparent; color: white;" name="password" class="form-control">
+                                        <small>Leave blank to keep the current password.</small>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="confirm_password">Confirm Password:</label>
+                                        <input type="password" style="background-color: transparent; color: white;" name="confirm_password" class="form-control">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="profile">Profile Picture:</label>
+                                        <input type="file" style="background-color: transparent; color: white;" name="profile" class="form-control-file">
+                                    </div>
+                                </div>
                             </div>
-                            <div class="form-group">
-                                <label for="last_name">Last Name:</label>
-                                <input type="text" name="last_name" value="<?php echo isset($row['last_name']) ? $row['last_name'] : ''; ?>" class="form-control">
-                            </div>
-                            <div class="form-group">
-                                <label for="age">Age:</label>
-                                <input type="number" name="age" value="<?php echo $age; ?>" class="form-control">
-                            </div>
-                            <div class="form-group">
-                                <label for="birthday">Birthday:</label>
-                                <input type="date" name="birthday" value="<?php echo $birthday; ?>" class="form-control">
-                            </div>
-                            <div class="form-group">
-                                <label for="sex">Sex:</label>
-                                <select name="sex" class="form-control">
-                                    <option value="Male" <?php echo $sex == 'Male' ? 'selected' : ''; ?>>Male</option>
-                                    <option value="Female" <?php echo $sex == 'Female' ? 'selected' : ''; ?>>Female</option>
-                                    <option value="Other" <?php echo $sex == 'Other' ? 'selected' : ''; ?>>Other</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label for="contact_no">Contact Number:</label>
-                                <input type="text" name="contact_no" value="<?php echo $contact_no; ?>" class="form-control">
-                            </div>
-                            <div class="form-group">
-                                <label for="address">Address:</label>
-                                <input type="text" name="address" value="<?php echo $address; ?>" class="form-control">
-                            </div>
-                            <div class="form-group">
-                                <label for="email">Email:</label>
-                                <input type="email" name="email" value="<?php echo $email; ?>" class="form-control">
-                            </div>
-                            <div class="form-group">
-                                <label for="password">Password:</label>
-                                <input type="password" name="password" class="form-control">
-                                <small>Leave blank to keep the current password.</small>
-                            </div>
-                            <div class="form-group">
-                                <label for="confirm_password">Confirm Password:</label>
-                                <input type="password" name="confirm_password" class="form-control">
-                            </div>
-                            <div class="form-group">
-                                <label for="profile">Profile Picture:</label>
-                                <input type="file" name="profile" class="form-control-file">
-                            </div>
+
                             <div class="text-center">
                                 <a href="profile?id=<?php echo isset($customer_id) ? $customer_id : ''; ?>" class="btn btn-warning"> <i class="fas fa-arrow-left"></i> Back</a>
                                 &nbsp;

@@ -25,7 +25,7 @@ if (!isset($_SESSION['account_type']) || $_SESSION['account_type'] != 0) {
         }
         .card {
             width: 100%;
-            max-width: 600px;
+            max-width: 100%;
             margin: auto;
         }
         .form-group {
@@ -96,7 +96,7 @@ if (!isset($_SESSION['account_type']) || $_SESSION['account_type'] != 0) {
     <div class="content-body">
         <div class="container-fluid">
             <div class="col-lg-12 col-md-10 col-sm-12"> 
-                <div class="card" style="box-shadow: 2px 2px 5px black; background-image: linear-gradient(to bottom, #030637, #3C0753);">
+                <div class="card" style="box-shadow: none; background: transparent">
                     <div class="card-body">
                         <?php
                         // Database connection
@@ -134,30 +134,37 @@ if (!isset($_SESSION['account_type']) || $_SESSION['account_type'] != 0) {
                         ?>
 
                         <div class="profile-picture-wrapper">
-                            <img src="<?php echo $profile_picture; ?>" alt="Profile Picture" class="profile-picture">
+                            <img src="<?php echo $profile_picture; ?>" alt="Profile Picture" class="profile-picture" style="width: 130px; height:120px; border-radius: 10px;">
                         </div>
 
                         <form action="update_employee_process.php" method="POST" enctype="multipart/form-data">
                             <input type="hidden" name="employee_id" value="<?php echo $employee_id; ?>">
+                        
+                            <div class="row">
+                                
+                        <div class="col-md-6">
                             <div class="form-group">
                                 <label for="first_name">First Name:</label>
-                                <input type="text" name="first_name" value="<?php echo $row['first_name']; ?>" class="form-control" required>
+                                <input type="text" style="background-color: transparent; color: white;" name="first_name" value="<?php echo $row['first_name']; ?>" class="form-control" required>
                             </div>
                             <div class="form-group">
                                 <label for="last_name">Last Name:</label>
-                                <input type="text" name="last_name" value="<?php echo $row['last_name']; ?>" class="form-control" required>
+                                <input type="text" style="background-color: transparent; color: white;" name="last_name" value="<?php echo $row['last_name']; ?>" class="form-control" required>
                             </div>
                             <div class="form-group">
                                 <label for="age">Age:</label>
-                                <input type="number" name="age" value="<?php echo $age; ?>" class="form-control" required>
+                                <input type="number" style="background-color: transparent; color: white;" name="age" value="<?php echo $age; ?>" class="form-control" required>
                             </div>
                             <div class="form-group">
                                 <label for="birthday">Birthday:</label>
-                                <input type="date" name="birthday" value="<?php echo $birthday; ?>" class="form-control" required>
+                                <input type="date" style="background-color: transparent; color: white;" name="birthday" value="<?php echo $birthday; ?>" class="form-control" required>
                             </div>
+                        </div>
+
+                        <div class="col-md-6">
                             <div class="form-group">
                                 <label for="sex">Sex:</label>
-                                <select name="sex" class="form-control" required>
+                                <select name="sex" style="background-color: transparent; color: white;" class="form-control" required>
                                     <option value="Male" <?php echo $sex == 'Male' ? 'selected' : ''; ?>>Male</option>
                                     <option value="Female" <?php echo $sex == 'Female' ? 'selected' : ''; ?>>Female</option>
                                     <option value="Other" <?php echo $sex == 'Other' ? 'selected' : ''; ?>>Other</option>
@@ -165,20 +172,23 @@ if (!isset($_SESSION['account_type']) || $_SESSION['account_type'] != 0) {
                             </div>
                             <div class="form-group">
                                 <label for="contact_no">Contact Number:</label>
-                                <input type="text" name="contact_no" value="<?php echo $contact_no; ?>" class="form-control" required>
+                                <input type="text" style="background-color: transparent; color: white;" name="contact_no" value="<?php echo $contact_no; ?>" class="form-control" required>
                             </div>
                             <div class="form-group">
                                 <label for="address">Address:</label>
-                                <input type="text" name="address" value="<?php echo $address; ?>" class="form-control" required>
+                                <input type="text" style="background-color: transparent; color: white;" name="address" value="<?php echo $address; ?>" class="form-control" required>
                             </div>
+                        
                             <div class="form-group">
                                 <label for="profile">Profile Picture:</label>
                                 <input type="file" name="profile" class="form-control-file">
                             </div>
+                        </div>
+                            </div>
                             <div class="text-center">
-                                <a href="view_employee?id=<?php echo $employee_id; ?>" class="btn btn-warning" style="box-shadow: none; border: none; background: orange;"> <i class="fas fa-arrow-left"></i></a>
+                                <a href="view_employee?id=<?php echo $employee_id; ?>" class="btn btn-warning" style="box-shadow: none; border: none; background: orange; color: white;"> <i class="fas fa-arrow-left"></i> Back</a>
                                 &nbsp;
-                                <button type="submit" class="btn btn-primary" style="box-shadow: none; border: none; background: green;"><i class="fa-solid fa-pen-nib" style="color: #ffffff;"></i></button>
+                                <button type="submit" class="btn btn-primary" style="box-shadow: none; border: none; background: green; color: white;"><i class="fa-solid fa-pen-nib" style="color: #ffffff;"></i> Update</button>
                             </div>
                         </form>
 

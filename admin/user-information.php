@@ -89,12 +89,12 @@ th, td {
 }
 
 tr {
-    border-bottom: 1px solid #ddd; 
+    border-bottom: 1px dashed #ddd; 
 }
 
 th {
     background-color: #f2f2f2;
-    border-bottom: 2px solid #ddd; 
+    border-bottom: 2px dashed #ddd; 
 }
     </style>
 </head>
@@ -121,7 +121,7 @@ th {
             <div class="row invoice-card-row">
                 <!-- User Information Card Start -->
                 <div class="col-12">
-                    <div class="card" style="box-shadow: 2px 2px 2px black; background-image: linear-gradient(to bottom, #030637, #3C0753);">
+                    <div class="card" style="box-shadow: none; border: 1px dashed white; background: transparent">
                         <div class="card-body">                                     
                             <div class="table-responsive">
                                 <ul class="nav nav-tabs" id="userTabs" role="tablist">

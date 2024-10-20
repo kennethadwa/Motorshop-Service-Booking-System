@@ -68,9 +68,9 @@ if ($requests->num_rows > 0) {
     echo '<div class="d-flex flex-wrap">'; // Flex container for cards
     while ($row = $requests->fetch_assoc()) {
         echo '<div class="card m-2" style="width: 25rem;">';
-        echo '<div class="card-header d-flex justify-content-between align-items-center">';
-        echo '<img src="' . $row['customer_profile_picture'] . '" alt="Profile Picture" style="width: 130px; height: 100px; border-radius: 10px;">';
-        echo'<a href="view_details.php?request_id=' . $row['request_id'] . '" class = "view">View Details</a>';
+        echo '<div class="card-header d-flex justify-content-evenly align-items-center">';
+        echo '<img src="' . $row['customer_profile_picture'] . '" alt="Profile Picture" style="width: 160px; height: 100px; border-radius: 10px;">';
+        echo '<p style="font-weight: 600;">Booking No. ' . $row["request_id"] . '</p>';
         echo '</div>';
         echo '<div class="card-body">';
         echo '<p class="card-text"><strong>Name:</strong> ' . $row['customer_name'] . '</p>';
@@ -84,7 +84,7 @@ if ($requests->num_rows > 0) {
         echo '
            <br>
            <div style="display: flex; justify-content: center; align-items:center; flex-direction: column;">
-               <p style="font-weight: 600;">Booking No. ' . $row["request_id"] . '</p>
+               <a href="view_details.php?request_id=' . $row['request_id'] . '" class = "view">View Details</a>
            </div>
             ';
 

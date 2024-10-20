@@ -47,7 +47,7 @@ function fetchBookings($status, $limit, $offset, $conn) {
 		::-webkit-scrollbar-thumb {
 			background-color: #DA0C81;
 			border-radius: 10px;
-			border: 2px solid #DA0C81;
+			border: 2px dashed #DA0C81;
 		}
 		::-webkit-scrollbar-thumb:hover {
 			background-color: #555;
@@ -55,7 +55,7 @@ function fetchBookings($status, $limit, $offset, $conn) {
 
         .card {
             margin: 10px 0;
-            background-color: #3C0753;
+            background-color: rgba(0, 0, 0, 0.473);
             color: white;
             border-radius: 15px;
             padding: 15px;
@@ -64,7 +64,7 @@ function fetchBookings($status, $limit, $offset, $conn) {
 
         .card-header {
             font-weight: bold;
-            border-bottom: 1px solid #DA0C81;
+            border-bottom: 1px dashed white;
         }
 
         .table {
@@ -98,7 +98,7 @@ function fetchBookings($status, $limit, $offset, $conn) {
 	<div class="content-body">
 	    <div class="container-fluid">		
         <div class="row">
-	            <div class="col-12" style="box-shadow: 2px 2px 2px black; background-image: linear-gradient(to bottom, #030637, #3C0753); border-radius: 20px; padding: 20px;">
+	            <div class="col-12" style="box-shadow: none; background: transparent; border-radius: 20px; padding: 20px;">
                     <div class="d-flex justify-content-end">
                         <form id="sortForm">
                             <label for="sort">Sort by:</label>

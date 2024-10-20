@@ -47,12 +47,33 @@ if (!isset($_SESSION['account_type']) || $_SESSION['account_type'] != 0) {
             margin-bottom: 20px;
         }
         .profile-picture {
-            width: 100px;
-            height: 100px;
-            border-radius: 50%;
+            width: 130px;
+            height: 120px;
+            border-radius: 10px;
             object-fit: cover;
             border: 2px solid #ccc;
         }
+        body{
+	  background-color: #17153B;
+	}
+
+			::-webkit-scrollbar {
+         width: 18px; 
+      }
+
+      ::-webkit-scrollbar-track {
+          background: #17153B;
+      }
+      
+      ::-webkit-scrollbar-thumb {
+          background-color: #DA0C81; 
+          border-radius: 10px; 
+          border: 2px solid #DA0C81; 
+      }
+
+      ::-webkit-scrollbar-thumb:hover {
+          background-color: #555;
+      }
     </style>
 </head>
 <body>
@@ -75,9 +96,8 @@ if (!isset($_SESSION['account_type']) || $_SESSION['account_type'] != 0) {
     <div class="content-body">
         <div class="container-fluid">
             <div class="col-lg-12 col-md-10 col-sm-12"> 
-                <div class="card">
+                <div class="card" style="box-shadow: none; background: transparent;">
                     <div class="card-body">
-                        <h2 class="text-center mb-4">Update Employee Information</h2>
                         <?php
                         // Database connection
                         $conn = new mysqli("localhost", "root", "", "sairom_service");
@@ -108,7 +128,7 @@ if (!isset($_SESSION['account_type']) || $_SESSION['account_type'] != 0) {
                         ?>
 
                         <div class="profile-picture-wrapper">
-                            <img src="<?php echo $profile_picture; ?>" alt="Profile Picture" class="profile-picture">
+                            <img src="<?php echo $profile_picture; ?>" alt="Profile Picture" class="profile-picture" style="width: 130px; height:120px; border-radius: 10px;">
                         </div>
 
                         <form action="update_employee_account_process.php" method="POST" enctype="multipart/form-data">
@@ -137,8 +157,11 @@ if (!isset($_SESSION['account_type']) || $_SESSION['account_type'] != 0) {
                                 </select>
                             </div>
                             <div class="text-center">
-                                <button type="submit" class="btn btn-primary">Update</button>
-                                <a href="manage-account.php" class="btn btn-warning"><i class="fas fa-arrow-left"></i> Back</a>
+
+                                <a href="manage-account.php" class="btn" style="box-shadow: none; background:orange; color: white;"><i class="fas fa-arrow-left"></i> Back</a>
+
+                                <button type="submit" class="btn" style="box-shadow: none; background:green; color: white;"><i class="fa-solid fa-pen-nib" style="color: #ffffff;"></i> Update</button>
+                                
                             </div>
                         </form>
 
@@ -148,10 +171,6 @@ if (!isset($_SESSION['account_type']) || $_SESSION['account_type'] != 0) {
         </div>
     </div>
     <!-- Content Body End -->
-
-    <!-- Footer Start -->
-    <?php include('footer.php'); ?>
-    <!-- Footer End -->
 </div>
 <!-- Main wrapper end -->
 
