@@ -6,7 +6,23 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
   <link rel="stylesheet" href="login-register.css">
+  <script src="https://www.google.com/recaptcha/api.js" async defer></script>
   <title>Login to Sairom</title>
+  <script>
+    function enableSignInButton(){
+      document.getElementById("signinBtn").disabled = false;
+    }
+  </script>
+
+  <style>
+    #signinBtn:disabled {
+    background-color: lightgray;
+    color: darkgray; 
+    cursor: not-allowed; 
+    opacity: 0.7;
+    border: none; 
+}
+  </style>
 </head>
 
 <body >
@@ -38,7 +54,9 @@
     <input type="email" name="email" placeholder="Email" required>
     <input type="password" name="password" placeholder="Password" required>
     <a href="forget_password.php">Forget Your Password?</a>
-    <button type="submit">Sign In</button>
+    <button type="submit" id="signinBtn" disabled="disabled" style="background: blue;">Sign In</button>
+    <br>
+    <div class="g-recaptcha" data-sitekey="6LddpWYqAAAAAATb2j9nEwQHOoKbO7_Zpn4RNblC" data-callback="enableSignInButton"></div>
   </form>
 </div>
     

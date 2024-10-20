@@ -10,7 +10,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $email = mysqli_real_escape_string($conn, $email);
     $password = mysqli_real_escape_string($conn, $password);
 
-    $query = "SELECT admin_id, employee_id, customer_id, first_name, last_name, account_type, password FROM (
+    if(isset($_POST['g-recaptcha-response']) && !empty($_POST['g-recaptcha-response'])){
+
+        $secretKey = '6LddpWYqAAAAAOAe7s3Sfry8xRZhTFur38Ienozm';
+
+        $verifyResponse = file_get_contents('https://www.google.com/recaptcha/api/siteverify?secret='. $secretKey.'&response='.$_POST['g-recaptcha-response']);
+        $response = json_decode($verifyResponse);
+
+        if($response -> success){
+
+                    $query = "SELECT admin_id, employee_id, customer_id, first_name, last_name, account_type, password FROM (
                 SELECT admin_id, NULL AS employee_id, NULL AS customer_id, email, first_name, last_name, account_type, password FROM admin
                 UNION ALL
                 SELECT NULL AS admin_id, employee_id, NULL AS customer_id, email, first_name, last_name, account_type, password FROM employees
@@ -73,5 +82,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         echo "<script>alert('No user found with this email!'); window.location.href='login-register.php';</script>";
         exit();
     }
+
+        } else {
+            echo '<script>alert("Failed to verify");</script>';
+            header("Location: login-register");
+        }
+
+    } else {
+
+        echo '<script>alert("Failed to verify");</script>';
+        header("Location: login-register");
+    }
+
+    
 }
 ?>
