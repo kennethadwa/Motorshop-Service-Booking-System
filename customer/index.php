@@ -227,24 +227,24 @@ $total_schedules = mysqli_fetch_assoc($result_schedules)['total_schedules'];
                       
                               <div class="accordion-item" >
                                   <h2 class="accordion-header" id="headingOne">
-                                      <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne"                       aria-expanded="true" aria-controls="collapseOne"  style="background: transparent; color: white; font-size: 1.2rem;                      ">
+                                      <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne"  style="background: transparent; color: white; font-size: 1.2rem;                      ">
                                           What type of service do you require for your motorcycle?
                                       </button>
                                   </h2>
-                                  <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne"                       data-bs-parent="#accordionExample">
+                                  <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
                                       <div class="accordion-body">
-                                          Please specify the type of service you need, such as an oil change, tire rotation, brake inspection, or a                       complete motorcycle check-up. This information helps us allocate the right resources and ensure that your                       motorcycle receives the best possible care.
+                                          Please specify the type of service you need, such as an oil change, tire rotation, brake inspection, or a complete motorcycle check-up. This information helps us allocate the right resources and ensure that your motorcycle receives the best possible care.
                                       </div>
                                   </div>
                               </div>
                       
                               <div class="accordion-item">
                                   <h2 class="accordion-header" id="headingTwo">
-                                      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo"                       aria-expanded="false" aria-controls="collapseTwo" style="background: transparent; color: white; font-size: 1.2rem;                      ">
+                                      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo" style="background: transparent; color: white; font-size: 1.2rem;                      ">
                                           What is the make and model of your motorcyle?
                                       </button>
                                   </h2>
-                                  <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo"                       data-bs-parent="#accordionExample">
+                                  <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
                                       <div class="accordion-body">
                                           Please provide the make and model of motorcycle. This information is crucial for us to assess your service                       requirements accurately and ensure that we have the necessary parts and equipment available for your specific                       motorcycle.
                                       </div>

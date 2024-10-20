@@ -90,11 +90,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             height: 100vh;
         }
         .card {
-            max-width: 600px;
-            width: 90%; 
+            max-width: 100%;
+            width: 100%; 
             height: auto;
-            box-shadow: 2px 2px 2px black; 
-            background-image: linear-gradient(to bottom, #030637, #3C0753);
+            box-shadow: none; 
+            background: transparent;
         }
         @media (min-width: 768px) {
             .card {
@@ -147,6 +147,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <div class="card mb-4">
                         <div class="card-body">
                             <form method="POST" action="" enctype="multipart/form-data">
+                                <div class="row">
+
+                            <div class="col-md-6">
                                 <div class="form-group mt-3">
                                     <label for="product_name">Product Name:</label>
                                     <input type="text" name="product_name" id="product_name" class="form-control" required>
@@ -168,7 +171,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                         <?php endforeach; ?>
                                     </select>
                                 </div>
+                              </div>
 
+                              <div class="col-md-6">
                                 <div class="form-group mt-3">
                                     <label for="price">Price:</label>
                                     <input type="number" step="0.01" name="price" id="price" class="form-control" required>
@@ -181,9 +186,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                     <label for="image">Upload Image:</label>
                                     <input type="file" name="image" id="image" class="form-control" accept="image/*" required>
                                 </div>
-
+                                </div>
+                               </div>
                                 <div class="add-btn" style="display: flex; justify-content:center">
-                                    <button type="submit" class="btn btn-primary mt-3">Add Product</button>
+                                    <button type="submit" class="btn mt-5" style="background-color: blue; color: white; box-shadow: none;">Add Product</button>
                                 </div>
                             </form>
 

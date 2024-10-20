@@ -214,7 +214,7 @@ switch ($status) {
         <div class="container-fluid">
             <div class="row invoice-card-row">
                 <div class="col-12">
-                    <div class="card mb-4" style="box-shadow: 2px 2px 2px black; background-image: linear-gradient(to bottom, #030637, #3C0753);">
+                    <div class="card mb-4" style="box-shadow: none; background: transparent;">
                         <div class="card-body">
                             <div class="status-msg d-flex justify-content-center">
                                 <h3 style="color: <?php echo $statusColor; ?>; font-family: Arial; font-weight: 600; margin-bottom: 30px;">

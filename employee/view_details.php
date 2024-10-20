@@ -180,7 +180,7 @@ switch ($status) {
         <div class="container-fluid">
             <div class="row invoice-card-row">
                 <div class="col-12">
-                    <div class="card mb-4" style="box-shadow: 2px 2px 2px black; background-image: linear-gradient(to bottom, #030637, #3C0753);">
+                    <div class="card mb-4" style="box-shadow: none; background: transparent;">
                         <div class="card-body">
                             <div class="status-msg d-flex justify-content-center">
                                 <h3 style="color: <?php echo $statusColor; ?>; font-family: Arial; font-weight: 600; margin-bottom: 30px;">
@@ -200,7 +200,6 @@ switch ($status) {
                                 <p>Package Price: ₱<?php echo $price; ?></p>
                                 <br>
                                 <p>Requested Date & Time: <?php echo $request_date . ' : ' . $request_time; ?></p>
-                                <p style="color: lightgreen;">Deposit Required to Process Booking: ₱<?php echo $price / 2; ?></p>
                                 <p style="color: orange;"><?php if($status == 'paid' || $status == 'in progress' || $status == 'completed'){ echo '(Payment Completed)'; } ?></p>
                                 <div class="desc">
                                     <strong class="card-title" style="color: gray; text-align:center; font-size: 0.9rem;">Description</strong>
@@ -225,7 +224,7 @@ switch ($status) {
                             <form method="POST" action="">
                                 <div class="form-group mt-4">
                                     <label for="status">Change Status:</label>
-                                    <select class="form-control" name="status" id="status">
+                                    <select class="form-control" style="box-shadow: none; background: transparent; color: white;" name="status" id="status">
                                         <option value="completed" <?php echo ($status == 'completed') ? 'selected' : ''; ?>>Completed</option>
                                     </select>
                                 </div>

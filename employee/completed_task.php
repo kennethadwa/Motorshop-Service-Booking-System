@@ -57,12 +57,12 @@ $schedules = $stmt->get_result();
         }
 
         tr {
-            border-bottom: 1px solid #ddd; 
+            border-bottom: 1px dashed white; 
         }
 
         th {
             background-color: #f2f2f2;
-            border-bottom: 2px solid #ddd; 
+            border-bottom: 1px dashed white; 
         }
 
         body {
@@ -110,10 +110,10 @@ $schedules = $stmt->get_result();
         <div class="container-fluid">
             <div class="row invoice-card-row">
                 <div class="col-12">
-                    <div class="card mb-4" style="box-shadow: 2px 2px 2px black; background-image: linear-gradient(to bottom, #030637, #3C0753);">
+                    <div class="card mb-4" style="box-shadow: none; border: 1px dashed white; background: transparent;">
                         <div class="card-body">
                             <div class="table-responsive">
-                                <table class="table table-bordered table-striped">
+                                <table class="table">
                                     <thead>
                                         <tr style="color: white;">
                                             <th>Booking No.</th>
@@ -128,7 +128,7 @@ $schedules = $stmt->get_result();
                                     <tbody>
                                       <?php if ($schedules->num_rows > 0): ?>
                                           <?php while ($row = $schedules->fetch_assoc()): ?>
-                                              <tr style="background: transparent;">
+                                              <tr style="background: transparent; border-bottom: 1px dashed white;">
                                                   <!-- Booking No -->
                                                   <td><strong><?php echo $row['request_id']; ?></strong></td>
                                   
@@ -149,7 +149,7 @@ $schedules = $stmt->get_result();
                                   
                                                   <!-- View Details Button -->
                                                   <td class="text-center">
-                                                      <a href="view_details.php?request_id=<?php echo $row['request_id']; ?>" class="btn btn-primary"                                   style="background: #4A249D; box-shadow: 2px 2px 5px black; border-radius: 5px; color: white; border:                                   none;">
+                                                      <a href="view_details.php?request_id=<?php echo $row['request_id']; ?>" class="btn btn-primary"                                   style="background: #4A249D; box-shadow: 2px 2px 5px black; border-radius: 5px; color: white; border: none;">
                                                           <i class="fas fa-eye"></i> View
                                                       </a>
                                                   </td>

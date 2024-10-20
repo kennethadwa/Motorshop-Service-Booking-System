@@ -48,8 +48,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             max-width: 600px;
             width: 90%; 
             height: auto;
-            box-shadow: 2px 2px 2px black; 
-            background-image: linear-gradient(to bottom, #030637, #3C0753);
+            box-shadow: none; 
+            background: transparent;
         }
         @media (min-width: 768px) {
             .card {
@@ -115,7 +115,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             <?php if ($category_added): ?>
                             <script>
                                 alert("Category added successfully!");
-                                window.location.href = "add_category"; // Redirect to your category view page
+                                window.location.href = "add_category"; 
                             </script>
                             <?php endif; ?>
                         </div>

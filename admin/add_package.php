@@ -75,47 +75,63 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <link rel="stylesheet" href="vendor/nouislider/nouislider.min.css">
     <link href="css/style.css" rel="stylesheet">
     <style>
-        body {
-            background-color: #17153B;
-        }
-        .container-fluid {
-            display: flex;
-            justify-content: center;
-            height: 100vh;
-        }
+    body {
+        background-color: #17153B;
+        height: 100vh;
+        margin: 0;
+        display: flex;
+        flex-direction: column;
+    }
+    #main-wrapper {
+        flex-grow: 1;
+        display: flex;
+        flex-direction: column;
+    }
+    .content-body {
+        flex-grow: 1;
+        display: flex;
+    }
+    .container-fluid {
+        flex-grow: 1;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 0;
+        height: 100%;
+    }
+    .card {
+        width: 100%;
+        max-width: 100%;
+        height: 100%;
+        box-shadow: none;
+        background: transparent;
+    }
+    .card-body {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding: 20px;
+        height: 100%;
+    }
+    form {
+        display: flex;
+        flex-direction: column;
+        flex-grow: 1;
+        justify-content: space-between;
+    }
+    .form-group {
+        margin-bottom: 1.5rem;
+    }
+    .add-btn {
+        margin-top: 20px;
+    }
+    @media (max-width: 576px) {
         .card {
-            max-width: 600px;
-            width: 90%; 
-            height: auto;
-            box-shadow: 2px 2px 2px black; 
-            background-image: linear-gradient(to bottom, #030637, #3C0753);
+            margin: 0 10px;
         }
-        @media (min-width: 768px) {
-            .card {
-                width: 600px;
-            }
-        }
-        @media (max-width: 576px) {
-            .card {
-                width: 100%; 
-                margin: 0 10px; 
-            }
-        }
-        ::-webkit-scrollbar {
-            width: 18px;
-        }
-        ::-webkit-scrollbar-track {
-            background: #17153B;
-        }
-        ::-webkit-scrollbar-thumb {
-            background-color: #DA0C81;
-            border-radius: 10px;
-            border: 2px solid #DA0C81;
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background-color: #555;
-        }
-    </style>
+    }
+</style>
+
 </head>
 <body>
 
@@ -142,36 +158,45 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         <div class="card-body">
                             <!-- Add Package Form -->
                             <form method="POST" action="" enctype="multipart/form-data">
+                             <div class="row">
+
+                             <div class="col-md-4">
                                 <div class="form-group mt-3">
                                     <label for="package_name">Package Name:</label>
-                                    <input type="text" name="package_name" id="package_name" class="form-control" required>
+                                    <input type="text" name="package_name" style="background: transparent; color: white;" id="package_name" class="form-control" required>
                                 </div>
                                 <div class="form-group mt-3">
                                     <label for="description">Description:</label>
-                                    <textarea name="description" id="description" class="form-control" rows="4" required></textarea>
+                                    <textarea name="description" style="background: transparent; color: white;" id="description" class="form-control" rows="4" required></textarea>
                                 </div>
                                 <div class="form-group mt-3">
                                     <label for="price">Price:</label>
-                                    <input type="number" step="0.01" name="price" id="price" class="form-control" required>
+                                    <input type="number" step="0.01" style="background: transparent; color: white;" name="price" id="price" class="form-control" required>
                                 </div>
+                            </div>
+
+                            <div class="col-md-4">
                                 <div class="form-group mt-3">
                                     <label for="duration">Duration:</label>
-                                    <input type="number" name="duration" id="duration" class="form-control" required>
+                                    <input type="number" name="duration" style="background: transparent; color: white;" id="duration" class="form-control" required>
                                 </div>
                                 <div class="form-group mt-3">
                                     <label for="duration_unit">Duration Unit:</label>
-                                    <select name="duration_unit" id="duration_unit" class="form-control" required>
+                                    <select name="duration_unit" style="background: transparent; color: white;" id="duration_unit" class="form-control" required>
                                         <option value="hours">Hours</option>
                                         <option value="days">Days</option>
                                     </select>
                                 </div>
                                 <div class="form-group mt-3">
                                     <label for="status">Status:</label>
-                                    <select name="status" id="status" class="form-control" required>
+                                    <select name="status" style="background: transparent; color: white;" id="status" class="form-control" required>
                                         <option value="active">Active</option>
                                         <option value="inactive">Inactive</option>
                                     </select>
                                 </div>
+                            </div>
+
+                            <div class="col-md-4">
                                 <div class="form-group mt-3">
                                     <label>Needed Items:</label><br>
                                     <?php foreach ($products as $product): ?>
@@ -180,6 +205,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                             <label class="form-check-label" for="product_<?php echo $product['product_id']; ?>"><?php echo $product['product_name']; ?></label>
                                         </div>
                                     <?php endforeach; ?>
+                                </div>
+                                </div>
                                 </div>
                                 <div class="add-btn" style="display: flex; justify-content:center">
                                     <button type="submit" class="btn btn-primary mt-3" style="background: blue; color: white; border: none; box-shadow: 1px 1px 10px black; border-radius: 10px;">Add Package</button>

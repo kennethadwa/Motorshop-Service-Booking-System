@@ -87,7 +87,7 @@ if (!isset($_SESSION['account_type']) || $_SESSION['account_type'] != 1) {
         <div class="container-fluid">
             <div class="row justify-content-center align-items-center">
                 <div class="col-lg-7 col-md-10 col-sm-12">
-                    <div class="card" style="box-shadow: 2px 2px 5px black; background-image: linear-gradient(to bottom, #030637, #3C0753);">
+                    <div class="card" style="box-shadow: none; background: transparent;">
                         <div class="card-body row justify-content-center">
                             <?php
                             // Database connection
@@ -138,8 +138,8 @@ if (!isset($_SESSION['account_type']) || $_SESSION['account_type'] != 1) {
                             
                             <!-- Action Buttons -->
                             <div class="col-12 text-center mt-4">
-                                <a href="index" class="btn action-btn" style="box-shadow: none; border: none; background: orange;"><i class="fas fa-arrow-left"></i></a>
-                                <a href="update_profile?id=<?php echo $employee_id; ?>" class="btn action-btn" style="box-shadow: none; border: none; background: green;"><i class="fa-solid fa-pen-nib" style="color: #ffffff;"></i></a>
+                                <a href="index" class="btn action-btn" style="box-shadow: none; border: none; background: orange; color: white;"><i class="fas fa-arrow-left"></i> Back</a>
+                                <a href="update_profile?id=<?php echo $employee_id; ?>" class="btn action-btn" style="box-shadow: none; border: none; background: green; color: white;"><i class="fa-solid fa-pen-nib" style="color: #ffffff;"></i> Update</a>
                             </div>
                         </div>
                     </div>

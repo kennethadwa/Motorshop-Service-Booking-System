@@ -25,7 +25,7 @@ if (!isset($_SESSION['account_type']) || $_SESSION['account_type'] != 1) {
         }
         .card {
             width: 100%;
-            max-width: 800px; /* Increased max-width for better layout */
+            max-width: 100%;
             margin: auto;
             background: #2B2A4C;
             box-shadow: none;
@@ -214,8 +214,9 @@ if (!isset($_SESSION['account_type']) || $_SESSION['account_type'] != 1) {
                             </div>
 
                             <div class="text-center">
-                                <a href="profile?id=<?php echo isset($employee_id) ? $employee_id : ''; ?>" class="btn btn-warning"> <i class="fa fa-arrow-left"></i> Back </a>
-                                <button type="submit" class="btn btn-primary">Update</button>
+                                <a href="profile?id=<?php echo isset($employee_id) ? $employee_id : ''; ?>" class="btn" style="background: orange; color: white;"> <i class="fa fa-arrow-left"></i> Back </a>
+                                &nbsp;
+                                <button type="submit" class="btn" style="background: green; color: white;">Update</button>
                             </div>
                         </form>
                     </div>

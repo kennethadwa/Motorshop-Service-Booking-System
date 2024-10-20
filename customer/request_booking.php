@@ -99,11 +99,11 @@ unset($_SESSION['form_submitted']);
             max-width: 700px;
             width: 90%; 
             height: auto;
-            box-shadow: 0 12px 30px rgba(0,0,0,0.15);
-            background-color: #ffffff;
+            box-shadow: none;
+            color: white;
+            background-color: transparent;
             border-radius: 12px;
             padding: 40px;
-            border: 1px solid #dee2e6;
         }
         .form-control {
             border-radius: 5px;
@@ -161,16 +161,20 @@ unset($_SESSION['form_submitted']);
                 <div class="col-12">
                     <div class="card mb-4">
                         <div class="card-body">
-                        
-                        <form method="POST" action="" enctype="multipart/form-data">
+                    <form method="POST" action="" enctype="multipart/form-data">
+                        <div class="row">
+                          <div class="col-md-6">
                             <div class="form-group">
+                                <div class="row"></div>
                                 <label for="model_name">Motorcycle Model:</label>
                                 <input type="text" name="model_name" id="model_name" class="form-control" required>
                             </div>
+                            <br>
                             <div class="form-group">
                                 <label for="address">Address:</label>
                                 <input type="text" name="address" id="address" class="form-control" required>
                             </div>
+                            <br>
                             <div class="row">
                                 <div class="col-md-6 col-sm-12">
                                     <div class="form-group">
@@ -178,6 +182,7 @@ unset($_SESSION['form_submitted']);
                                         <input type="date" name="request_date" id="request_date" class="form-control" required>
                                     </div>
                                 </div>
+                                <br>
                                 <div class="col-md-6 col-sm-12">
                                     <div class="form-group">
                                         <label for="request_time">Booking Time:</label>
@@ -185,12 +190,17 @@ unset($_SESSION['form_submitted']);
                                     </div>
                                 </div>
                             </div>
-
-                            <div class="form-group">
+                            <br>
+                              <div class="form-group">
                                 <label for="description">Description:</label>
                                 <textarea name="description" id="description" class="form-control" rows="4" required></textarea>
                             </div>
 
+                        </div>
+
+                        
+                            
+                          <div class="col-md-6">
                             <div class="form-group">
                                 <label for="package_id">Select Package:</label>
                                 <select name="package_id" id="package_id" class="form-control" required>
@@ -203,15 +213,17 @@ unset($_SESSION['form_submitted']);
                                     <?php endforeach; ?>
                                 </select>
                             </div>
-
+                            <br>
                             <div class="form-group">
                                 <label for="images">Upload Images:</label>
                                 <input type="file" name="images[]" id="images" class="form-control" multiple accept="image/*">
                             </div>
-
+                           </div>
+                          </div>
                             <div class="sub-btn">
                                 <button type="submit" class="btn mt-3">Submit Request</button>
                             </div>
+
                         </form>
                     </div>
                 </div>

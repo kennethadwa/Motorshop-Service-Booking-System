@@ -234,7 +234,7 @@ $deposit_price = $result->fetch_assoc()['price'] / 2;  // 50% deposit
         <div class="container-fluid">
             <div class="row invoice-card-row">
                 <div class="col-12">
-                    <div class="card mb-4" style="box-shadow: 2px 2px 2px black; background-image: linear-gradient(to bottom, #030637, #3C0753);">
+                    <div class="card mb-4" style="box-shadow: none; background: transparent;">
                         <div class="card-body">
 
                         <div class="status-msg" style="display: flex; flex-direction: column; justify-content:center; align-items: center;">

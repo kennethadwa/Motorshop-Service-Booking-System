@@ -5,17 +5,17 @@ if (!isset($_SESSION['account_type']) || $_SESSION['account_type'] != 1) {
     exit();
 }
 
-// Include the database connection
+
 include('../connection.php'); 
 
-$employee_id = $_SESSION['employee_id']; // Get the employee ID from the session
+$employee_id = $_SESSION['employee_id']; 
 
-// Set up pagination variables
+
 $cardsPerPage = 10;
 $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
 $startIndex = ($page - 1) * $cardsPerPage;
 
-// Get total number of schedules for the employee
+
 $totalSchedulesSql = "SELECT COUNT(*) AS total FROM schedule s
                       LEFT JOIN booking_request br ON s.booking_id = br.request_id
                       WHERE s.employee_id = ? AND br.status = 'In Progress'";
@@ -25,10 +25,10 @@ $stmt->execute();
 $result = $stmt->get_result();
 $totalSchedules = $result->fetch_assoc()['total'];
 
-// Calculate total number of pages
+
 $totalPages = ceil($totalSchedules / $cardsPerPage);
 
-// Fetch the schedules for the current page
+
 $scheduleSql = "SELECT s.schedule_id, 
                        CONCAT(c.first_name, ' ', c.last_name) AS customer_name,
                        CONCAT(e.first_name, ' ', e.last_name) AS employee_name,
@@ -51,13 +51,13 @@ $stmt->bind_param("iii", $employee_id, $cardsPerPage, $startIndex);
 $stmt->execute();
 $schedules = $stmt->get_result();
 
-// Store all schedules in an array
+
 $scheduleArray = [];
 while ($row = $schedules->fetch_assoc()) {
     $scheduleArray[] = $row;
 }
 
-// Get the most recent request date
+
 $mostRecentDate = !empty($scheduleArray) ? $scheduleArray[0]['request_date'] : null;
 ?>
 
@@ -122,7 +122,7 @@ $mostRecentDate = !empty($scheduleArray) ? $scheduleArray[0]['request_date'] : n
         }
 
         .card {
-            background: rgba(255, 255, 255, 0.1); 
+            background: rgba(0, 0, 0, 0.473); 
             border: none; 
             box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.5); 
             margin-bottom: 20px;
