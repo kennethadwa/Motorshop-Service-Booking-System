@@ -99,7 +99,7 @@ function fetchBookings($status, $limit, $offset, $conn) {
 	    <div class="container-fluid">		
         <div class="row">
 	            <div class="col-12" style="box-shadow: none; background: transparent; border-radius: 20px; padding: 20px;">
-                    <div class="d-flex justify-content-end">
+                    <div style="display: none;">
                         <form id="sortForm">
                             <label for="sort">Sort by:</label>
                             <select id="sort" name="sort" onchange="loadTabData(document.querySelector('.nav-link.active').getAttribute('data-status'), 1)">
@@ -129,7 +129,7 @@ function fetchBookings($status, $limit, $offset, $conn) {
 	                    </li>
 	                </ul>
 
-	                <div class="tab-content mt-3">
+	                <div class="tab-content mt-3 d-flex justify-content-evenly" style="width: 100%;">
 	                    <div id="bookingTableContent" class="table-responsive"></div>
 	                </div>
 	            </div>

@@ -176,11 +176,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             <form method="POST" action="" enctype="multipart/form-data">
                                 <div class="form-group mt-3">
                                     <label for="product_name">Product Name:</label>
-                                    <input type="text" name="product_name" id="product_name" class="form-control" value="<?php echo htmlspecialchars($product['product_name']); ?>" required>
+                                    <input type="text" name="product_name" id="product_name" class="form-control" value="<?php echo htmlspecialchars($product['product_name']); ?>" >
                                 </div>
                                 <div class="form-group mt-3">
                                     <label for="description">Description:</label>
-                                    <textarea name="description" id="description" class="form-control" rows="4" required><?php echo htmlspecialchars($product['description']); ?></textarea>
+                                    <textarea name="description" id="description" class="form-control" rows="4" ><?php echo htmlspecialchars($product['description']); ?></textarea>
                                 </div>
 
                                 <!-- Category Dropdown -->
@@ -198,11 +198,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                                 <div class="form-group mt-3">
                                     <label for="price">Price:</label>
-                                    <input type="number" step="0.01" name="price" id="price" class="form-control" value="<?php echo htmlspecialchars($product['price']); ?>" required>
+                                    <input type="number" step="0.01" name="price" id="price" class="form-control" value="<?php echo htmlspecialchars($product['price']); ?>" >
                                 </div>
                                 <div class="form-group mt-3">
                                     <label for="quantity">Quantity:</label>
-                                    <input type="number" name="quantity" id="quantity" class="form-control" value="<?php echo htmlspecialchars($product['quantity']); ?>" required>
+                                    <input type="number" name="quantity" id="quantity" class="form-control" value="<?php echo htmlspecialchars($product['quantity']); ?>" >
                                 </div>
                                 <div class="form-group mt-3">
                                     <label for="image">Upload New Image (leave blank if not changing):</label>
@@ -210,7 +210,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                 </div>
 
                                 <div class="add-btn" style="display: flex; justify-content:center">
-                                    <button type="submit" class="btn btn-primary mt-3">Update Product</button>
+                                    <button type="submit" class="btn mt-3" style="background: green; color: white; border-radius: 10px;">Update</button>
                                 </div>
                             </form>
 

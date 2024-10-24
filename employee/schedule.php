@@ -168,7 +168,7 @@ $mostRecentDate = !empty($scheduleArray) ? $scheduleArray[0]['request_date'] : n
             <div class="row invoice-card-row">
                 <?php if (count($scheduleArray) > 0): ?>
                     <?php foreach ($scheduleArray as $row): ?>
-                        <div class="col-lg-4 col-md-6 mb-4">
+                        <div class="col-lg-4 col-md-6 mb-4 d-flex flex-wrap justify-content-evenly">
                             <div class="card">
                                 <div class="card-body">
                                     <div class="d-flex align-items-center mb-3">

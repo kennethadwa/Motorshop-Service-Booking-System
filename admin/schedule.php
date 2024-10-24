@@ -121,7 +121,7 @@ $schedules = $conn->query($scheduleSql);
         <div class="row invoice-card-row">
             <div class="col-12">
                 <div class="card mb-4" style="box-shadow: none; background: transparent;">
-                    <div class="card-body">
+                    <div class="card-body d-flex flex-column flex-wrap">
                         <div class="d-flex justify-content-end mb-5">
                             <a href="assign_employee" class="btn" style="background: #525CEB; box-shadow: 1px 1px 10px black; border-radius: 5px; color: white;">
                                 <i class="fa fa-plus"></i> Assign Employee
@@ -131,11 +131,12 @@ $schedules = $conn->query($scheduleSql);
                             <?php if ($schedules->num_rows > 0): ?>
                                 <?php while ($row = $schedules->fetch_assoc()): ?>
                                     <div class="col-lg-4 col-md-6 mb-4">
-                                        <div class="card" style="background: rgba(0, 0, 0, 0.473); border: none; box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.5); display: flex; flex-direction: column; align-items: center; justify-content:center;">
+                                        <div class="card" style="background: rgba(0, 0, 0, 0.473); border: none; box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.5);">
                                             <div class="card-body">
-                                                <div class="d-flex align-items-center mb-3 justify-content-center">
+                                                <div class="d-flex align-items-center mb-3 justify-content-center" style="border-bottom: 1px dashed white;">
                                                     <h5 class="card-title text-white">Booking No. <?php echo $row['request_id']; ?></h5>
                                                 </div>
+                                                <p style="color: lightblue;"><strong style="color: white;">Customer Name:</strong> . <?php echo $row['customer_name']; ?> </p>
                                                 <div class="d-flex align-items-center mb-2">
                                                     <p style="color: lightblue;"><strong style="color: white; font-weight: 600;">Assigned to: </strong><?php echo $row['employee_name']; ?></p>
                                                 </div>

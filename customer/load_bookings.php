@@ -10,7 +10,7 @@ if (!isset($_SESSION['customer_id'])) {
 }
 
 $customerId = $_SESSION['customer_id'];
-$limit = 5;
+$limit = 12;
 $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
 $page = max(1, $page);
 $offset = ($page - 1) * $limit;
@@ -77,11 +77,15 @@ if ($requests->num_rows > 0) {
 // Pagination
 $totalPages = ceil($totalBookings / $limit);
 if ($totalPages > 1) {
-    echo '<nav><ul class="pagination justify-content-center">';
+    echo '<div class="d-flex justify-content-center align-items-center mt-5" style="width: 100%;">';
+    echo '<nav><ul class="pagination">';
     for ($i = 1; $i <= $totalPages; $i++) {
         $active = $i == $page ? 'active' : '';
-        echo '<li class="page-item ' . $active . '"><a class="page-link" href="#" onclick="changePage(\'' . $status . '\', ' . $i . ')">' . $i . '</a></li>';
+        echo '<li class="page-item ' . $active . '"><a class="page-link" href="javascript:void(0);" onclick="changePage(\'' . $status . '\', ' . $i . ')">' . $i . '</a></li>';
+
     }
     echo '</ul></nav>';
+    echo '</div>';
 }
+
 ?>

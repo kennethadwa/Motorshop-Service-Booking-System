@@ -140,7 +140,12 @@ if ($result && $result->num_rows > 0) {
                 <p class="desc"><?php echo htmlspecialchars($product['description']); ?></p>
                 <p class="quantity">Quantity: <?php echo htmlspecialchars($product['quantity']); ?></p>
             </div>
-            <a href="edit_product?product_id=<?php echo $product['id']; ?>" class="bookbtn" style="background: #7C00FE; color: white; box-shadow: 1px 1px 7px black;">Edit Product</a>
+
+            <div class="d-flex justify-content-center">
+                <a href="edit_product?product_id=<?php echo $product['id']; ?>" class="bookbtn" style="background: green; color: white; box-shadow: 1px 1px 7px black;">Edit</a>
+                &nbsp;
+                <a href="delete_product.php?product_id=<?php echo $product['id']; ?>" class="bookbtn" style="background: red; color: white; box-shadow: 1px 1px 7px black;" onclick="return confirm('Are you sure you want to delete this product?');">Delete</a>
+            </div> 
         </div>
     <?php } ?>
 </div>

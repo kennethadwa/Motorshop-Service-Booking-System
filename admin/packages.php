@@ -5,7 +5,6 @@ if (!isset($_SESSION['account_type']) || $_SESSION['account_type'] != 0) {
     exit();
 }
 
-// Include the database connection
 include('../connection.php'); 
 
 ?>
@@ -96,24 +95,13 @@ include('../connection.php');
             <div class="col-12">
                 <div class="card mb-4" style="box-shadow: none; background:transparent;">
                     <div class="card-body text-center">
-
-                        <!-- Row 2: Products -->
-                        <div class="row">
+                        <!-- Row 1: Packages -->
+                        <div class="row mb-4">
                             <div class="col-lg-6 col-md-12 col-sm-12 mb-3">
-                                <a href="add_product" class="btn btn-customs">Add Product</a>
+                                <a href="add_package" class="btn btn-customs">Add Package</a>
                             </div>
                             <div class="col-lg-6 col-md-12 col-sm-12 mb-3">
-                                <a href="view_products" class="btn btn-customs">View Products</a>
-                            </div>
-                        </div>
-
-                        <!-- Row 3: Products -->
-                        <div class="row">
-                            <div class="col-lg-6 col-md-12 col-sm-12 mb-3">
-                                <a href="add_category" class="btn btn-customs">Add Category</a>
-                            </div>
-                            <div class="col-lg-6 col-md-12 col-sm-12 mb-3">
-                                <a href="view_category" class="btn btn-customs">View Category</a>
+                                <a href="view_packages" class="btn btn-customs">View Packages</a>
                             </div>
                         </div>
                     </div>

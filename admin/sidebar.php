@@ -211,6 +211,11 @@ if ($c_admin_id) {
                 <span class="nav-text">Bookings</span>
             </a></li>
 
+            <li><a href="packages" aria-expanded="false">
+                <i class="fa-regular fa-envelope" style="color:white;"></i>
+                <span class="nav-text">Packages</span>
+            </a></li>
+
             <!-- Inventory Menu -->
             <li><a href="inventory" aria-expanded="false">
                 <i class="fa-solid fa-truck-ramp-box" style="color:white;"></i>

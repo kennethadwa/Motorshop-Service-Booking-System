@@ -75,62 +75,58 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <link rel="stylesheet" href="vendor/nouislider/nouislider.min.css">
     <link href="css/style.css" rel="stylesheet">
     <style>
-    body {
-        background-color: #17153B;
-        height: 100vh;
-        margin: 0;
-        display: flex;
-        flex-direction: column;
-    }
-    #main-wrapper {
-        flex-grow: 1;
-        display: flex;
-        flex-direction: column;
-    }
-    .content-body {
-        flex-grow: 1;
-        display: flex;
-    }
-    .container-fluid {
-        flex-grow: 1;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        padding: 0;
-        height: 100%;
-    }
-    .card {
-        width: 100%;
-        max-width: 100%;
-        height: 100%;
-        box-shadow: none;
-        background: transparent;
-    }
-    .card-body {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        padding: 20px;
-        height: 100%;
-    }
-    form {
-        display: flex;
-        flex-direction: column;
-        flex-grow: 1;
-        justify-content: space-between;
-    }
-    .form-group {
-        margin-bottom: 1.5rem;
-    }
-    .add-btn {
-        margin-top: 20px;
-    }
-    @media (max-width: 576px) {
-        .card {
-            margin: 0 10px;
+        body {
+            background-color: #17153B;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: #FFFFFF;
         }
-    }
-</style>
+        .container {
+            margin-top: 50px;
+            max-width: 800px;
+            background-color: #FFFFFF;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        .form-control {
+            background-color: #EDE8DC;
+            border: none;
+            color: black;
+        }
+        .form-control:hover{
+            background-color: #EDE8DC;
+            color: black;
+        }
+        .form-control:focus {
+            background-color: #EDE8DC;
+            color: black;
+            border-color: black;
+            box-shadow: none;
+        }
+        label {
+            font-weight: bold;
+            color: black;
+        }
+        .btn-custom {
+            background-color: #180161;
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            width: 100%;
+            transition: background-color 0.3s;
+        }
+        .file-upload {
+            background-color: #EDE8DC;
+            padding: 10px;
+            border-radius: 5px;
+        }
+        textarea {
+            resize: none;
+        }
+    </style>
 
 </head>
 <body>
@@ -154,60 +150,66 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <div class="container-fluid">
             <div class="row invoice-card-row">
                 <div class="col-12">
-                    <div class="card mb-4">
+                    <div class="card mb-4" style="background: transparent; box-shadow: none;">
                         <div class="card-body">
-                            <!-- Add Package Form -->
-                            <form method="POST" action="" enctype="multipart/form-data">
-                             <div class="row">
 
-                             <div class="col-md-4">
-                                <div class="form-group mt-3">
+                            <!-- Add Package Form -->
+                        <div class="container">                         
+                            <form method="POST" action="" enctype="multipart/form-data">
+
+                            <div class="mb-3">
                                     <label for="package_name">Package Name:</label>
-                                    <input type="text" name="package_name" style="background: transparent; color: white;" id="package_name" class="form-control" required>
-                                </div>
-                                <div class="form-group mt-3">
-                                    <label for="description">Description:</label>
-                                    <textarea name="description" style="background: transparent; color: white;" id="description" class="form-control" rows="4" required></textarea>
-                                </div>
-                                <div class="form-group mt-3">
-                                    <label for="price">Price:</label>
-                                    <input type="number" step="0.01" style="background: transparent; color: white;" name="price" id="price" class="form-control" required>
-                                </div>
+                                    <input type="text" name="package_name" style="background: #EDE8DC; color: black;" id="package_name" class="form-control" required>
                             </div>
 
-                            <div class="col-md-4">
-                                <div class="form-group mt-3">
+
+                            <div class="mb-3">
+                                    <label for="description">Description:</label>
+                                    <textarea name="description" style="background: #EDE8DC; color: black;" id="description" class="form-control" rows="4" required></textarea>
+                            </div>
+
+
+                            <div class="mb-3">
+                                    <label for="price">Price:</label>
+                                    <input type="number" step="0.01" style="background: #EDE8DC; color: black;" name="price" id="price" class="form-control" required>
+                            </div>
+
+                            <div class="row mb- 3">
+                                <div class="col-md-6">
                                     <label for="duration">Duration:</label>
-                                    <input type="number" name="duration" style="background: transparent; color: white;" id="duration" class="form-control" required>
+                                    <input type="number" name="duration" style="background: #EDE8DC; color: black;" id="duration" class="form-control" required>
                                 </div>
-                                <div class="form-group mt-3">
+
+                                <div class="col-md-6">
                                     <label for="duration_unit">Duration Unit:</label>
-                                    <select name="duration_unit" style="background: transparent; color: white;" id="duration_unit" class="form-control" required>
+                                    <select name="duration_unit" style="background: #EDE8DC; color: black;" id="duration_unit" class="form-control" required>
                                         <option value="hours">Hours</option>
                                         <option value="days">Days</option>
                                     </select>
                                 </div>
-                                <div class="form-group mt-3">
+                            </div>
+
+
+                                <div class="mb-5">
                                     <label for="status">Status:</label>
-                                    <select name="status" style="background: transparent; color: white;" id="status" class="form-control" required>
+                                    <select name="status" style="background: #EDE8DC; color: black;" id="status" class="form-control" required>
                                         <option value="active">Active</option>
                                         <option value="inactive">Inactive</option>
                                     </select>
                                 </div>
-                            </div>
-
-                            <div class="col-md-4">
-                                <div class="form-group mt-3">
-                                    <label>Needed Items:</label><br>
+                            
+                            <div class="mb-3">
+                                <label>Needed Items:</label>
+                                <div class="form-group" style="background:#1E201E; border-radius: 10px; padding: 15px 0 10px 0; display: flex; justify-content: space-evenly;">
                                     <?php foreach ($products as $product): ?>
                                         <div class="form-check">
-                                            <input type="checkbox" class="form-check-input" name="needed_items[]" value="<?php echo $product['product_id']; ?>" id="product_<?php echo $product['product_id']; ?>">
-                                            <label class="form-check-label" for="product_<?php echo $product['product_id']; ?>"><?php echo $product['product_name']; ?></label>
+                                            <input type="checkbox" style="border: 1px solid black;" class="form-check-input" name="needed_items[]" value="<?php echo $product['product_id']; ?>" id="product_<?php echo $product['product_id']; ?>">
+                                            <label class="form-check-label" style="color: white;" for="product_<?php echo $product['product_id']; ?>"><?php echo $product['product_name']; ?></label>
                                         </div>
                                     <?php endforeach; ?>
                                 </div>
-                                </div>
-                                </div>
+                            </div>
+
                                 <div class="add-btn" style="display: flex; justify-content:center">
                                     <button type="submit" class="btn btn-primary mt-3" style="background: blue; color: white; border: none; box-shadow: 1px 1px 10px black; border-radius: 10px;">Add Package</button>
                                 </div>
@@ -219,7 +221,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                 window.location.href = "view_packages";
                             </script>
                             <?php endif; ?>
-
+                            </div>
                         </div>
                     </div>
                 </div>

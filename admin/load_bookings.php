@@ -11,6 +11,31 @@
         background-color: #050C9C;
         color: white;
     }
+
+    .pagination {
+        display: flex;
+        justify-content: center; /* Center the pagination */
+        margin-top: 20px; /* Add some margin above */
+    }
+
+    .pagination a {
+        color: white;
+        padding: 10px 15px;
+        margin: 0 5px;
+        text-decoration: none;
+        background-color: #17153B;
+        border-radius: 5px;
+        transition: background-color 0.3s;
+    }
+
+    .pagination a.active {
+        background-color: #7A1CAC; 
+        font-weight: bold;
+    }
+
+    .pagination a:hover {
+        background-color: #AD49E1;
+    }
 </style>
 
 <?php
@@ -28,7 +53,7 @@ $validStatuses = ['pending', 'approved', 'in progress', 'completed', 'rejected',
 
 // Get the status and validate it
 $status = isset($_GET['status']) && in_array($_GET['status'], $validStatuses) ? $_GET['status'] : 'pending';
-$limit = 5;
+$limit = 12;
 $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
 $offset = ($page - 1) * $limit;
 
@@ -65,10 +90,10 @@ $requestStmt->execute();
 $requests = $requestStmt->get_result();
 
 if ($requests->num_rows > 0) {
-    echo '<div class="d-flex flex-wrap">'; // Flex container for cards
+    echo '<div class="d-flex flex-wrap justify-content-evenly">'; // Flex container for cards
     while ($row = $requests->fetch_assoc()) {
         echo '<div class="card m-2" style="width: 25rem;">';
-        echo '<div class="card-header d-flex justify-content-evenly align-items-center">';
+        echo '<div class="card-header align-items-center">';
         echo '<img src="' . $row['customer_profile_picture'] . '" alt="Profile Picture" style="width: 160px; height: 100px; border-radius: 10px;">';
         echo '<p style="font-weight: 600;">Booking No. ' . $row["request_id"] . '</p>';
         echo '</div>';
@@ -100,6 +125,6 @@ if ($requests->num_rows > 0) {
     }
     echo '</div>';
 } else {
-    echo '<div class="card">No bookings found.</div>';
+    echo '<div class="card" style="background: transparent; color: white; box-shadow: none;">No bookings found.</div>';
 }
 ?>

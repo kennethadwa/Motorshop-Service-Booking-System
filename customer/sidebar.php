@@ -171,11 +171,6 @@ if ($c_customer_id) {
                 </div>
             </li>
 
-            <li><a href="index" aria-expanded="false">
-                <i class="flaticon-025-dashboard"></i>
-                <span class="nav-text">Home</span>
-            </a></li>
-
             <li><a href="packages" aria-expanded="false">
                 <i class="fa-regular fa-calendar-days"></i>
                 <span class="nav-text">Packages</span>

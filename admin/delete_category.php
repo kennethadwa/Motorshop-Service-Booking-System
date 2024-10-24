@@ -12,7 +12,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   
     if ($stmt->execute()) {
         
-        header("Location: inventory.php?message=Category deleted successfully");
+        header("Location: view_category?message=Category deleted successfully");
         exit;
     } else {
       

@@ -84,67 +84,53 @@ unset($_SESSION['form_submitted']);
         body {
             background-color: #17153B;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            color: #343a40;
-            margin: 0;
-            padding: 0;
+            color: #FFFFFF;
         }
-        .container-fluid {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 50px;
-            height: 100vh;
-        }
-        .card {
-            max-width: 700px;
-            width: 90%; 
-            height: auto;
-            box-shadow: none;
-            color: white;
-            background-color: transparent;
-            border-radius: 12px;
-            padding: 40px;
+        .container {
+            margin-top: 50px;
+            max-width: 800px;
+            background-color: #FFFFFF;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
         }
         .form-control {
-            border-radius: 5px;
-            border: 1px solid #ced4da;
-            padding: 12px;
-            transition: border-color 0.3s;
-            width: 100%;
+            background-color: #EDE8DC;
+            border: none;
+            color: black;
+        }
+        .form-control:hover{
+            background-color: #EDE8DC;
+            color: black;
         }
         .form-control:focus {
-            border-color: #007bff;
-            box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+            background-color: #EDE8DC;
+            color: black;
+            border-color: black;
+            box-shadow: none;
         }
         label {
             font-weight: bold;
-            margin-bottom: 8px;
-            display: block;
+            color: black;
         }
-        .btn {
-            background-color: #007bff;
-            color: white;
+        .btn-custom {
+            background-color: #180161;
             border: none;
-            padding: 12px 24px;
+            color: white;
+            padding: 10px 20px;
             border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s;
             font-size: 16px;
+            cursor: pointer;
             width: 100%;
+            transition: background-color 0.3s;
         }
-        .btn:hover {
-            background-color: #0056b3;
+        .file-upload {
+            background-color: #EDE8DC;
+            padding: 10px;
+            border-radius: 5px;
         }
-        @media (min-width: 768px) {
-            .card {
-                width: 700px;
-            }
-        }
-        @media (max-width: 576px) {
-            .card {
-                width: 100%; 
-                margin: 0 10px; 
-            }
+        textarea {
+            resize: none;
         }
     </style>
 </head>
@@ -159,78 +145,69 @@ unset($_SESSION['form_submitted']);
         <div class="container-fluid">
             <div class="row invoice-card-row">
                 <div class="col-12">
-                    <div class="card mb-4">
-                        <div class="card-body">
-                    <form method="POST" action="" enctype="multipart/form-data">
-                        <div class="row">
-                          <div class="col-md-6">
-                            <div class="form-group">
-                                <div class="row"></div>
-                                <label for="model_name">Motorcycle Model:</label>
-                                <input type="text" name="model_name" id="model_name" class="form-control" required>
-                            </div>
-                            <br>
-                            <div class="form-group">
-                                <label for="address">Address:</label>
-                                <input type="text" name="address" id="address" class="form-control" required>
-                            </div>
-                            <br>
-                            <div class="row">
-                                <div class="col-md-6 col-sm-12">
-                                    <div class="form-group">
-                                        <label for="request_date">Booking Date:</label>
-                                        <input type="date" name="request_date" id="request_date" class="form-control" required>
-                                    </div>
-                                </div>
-                                <br>
-                                <div class="col-md-6 col-sm-12">
-                                    <div class="form-group">
-                                        <label for="request_time">Booking Time:</label>
-                                        <input type="time" name="request_time" id="request_time" class="form-control" required>
-                                    </div>
-                                </div>
-                            </div>
-                            <br>
-                              <div class="form-group">
-                                <label for="description">Description:</label>
-                                <textarea name="description" id="description" class="form-control" rows="4" required></textarea>
-                            </div>
+                    <div class="card mb-4" style="background: transparent; box-shadow: none;">
 
-                        </div>
+                       <div class="container">
+                          <form method="POST" action="" enctype="multipart/form-data">
 
-                        
-                            
-                          <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="package_id">Select Package:</label>
-                                <select name="package_id" id="package_id" class="form-control" required>
-                                    <option value="">Select a package</option>
-                                    <?php foreach ($packages as $package): ?>
-                                        <option value="<?= $package['package_id'] ?>">
-                                            <?php echo 'Package ' . '('. $package['package_id'] . '): '; ?>
-                                            &nbsp;
-                                            <?= htmlspecialchars($package['package_name']) ?></option>
-                                    <?php endforeach; ?>
-                                </select>
-                            </div>
-                            <br>
-                            <div class="form-group">
-                                <label for="images">Upload Images:</label>
-                                <input type="file" name="images[]" id="images" class="form-control" multiple accept="image/*">
-                            </div>
-                           </div>
+
+                              <div class="mb-3">
+                                  <label for="model_name">Motorcycle Model:</label>
+                                  <input type="text" name="model_name" id="model_name" class="form-control" required>
+                              </div>
+
+
+                              <div class="mb-3">
+                                  <label for="address">Address:</label>
+                                  <input type="text" name="address" id="address" class="form-control" required>
+                              </div>
+
+
+                              <div class="row mb-3">
+                                  <div class="col-md-6">
+                                      <label for="request_date">Booking Date:</label>
+                                      <input type="date" name="request_date" id="request_date" class="form-control" required>
+                                  </div>
+                                  <div class="col-md-6">
+                                      <label for="request_time">Booking Time:</label>
+                                      <input type="time" name="request_time" id="request_time" class="form-control" required>
+                                  </div>
+                              </div>
+
+
+                              <div class="mb-3">
+                                  <label for="description">Description:</label>
+                                  <textarea name="description" id="description" class="form-control" rows="4" required></textarea>
+                              </div>
+
+
+                              <div class="mb-3">
+                                  <label for="package_id">Select Package:</label>
+                                  <select name="package_id" id="package_id" class="form-control" required>
+                                      <option value="">Select a package</option>
+                                      <?php foreach ($packages as $package): ?>
+                                          <option value="<?= $package['package_id'] ?>">
+                                              <?= htmlspecialchars($package['package_name']) ?>
+                                          </option>
+                                      <?php endforeach; ?>
+                                  </select>
+                              </div>
+
+                              
+                              <div class="mb-3 file-upload">
+                                  <label for="images">Upload Images:</label>
+                                  <input type="file" name="images[]" id="images" class="form-control" multiple accept="image/*">
+                              </div>
+
+                              
+                              <button type="submit" class="btn btn-custom">Submit Request</button>
+                                                </form>
+                                           </div>
+                                      </div>
+                                  </div>
+                              </div>
                           </div>
-                            <div class="sub-btn">
-                                <button type="submit" class="btn mt-3">Submit Request</button>
-                            </div>
-
-                        </form>
                     </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
 
 <script src="vendor/global/global.min.js"></script>
 <script src="vendor/chart.js/Chart.bundle.min.js"></script>

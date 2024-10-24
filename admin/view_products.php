@@ -91,35 +91,35 @@ if ($result && $result->num_rows > 0) {
 
     .category-navbar {
     display: flex;
-    flex-wrap: wrap; /* Allow items to wrap on smaller screens */
-    justify-content: center; /* Center items */
+    flex-wrap: wrap; 
+    justify-content: center; 
     margin-top: 20px;
 }
 
 .category-navbar a {
-    margin: 5px; /* Reduced margin for better spacing */
+    margin: 5px; 
     padding: 10px 15px;
     text-decoration: none;
     color: white;
     background-color: #27005D;
     border-radius: 5px;
-    transition: background-color 0.3s ease; /* Smooth transition on hover */
+    transition: background-color 0.3s ease; 
 }
 
 .category-navbar a:hover {
     background-color: #7C00FE;
 }
 
-/* Responsive adjustments */
+
 @media (max-width: 768px) {
     .category-navbar {
-        flex-direction: column; /* Stack items vertically on small screens */
-        align-items: center; /* Center align items */
+        flex-direction: column;
+        align-items: center;
     }
 
     .category-navbar a {
-        width: 100%; /* Full width for each button */
-        text-align: center; /* Center text */
+        width: 100%;
+        text-align: center;
     }
 }
 
@@ -148,7 +148,7 @@ if ($result && $result->num_rows > 0) {
         <div class="row invoice-card-row">
           <div class="col-12">
             <div class="search-container d-flex justify-content-center">
-              <input type="text" id="search-input" placeholder="Search packages..." onkeyup="filterPackages()">
+              <input type="text" id="search-input" placeholder="Search products..." onkeyup="filterPackages()">
             </div>
 
             <!-- Category Navbar -->

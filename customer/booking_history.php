@@ -90,22 +90,22 @@ include('../connection.php');
                             <!-- Tab Navigation -->
                             <ul class="nav nav-tabs" id="bookingTabs">
                                 <li class="nav-item">
-                                    <a class="nav-link active" data-status="pending" href="#" style="background: transparent; color: pink; font-weight: 600; ">Pending</a>
+                                    <a class="nav-link active" data-status="pending" href="#" style="background: transparent; color: white; font-weight: 600; ">Pending</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" data-status="approved" href="#" style="background: transparent; color: pink; font-weight: 600; ">Approved</a>
+                                    <a class="nav-link" data-status="approved" href="#" style="background: transparent; color: white; font-weight: 600; ">Approved</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" data-status="paid" href="#" style="background: transparent; color: pink; font-weight: 600; ">Paid</a>
+                                    <a class="nav-link" data-status="paid" href="#" style="background: transparent; color: white; font-weight: 600; ">Paid</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" data-status="in progress" href="#" style="background: transparent; color: pink; font-weight: 600; ">In Progress</a>
+                                    <a class="nav-link" data-status="in progress" href="#" style="background: transparent; color: white; font-weight: 600; ">In Progress</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" data-status="completed" href="#" style="background: transparent; color: pink; font-weight: 600; ">Completed</a>
+                                    <a class="nav-link" data-status="completed" href="#" style="background: transparent; color: white; font-weight: 600; ">Completed</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" data-status="rejected" href="#" style="background: transparent; color: pink; font-weight: 600; ">Rejected</a>
+                                    <a class="nav-link" data-status="rejected" href="#" style="background: transparent; color: white; font-weight: 600; ">Rejected</a>
                                 </li>
                             </ul>
 
@@ -159,12 +159,12 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
-function loadTabData(status) {
+function loadTabData(status, page = 1) {
     const bookingTable = document.getElementById('bookingCardsContent');
 
-    // Use AJAX to load booking data without reloading
+    // Use AJAX to load booking data with pagination
     const xhr = new XMLHttpRequest();
-    xhr.open('GET', `load_bookings.php?status=${status}`, true);
+    xhr.open('GET', `load_bookings.php?status=${status}&page=${page}`, true);
     xhr.onreadystatechange = function() {
         if (xhr.readyState === 4 && xhr.status === 200) {
             bookingTable.innerHTML = xhr.responseText;
@@ -172,6 +172,12 @@ function loadTabData(status) {
     };
     xhr.send();
 }
+
+// Handle pagination page changes
+function changePage(status, page) {
+    loadTabData(status, page);
+}
+
 </script>
 
 </body>
