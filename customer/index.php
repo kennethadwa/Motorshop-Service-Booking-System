@@ -2,33 +2,106 @@
 session_start();
 
 include('../connection.php');
+require_once '../config.php';
+require_once '../vendor/autoload.php';
 
+// Enable error reporting
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
+// Authenticate code from Google OAuth Flow
+if (isset($_GET['code'])) {
+    $token = $client->fetchAccessTokenWithAuthCode($_GET['code']);
+    
+    if (isset($token['access_token'])) {
+        $client->setAccessToken($token['access_token']);
+
+        // Get profile info
+        $google_oauth = new \Google\Service\Oauth2($client);
+        $google_account_info = $google_oauth->userinfo->get();
+        
+        $userinfo = [
+            'email' => $google_account_info['email'],
+            'first_name' => $google_account_info['givenName'],
+            'last_name' => $google_account_info['familyName'],
+            'sex' => $google_account_info['gender'],
+            'token' => $google_account_info['id'],
+        ];
+
+        // Check if Google account already exists in the database
+        $sql = "SELECT * FROM customers WHERE token = '{$userinfo['token']}'";
+        $result = mysqli_query($conn, $sql);
+
+        if (!$result) {
+            die("Query Failed: " . mysqli_error($conn));
+        }
+
+        if (mysqli_num_rows($result) > 0) {
+            // Existing user
+            $userinfo = mysqli_fetch_assoc($result);
+            $_SESSION['token'] = $userinfo['token']; // Use token for Google SSO users
+            $_SESSION['customer_id'] = $userinfo['customer_id'];
+            $_SESSION['account_type'] = $userinfo['account_type']; // Set account type
+        } else {
+            // New user, insert into the database
+            $sql = "INSERT INTO customers (first_name, last_name, sex, email, account_type, token) 
+                    VALUES ('{$userinfo['first_name']}', '{$userinfo['last_name']}', '{$userinfo['sex']}', '{$userinfo['email']}', 2, '{$userinfo['token']}')";
+            $result = mysqli_query($conn, $sql);
+
+            if (!$result) {
+                die("Error creating account: " . mysqli_error($conn));
+            }
+
+            // Retrieve the customer ID of the newly inserted user
+            $stmt = $conn->prepare("SELECT customer_id, account_type FROM customers WHERE token = ?");
+            $stmt->bind_param("s", $userinfo['token']);
+            $stmt->execute();
+            $stmt->bind_result($customer_id, $account_type);
+            $stmt->fetch();
+            $_SESSION['token'] = $userinfo['token']; // Use token for Google SSO users
+            $_SESSION['customer_id'] = $customer_id;
+            $_SESSION['account_type'] = $account_type; // Set account type
+            $stmt->close();
+
+            echo "<script>alert('Account Successfully Created!');</script>";
+        }
+
+        // Redirect after login or account creation
+        header("Location: index.php"); // Redirect to your main page
+        exit();
+    } else {
+        echo "Authentication failed. Please try again.";
+        die();
+    }
+} else {
+    // Check if user is already logged in using other methods
+    if (isset($_SESSION['customer_id'])) {
+        $sql = "SELECT * FROM customers WHERE customer_id = '{$_SESSION['customer_id']}'";
+        $result = mysqli_query($conn, $sql);
+
+        if (!$result) {
+            die("Query Failed: " . mysqli_error($conn));
+        }
+
+        if (mysqli_num_rows($result) > 0) {
+            $userinfo = mysqli_fetch_assoc($result);
+            $_SESSION['account_type'] = $userinfo['account_type'];
+        }
+    }
+}
+
+// Redirect if account_type is not set to 2
 if (!isset($_SESSION['account_type']) || $_SESSION['account_type'] != 2) {
-    header("Location: ../login-register.php");
+    header("Location: ../login-register.php"); // Redirect to login page if not allowed
     exit();
 }
 
-// Query for total employees
-$query_employees = "SELECT COUNT(*) AS total_employees FROM employees";
-$result_employees = mysqli_query($conn, $query_employees);
-$total_employees = mysqli_fetch_assoc($result_employees)['total_employees'];
-
-// Query for total customers
-$query_customers = "SELECT COUNT(*) AS total_customers FROM customers";
-$result_customers = mysqli_query($conn, $query_customers);
-$total_customers = mysqli_fetch_assoc($result_customers)['total_customers'];
-
-// Query for total bookings
-$query_bookings = "SELECT COUNT(*) AS total_bookings FROM booking_request"; 
-$result_bookings = mysqli_query($conn, $query_bookings);
-$total_bookings = mysqli_fetch_assoc($result_bookings)['total_bookings'];
-
-// Query for total schedules
-$query_schedules = "SELECT COUNT(*) AS total_schedules FROM schedule"; 
-$result_schedules = mysqli_query($conn, $query_schedules);
-$total_schedules = mysqli_fetch_assoc($result_schedules)['total_schedules'];
-
+// Continue with the rest of your application
 ?>
+
+
+
+
 
 <!DOCTYPE html>
 <html lang="en">

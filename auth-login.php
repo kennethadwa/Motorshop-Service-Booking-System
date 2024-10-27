@@ -48,24 +48,24 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $_SESSION['last_name'] = $row['last_name']; 
             $_SESSION['account_type'] = $account_type;
 
-            // Set IDs based on account type
-            if ($account_type == 0) { // Admin
+            
+            if ($account_type == 0) { 
                 $_SESSION['admin_id'] = $row['admin_id']; 
-            } elseif ($account_type == 1) { // Employee
+            } elseif ($account_type == 1) {
                 $_SESSION['employee_id'] = $row['employee_id']; 
-            } elseif ($account_type == 2) { // Customer
+            } elseif ($account_type == 2) { 
                 $_SESSION['customer_id'] = $row['customer_id']; 
             }
 
             switch ($account_type) {
-                case 0: // Admin
-                    header("Location: ./admin/index"); // Redirect to admin index
+                case 0: 
+                    header("Location: ./admin/index"); 
                     break;
-                case 1: // Employee
-                    header("Location: ./employee/index"); // Redirect to employee index
+                case 1:
+                    header("Location: ./employee/index"); 
                     break;
-                case 2: // Customer
-                    header("Location: ./customer/index"); // Redirect to customer index
+                case 2: 
+                    header("Location: ./customer/packages"); 
                     break;
                 default:
                     echo "<script>alert('Invalid account type!'); window.location.href='login-register.php';</script>";
@@ -73,12 +73,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             }
             exit();
         } else {
-            // INVALID PASSWORD
+           
             echo "<script>alert('Invalid password!'); window.location.href='login-register.php';</script>";
             exit();
         }
     } else {
-        // INVALID EMAIL
+        
         echo "<script>alert('No user found with this email!'); window.location.href='login-register.php';</script>";
         exit();
     }

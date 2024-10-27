@@ -1,37 +1,56 @@
-<div class="col-xl-9 col-xxl-12">
-						<div class="card" style="box-shadow: none;">
-							<div class="card-body">
-								<div class="row align-items-center">
-									<div class="col-xl-6">
-										<div class="card-bx bg-blue">
-											<img class="pattern-img" src="images/pattern/pattern6.png" alt="">
-											<div class="card-info text-white">
-												<img src="images/pattern/circle.png" class="mb-4" alt="">
-												<h2 class="text-white card-balance">₱324,571.93</h2>
-												<ue class="fs-16">Total Revenue</ue>
-												<span style="color: lightgreen">+0.8% than last week</span>
-											</div>
-											<a class="change-btn" href="javascript:void(0);"><i class="fa fa-caret-up up-ico"></i>Change<span class="reload-icon"><i class="fas fa-sync-alt reload active"></i></span></a>
-										</div>
-									</div>
-									<div class="col-xl-6">
-										<div class="row  mt-xl-0 mt-4">
-											<div class="col-md-6">
-												<h4 class="card-title">Revenue's Overview</h4>
-												<span>Lorem ipsum dolor sit amet, consectetur adipiscing elit psu olor</span>
-												<ul class="card-list mt-4">
-													<li><span class="bg-blue circle"></span>Parts & Products Sales<span>20%</span></li>
-													<li><span class="bg-success circle"></span>Service Fees<span>40%</span></li>
-													<li><span class="bg-warning circle"></span>Diagnostic Fees<span>15%</span></li>
-													<li><span class="bg-light circle"></span>Customization and Upgrades<span>15%</span></li>
-												</ul>
-											</div>
-											<div class="col-md-6">
-												<canvas id="polarChart"></canvas>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
+<?php
+
+// Database connection
+include('../connection.php');
+
+// Query to get the total deposit for this week only
+$currentWeekQuery = "SELECT SUM(deposit_amount) AS total_this_week
+                     FROM transactions
+                     WHERE YEARWEEK(created_at, 1) = YEARWEEK(CURDATE(), 1)";
+
+// Execute query and check for errors
+$currentWeekResult = $conn->query($currentWeekQuery);
+if (!$currentWeekResult) {
+    die("Error in current week query: " . $conn->error);
+}
+
+$total_deposit = ($currentWeekResult->num_rows > 0) ? $currentWeekResult->fetch_assoc()['total_this_week'] : 0;
+
+// Close the database connection if it's no longer needed
+$conn->close();
+?>
+
+<div class="col-xl-12 col-xxl-12 d-flex p-0"> <!-- Add p-0 to remove padding -->
+    <div class="card w-100" style="box-shadow: none;"> <!-- Add w-100 to ensure full width -->
+        <div class="card-body">
+            <div class="row align-items-center">
+                <!-- Right Column -->
+                <div class="col-md-8">
+                    <div class="card-bx bg-blue">
+                        <img class="pattern-img" src="images/pattern/pattern6.png" alt="">
+                        <div class="card-info text-white d-flex justify-content-center align-items-center flex-column">
+                            <img src="images/pattern/circle.png" class="mb-4" alt="">
+                            <h2 class="text-white card-balance">₱<?php echo number_format($total_deposit, 2); ?></h2>
+                            <u class="fs-16">Total Revenue</u>
+                            <span style="color: lightgreen">Current Week's Total</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Left Column -->
+                <div class="col-md-4 mt-3 d-flex flex-column align-items-start">
+                    <h4 class="card-title">Most Requested Packages</h4>
+                    <span style="color: black;">Overview of the top requested packages based on completed bookings</span>
+                    <ul class="card-list mt-3">
+                        <?php foreach ($top_packages as $index => $package): ?>
+                            <li>
+                                <span style="color: black;"><?php echo htmlspecialchars($package['name']); ?></span>
+                                <span style="color: green;"><?php echo $package['count']; ?> requests (<?php echo $package['percentage']; ?>%)</span>
+                            </li>
+                        <?php endforeach; ?>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

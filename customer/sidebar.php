@@ -14,8 +14,6 @@ $firstName = isset($_SESSION['first_name']) ? $_SESSION['first_name'] : 'Guest';
 $lastName = isset($_SESSION['last_name']) ? $_SESSION['last_name'] : '';
 $emails = isset($_SESSION['email']) ? $_SESSION['email'] : 'No email available';
 
-$c_admin_id = isset($_SESSION['admin_id']) ? $_SESSION['admin_id'] : null; 
-$c_employee_id = isset($_SESSION['employee_id']) ? $_SESSION['employee_id'] : null;
 $c_customer_id = isset($_SESSION['customer_id']) ? $_SESSION['customer_id'] : null;
 
 
@@ -24,8 +22,8 @@ $prof_pictures = 'path/to/default/profile/picture.jpg';
 
 
 if ($c_customer_id) {
-    // Fetch Customer Data
-    $customer_queries = "SELECT customer_id, first_name, last_name, profile 
+    // Fetch Customer Data including the email
+    $customer_queries = "SELECT customer_id, first_name, last_name, email, profile 
                        FROM customers 
                        WHERE customer_id = ?";
 
@@ -34,8 +32,9 @@ if ($c_customer_id) {
     $stmt->execute();
     $customer_results = $stmt->get_result();
 
-    if ($rows= $customer_results->fetch_assoc()) {
+    if ($rows = $customer_results->fetch_assoc()) {
         $full_name = $rows['first_name'] . ' ' . $rows['last_name'];
+        $emails = $rows['email']; // Update the emails variable with the fetched email
         $prof_pictures = $rows['profile'] ? $rows['profile'] : $prof_pictures;
     }
 }
@@ -162,7 +161,7 @@ if ($c_customer_id) {
                     </div>
                     
                     <div class="header-info ms-3">
-                        <span class="font-w600" style="color: white; font-size: 1.2rem;">Hi, <b><?php echo htmlspecialchars($firstName); ?></b></span>
+                        <span class="font-w600" style="color: white; font-size: 1.2rem;">Hi, <b><?php echo htmlspecialchars($full_name); ?></b></span>
                         <p class="text-end font-w400" style="color: white; font-size: 0.9rem;"><?php echo htmlspecialchars($emails); ?></p>
                     </div>
                 </a>

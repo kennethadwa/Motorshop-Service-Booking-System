@@ -4,33 +4,14 @@ if (!isset($_SESSION['account_type']) || $_SESSION['account_type'] != 0) {
     header("Location: ../login-register.php");
     exit();
 }
-
 include('../connection.php');
-
 
 $admin_id = $_SESSION['admin_id'];
 
+include('chart_query.php');
 
-// Query for total employees
-$query_employees = "SELECT COUNT(*) AS total_employees FROM employees";
-$result_employees = mysqli_query($conn, $query_employees);
-$total_employees = mysqli_fetch_assoc($result_employees)['total_employees'];
-
-// Query for total customers
-$query_customers = "SELECT COUNT(*) AS total_customers FROM customers";
-$result_customers = mysqli_query($conn, $query_customers);
-$total_customers = mysqli_fetch_assoc($result_customers)['total_customers'];
-
-// Query for total bookings
-$query_bookings = "SELECT COUNT(*) AS total_bookings FROM booking_request"; // Corrected table name
-$result_bookings = mysqli_query($conn, $query_bookings);
-$total_bookings = mysqli_fetch_assoc($result_bookings)['total_bookings'];
-
-// Query for total schedules
-$query_schedules = "SELECT COUNT(*) AS total_schedules FROM schedule"; // New query to count schedules
-$result_schedules = mysqli_query($conn, $query_schedules);
-$total_schedules = mysqli_fetch_assoc($result_schedules)['total_schedules'];
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -39,6 +20,7 @@ $total_schedules = mysqli_fetch_assoc($result_schedules)['total_schedules'];
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>Sairom Dashboard</title>
+	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 	<link href="vendor/jquery-nice-select/css/nice-select.css" rel="stylesheet">
 	<link rel="stylesheet" href="vendor/nouislider/nouislider.min.css">
 	<!-- Style CSS -->
@@ -109,9 +91,6 @@ $total_schedules = mysqli_fetch_assoc($result_schedules)['total_schedules'];
 				<!-- Card 5 -->
 				<?php include('./cards/card5.php'); ?>
 
-				<!-- Card 6 -->
-				<?php include('./cards/card6.php'); ?>
-
 				<!-- Card 7 -->
 				<?php include('./cards/card7.php'); ?>
 
@@ -144,11 +123,17 @@ $total_schedules = mysqli_fetch_assoc($result_schedules)['total_schedules'];
 <script src="vendor/apexchart/apexchart.js"></script>
 <script src="vendor/nouislider/nouislider.min.js"></script>
 <script src="vendor/wnumb/wNumb.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
 
 <!-- Dashboard 1 -->
 <script src="js/dashboard/dashboard-1.js"></script>
 
 <script src="js/custom.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.0/xlsx.full.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="vendor/chart.js/Chart.bundle.min.js"></script>
 <script src="js/dlabnav-init.js"></script>
 <script src="js/demo.js"></script>
 <script src="js/styleSwitcher.js"></script>

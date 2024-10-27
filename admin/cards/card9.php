@@ -1,41 +1,99 @@
+<?php
+// Get current and previous month names
+$current_month_name = date("F") . "(Current Month)"; // Current month name
+$previous_month_name = date("F", strtotime("-1 month")) . "(Previous Month)"; // Previous month name
+
+// Your existing query and calculation code here
+?>
+
 <div class="col-xl-6 col-xxl-7">
-						<div class="card" style="box-shadow: none;">
-							<div class="card-header d-flex flex-wrap border-0 pb-0">
-								<div class="me-auto mb-sm-0 mb-3">
-									<h4 class="card-title mb-2">Transaction Overview</h4>
-									<span class="fs-12">Lorem ipsum dolor sit amet, consectetur</span>
-								</div>
-								<a href="javascript:void(0)" class="btn btn-rounded btn-md btn-primary me-3 me-3"><i class="las la-download scale5 me-3"></i>Download Report</a>
-								<div class="dropdown">
-									<a href="javascript:void(0);" class="btn-link" data-bs-toggle="dropdown" aria-expanded="false">
-										<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-											<path d="M12 13C12.5523 13 13 12.5523 13 12C13 11.4477 12.5523 11 12 11C11.4477 11 11 11.4477 11 12C11 12.5523 11.4477 13 12 13Z" stroke="#575757" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
-											<path d="M12 6C12.5523 6 13 5.55228 13 5C13 4.44772 12.5523 4 12 4C11.4477 4 11 4.44772 11 5C11 5.55228 11.4477 6 12 6Z" stroke="#575757" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
-											<path d="M12 20C12.5523 20 13 19.5523 13 19C13 18.4477 12.5523 18 12 18C11.4477 18 11 18.4477 11 19C11 19.5523 11.4477 20 12 20Z" stroke="#575757" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
-										</svg>
-									</a>
-									<div class="dropdown-menu dropdown-menu-right">
-										<a class="dropdown-item" href="javascript:void(0);">Delete</a>
-										<a class="dropdown-item" href="javascript:void(0);">Edit</a>
-									</div>
-								</div>
-							</div>
-							<div class="card-body pb-2">
-								<div class="d-sm-flex d-block">
-									<div class="form-check toggle-switch text-end form-switch me-4">
-									  <input checked class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
-									  <label class="form-check-label" for="flexSwitchCheckDefault">Number</label>
-									</div>
-									<div class="form-check toggle-switch text-end form-switch me-auto">
-									  <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault1">
-									  <label class="form-check-label" for="flexSwitchCheckDefault1">Analytics</label>
-									</div>
-									<ul class="card-list d-flex mt-sm-0 mt-3">
-										<li class="me-3"><span class="bg-success circle"></span>Income</li>
-										<li><span class="bg-danger circle"></span>Outcome</li>
-									</ul>
-								</div>
-								<div id="chartBar2" class="bar-chart"></div>
-							</div>
-						</div>
-					</div>
+    <div class="card" style="box-shadow: none; max-height: 650px; overflow: hidden;">
+        <div class="card-header d-flex flex-wrap border-0 pb-0">
+            <div class="me-auto mb-sm-0 mb-3">
+                <h4 class="card-title mb-2">Transaction Overview</h4>
+                <span class="fs-12">Comparison of Monthly Bookings</span>
+            </div>
+            <a href="javascript:void(0)" class="btn btn-rounded btn-md btn-primary me-3 me-3" onclick="exportToPDFs()">
+                <i class="las la-download scale5 me-3"></i>Download Report
+            </a>
+        </div>
+        <div class="card-body pb-2" style="max-height: 550px; overflow-y: auto;">
+            <div>
+                <canvas id="barChart" style="height: 450px; width: 100%;"></canvas>
+            </div>
+            <div class="mt-3">
+                <h5>Total Bookings Change: <?php echo number_format($percentage_change, 2); ?>%</h5>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        var ctx = document.getElementById('barChart').getContext('2d');
+        var barChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ['<?php echo $previous_month_name; ?>', '<?php echo $current_month_name; ?>'],
+                datasets: [{
+                    label: 'Total Bookings',
+                    data: [<?php echo $previous_month_total; ?>, <?php echo $current_month_total; ?>],
+                    backgroundColor: ['rgba(255, 99, 132, 0.6)', 'rgba(75, 192, 192, 0.6)'],
+                    borderColor: ['rgba(255, 99, 132, 1)', 'rgba(75, 192, 192, 1)'],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            text: 'Total Bookings'
+                        }
+                    }
+                },
+                plugins: {
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                return context.dataset.label + ': ' + context.raw;
+                            }
+                        }
+                    }
+                }
+            }
+        });
+    });
+
+
+    async function exportToPDFs() {
+        const canvas = document.getElementById('barChart');
+        const chartImage = await html2canvas(canvas, { backgroundColor: '#fff' });
+        const imgData = chartImage.toDataURL('image/png');
+
+        const { jsPDF } = window.jspdf;
+        const pdf = new jsPDF();
+        pdf.addImage(imgData, 'PNG', 10, 10, 190, 100);
+
+        // PDF content specific to card9.php
+        const totalBookingsChange = '<?php echo number_format($percentage_change, 2); ?>%';
+        const currentMonth = '<?php echo $current_month_name; ?>';
+        const previousMonth = '<?php echo $previous_month_name; ?>';
+        const previousMonthTotal = '<?php echo number_format($previous_month_total, 0); ?>';
+        const currentMonthTotal = '<?php echo number_format($current_month_total, 0); ?>';
+
+        pdf.setFontSize(12);
+        pdf.text("Transaction Overview", 10, 120);
+        pdf.text(`Comparison of Monthly Bookings`, 10, 130);
+        pdf.text(`${previousMonth}: Total Bookings ${previousMonthTotal}`, 10, 140);
+        pdf.text(`${currentMonth}: Total Bookings ${currentMonthTotal}`, 10, 150);
+        pdf.text(`Total Bookings Change: ${totalBookingsChange}`, 10, 160);
+
+        // Automatically download the PDF
+        pdf.save('Transaction_Report_Card9.pdf');
+    }
+
+    document.querySelector('.btn-primary').addEventListener('click', exportToPDF);
+</script>

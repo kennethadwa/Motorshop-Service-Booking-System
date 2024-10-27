@@ -131,7 +131,7 @@ $schedules = $conn->query($scheduleSql);
                             <?php if ($schedules->num_rows > 0): ?>
                                 <?php while ($row = $schedules->fetch_assoc()): ?>
                                     <div class="col-lg-4 col-md-6 mb-4">
-                                        <div class="card" style="background: rgba(0, 0, 0, 0.473); border: none; box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.5);">
+                                        <div class="card" style="background: rgba(0, 0, 0, 0.473); border: none; box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.5); height: auto;">
                                             <div class="card-body">
                                                 <div class="d-flex align-items-center mb-3 justify-content-center" style="border-bottom: 1px dashed white;">
                                                     <h5 class="card-title text-white">Booking No. <?php echo $row['request_id']; ?></h5>
@@ -153,7 +153,7 @@ $schedules = $conn->query($scheduleSql);
                                 <?php endwhile; ?>
                             <?php else: ?>
                                 <div class="col-12 text-center">
-                                    <div class="alert alert-light" role="alert" style="color: white;">
+                                    <div class="alert" role="alert" style="color: white; background: transparent;">
                                         No Scheduled Appointments Available
                                     </div>
                                 </div>
