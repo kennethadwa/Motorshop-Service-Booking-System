@@ -120,6 +120,15 @@ switch ($status) {
         $statusColor = 'white'; 
         break;
 }
+
+
+// Prepare the SQL query to fetch comments and requested_date
+$commentSql = "SELECT comments, date_requested FROM booking_request WHERE request_id = ?";
+$commentStmt = $conn->prepare($commentSql);
+$commentStmt->bind_param("i", $requestId);
+$commentStmt->execute();
+$commentResult = $commentStmt->get_result();
+
 ?>
 
 <!DOCTYPE html>
@@ -273,14 +282,35 @@ switch ($status) {
 
                         <br>
 
-                        <div class="delete" style="display: flex; justify-content: center; align-items:center;">
-                             <!-- DELETE BOOKING BUTTON -->
-                            <form action="delete_booking.php" method="POST">
-                                <input type="hidden" name="request_id" value="<?php echo $requestId; ?>">
-                                <button type="submit" class="btn mt-4"
-                                style="background: red; color: white; box-shadow: 1px 1px 10px black;">Delete Booking Request</button>
-                            </form>
-                        </div>
+                        <div class="comments-section" style="display: flex; flex-direction: column; align-items: center; margin-top: 20px;">
+                             <h4 style="color: white; text-align: center; font-weight: 600;">Comments</h4>
+                             <?php
+                             if ($commentResult && $commentResult->num_rows > 0) {
+                                 while ($commentRow = $commentResult->fetch_assoc()) {
+                                     echo '<div class="desc" style="color: #FFF; padding: 10px; border-radius: 8px; margin-top: 10px; width: 80%;                         ">';
+                                     echo '<p style="margin: 0; font-size: 0.9rem;">' . htmlspecialchars($commentRow['comments']) . '</p>';
+                                     echo '<small style="color: #999;">' . date("F j, Y, g:i a", strtotime($commentRow['date_requested'])) . '</small>';
+                                     echo '</div>';
+                                 }
+                             } else {
+                                 echo '<p style="color: #FFF;">No comments available for this booking.</p>';
+                             }
+                             ?>
+                         </div>
+                         
+                         <br>
+
+                        <!-- DELETE BOOKING BUTTON -->
+                            <?php if ($status == 'pending' || $status == 'approved'): ?>
+                                <div class="delete" style="display: flex; justify-content: center; align-items:center;">
+                                    <form action="delete_booking.php" method="POST">
+                                        <input type="hidden" name="request_id" value="<?php echo $requestId; ?>">
+                                        <button type="submit" class="btn mt-4" style="background: red; color: white; box-shadow: 1px 1px 10px black;">
+                                            Delete Booking Request
+                                        </button>
+                                    </form>
+                                </div>
+                            <?php endif; ?>
                         </div>
                     </div>
                 </div>

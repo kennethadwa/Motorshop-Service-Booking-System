@@ -143,6 +143,40 @@ switch ($status) {
         $statusColor = 'white'; 
         break;
 }
+
+
+// Handle status and comments update
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['status'])) {
+    $newStatus = $_POST['status'];
+    $newComments = isset($_POST['comments']) ? $_POST['comments'] : '';
+
+    $updateSql = "UPDATE booking_request SET status = ?, comments = ? WHERE request_id = ?";
+    $updateStmt = $conn->prepare($updateSql);
+    $updateStmt->bind_param("ssi", $newStatus, $newComments, $requestId);
+    $updateStmt->execute();
+    echo "<script>alert('Updated Successfully')</script>";
+    header("Location: bookings.php");
+    exit();
+}
+
+
+// Fetch request details including comments
+$requestSql = "SELECT request_date, request_time, description, status, comments FROM booking_request WHERE request_id = ?";
+$requestStmt = $conn->prepare($requestSql);
+$requestStmt->bind_param("i", $requestId);
+$requestStmt->execute();
+$requestResult = $requestStmt->get_result();
+
+$request_date = $request_time = $description = $status = $comments = '';
+if ($requestResult->num_rows > 0) {
+    $row = $requestResult->fetch_assoc();
+    $request_date = $row['request_date'];
+    $request_time = $row['request_time'];
+    $description = $row['description'];
+    $status = $row['status'];
+    $comments = $row['comments'];  // Fetch existing comments
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -256,12 +290,20 @@ switch ($status) {
                             </div>
 
                             <form method="POST" action="">
+
                                 <div class="form-group mt-4">
                                     <label for="status">Change Status:</label>
                                     <select class="form-control" name="status" id="status">
                                         <?php echo $options; ?>
                                     </select>
                                 </div>
+
+                                <div class="form-group mt-4">
+                                    <label for="comments">Comments:</label>
+                                    <textarea class="form-control" name="comments" id="comments" rows="3" placeholder="Enter comments here..."><?php echo htmlspecialchars($comments); ?></textarea>
+                                </div>
+
+
                                 <div class="d-flex justify-content-center">
                                     <button type="submit" class="btn btn-primary mt-3" style="box-shadow: 1px 1px 10px black;">Update Status</button>
                                 </div>

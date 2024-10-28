@@ -107,6 +107,9 @@ if ($data) {
 </head>
 <body>
     
+   <div class="receipt-title" style="width: 100%; max-height: 80px; display:flex; justify-content: center; align-items: center; margin-bottom: 10px;">
+    <h1 style="color: black; font-size:2rem; font-weight:600; font-family: Segoe;">Please Screenshot the Receipt, Thank you!🙂🤗</h1>
+   </div>
     <div class="receipt-card">
         <div class="receipt-header">
             <h4>Payment Receipt</h4>
@@ -132,12 +135,12 @@ if ($data) {
             <div class="spinner-border" role="status">
                 <span class="visually-hidden">Loading...</span>
             </div>
-            <p>Redirecting in <span id="countdown">10</span> seconds...</p>
+            <p>Redirecting in <span id="countdown">20</span> seconds...</p>
         </div>
     </div>
 
     <script>
-        let countdown = 30; // Set countdown time in seconds
+        let countdown = 20; // Set countdown time in seconds
         const countdownElement = document.getElementById('countdown');
 
         const countdownInterval = setInterval(() => {
