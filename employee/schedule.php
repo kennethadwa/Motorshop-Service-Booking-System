@@ -188,7 +188,7 @@ $mostRecentDate = !empty($scheduleArray) ? $scheduleArray[0]['request_date'] : n
                     <?php endforeach; ?>
                 <?php else: ?>
                     <div class="col-12 text-center">
-                        <div class="alert alert-light" role="alert" style="color: white;">
+                        <div class="alert" role="alert" style="color: white; background: transparent;">
                             No Scheduled Appointments Available
                         </div>
                     </div>

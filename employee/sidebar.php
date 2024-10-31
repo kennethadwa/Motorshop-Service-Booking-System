@@ -166,18 +166,13 @@ if ($c_employee_id) {
                 </div>
             </li>
 
-            <li><a href="index" aria-expanded="false">
-                <i class="flaticon-025-dashboard"></i>
-                <span class="nav-text">Home</span>
-            </a></li>
-
             <li><a href="schedule" aria-expanded="false">
                 <i class="fa-regular fa-calendar-days"></i>
                 <span class="nav-text">Assigned Task</span>
             </a></li>
 
             <li><a href="completed_task" aria-expanded="false">
-                <i class="fa-solid fa-dollar-sign"></i>
+                <i class="fa-solid fa-calendar-check"></i>
                 <span class="nav-text">Completed Task</span>
             </a></li>
 

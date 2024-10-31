@@ -62,7 +62,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     header("Location: ./admin/index"); 
                     break;
                 case 1:
-                    header("Location: ./employee/index"); 
+                    header("Location: ./employee/schedule"); 
                     break;
                 case 2: 
                     header("Location: ./customer/packages"); 

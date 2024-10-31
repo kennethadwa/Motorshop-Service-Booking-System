@@ -102,9 +102,6 @@ include('chart_query.php');
 
 				<!-- Card 10 -->
 				<?php include('./cards/card10.php'); ?>
-
-				<!-- Card 11 -->
-				<?php include('./cards/card11.php'); ?>
 			</div>
 		</div>
 	</div>

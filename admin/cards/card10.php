@@ -1,4 +1,4 @@
-<div class="col-xl-6 col-xxl-7">
+<div class="col-xl-12 col-xxl-12">
     <div class="card" style="box-shadow: none; max-height: 650px; overflow: hidden;">
         <div class="card-header d-flex flex-wrap border-0 pb-0">
             <div class="me-auto mb-sm-0 mb-3">

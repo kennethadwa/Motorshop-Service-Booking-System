@@ -18,7 +18,7 @@ $c_customer_id = isset($_SESSION['customer_id']) ? $_SESSION['customer_id'] : nu
 
 
 $full_name = 'Guest';
-$prof_pictures = 'path/to/default/profile/picture.jpg'; 
+$prof_pictures = 'path/to/default/profile/picture.jpg';
 
 
 if ($c_customer_id) {
@@ -42,8 +42,9 @@ if ($c_customer_id) {
 
 <style>
     body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
     .my-profile {
         width: 100%;
         height: auto;
@@ -76,67 +77,68 @@ if ($c_customer_id) {
         border-radius: 50%;
     }
 
-    .drp_btn{
+    .drp_btn {
         display: flex;
         flex-direction: column;
         justify-content: flex-end;
     }
 
-    .dlabnav{
+    .dlabnav {
         background-color: #2B2A4C;
         box-shadow: none;
         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     }
 
-    .nav-text{
+    .nav-text {
         color: white;
     }
 
-    .nav-text:hover{
+    .nav-text:hover {
         color: white;
     }
 
-    .nav-text:active{
+    .nav-text:active {
         color: white;
     }
 
-    i{
+    i {
         color: white;
     }
 
-    i:active{
+    i:active {
         color: white;
     }
 
-    .nav-link{
+    .nav-link {
         border: none;
     }
-    .nav9link img{
+
+    .nav9link img {
         box-shadow: none;
     }
 
-    .hamburger{
+    .hamburger {
         color: white;
     }
 
-    .header-profile{
+    .header-profile {
         background-color: #3C486B;
         margin: 0;
     }
 
-    .header-profile .nav-link{
+    .header-profile .nav-link {
         display: flex;
         flex-direction: column;
         justify-content: center;
         align-items: center;
     }
 
-    .header-profile .nav-link img{
+    .header-profile .nav-link img {
         width: 80px;
         height: 80px;
     }
 
-    .header-profile .nav-link .header-info{
+    .header-profile .nav-link .header-info {
         width: auto;
         display: flex;
         flex-direction: column;
@@ -144,10 +146,10 @@ if ($c_customer_id) {
         align-items: center;
     }
 
-    .header-profile .nav-link .prof{
-       display: flex;
-       justify-content: center;
-       align-items: center;
+    .header-profile .nav-link .prof {
+        display: flex;
+        justify-content: center;
+        align-items: center;
     }
 </style>
 
@@ -159,7 +161,7 @@ if ($c_customer_id) {
                     <div class="prof">
                         <img src="<?php echo $prof_pictures; ?>" alt="Profile Picture" class="profile-picture" style="border: none; box-shadow: none; object-fit: cover;">
                     </div>
-                    
+
                     <div class="header-info ms-3">
                         <span class="font-w600" style="color: white; font-size: 1.2rem;">Hi, <b><?php echo htmlspecialchars($full_name); ?></b></span>
                         <p class="text-end font-w400" style="color: white; font-size: 0.9rem;"><?php echo htmlspecialchars($emails); ?></p>
@@ -171,24 +173,29 @@ if ($c_customer_id) {
             </li>
 
             <li><a href="packages" aria-expanded="false">
-                <i class="fa-regular fa-calendar-days"></i>
-                <span class="nav-text">Packages</span>
-            </a></li>
+                    <i class="fa-solid fa-box-open"></i>
+                    <span class="nav-text">Packages</span>
+                </a></li>
 
             <li><a href="request_booking" aria-expanded="false">
-                <i class="fa-solid fa-dollar-sign"></i>
-                <span class="nav-text">Book a Service</span>
-            </a></li>
+                    <i class="fa-solid fa-calendar-check"></i>
+                    <span class="nav-text">Book a Service</span>
+                </a></li>
 
             <li><a href="booking_history" aria-expanded="false">
-                <i class="fa-solid fa-dollar-sign"></i>
-                <span class="nav-text">Booking History</span>
-            </a></li>
+                    <i class="fa-solid fa-clock-rotate-left"></i>
+                    <span class="nav-text">Booking History</span>
+                </a></li>
 
             <li><a href="transaction" aria-expanded="false">
-                <i class="fa-solid fa-dollar-sign"></i>
-                <span class="nav-text">Transaction History</span>
-            </a></li>
+                    <i class="fa-solid fa-dollar-sign"></i>
+                    <span class="nav-text">Transaction History</span>
+                </a></li>
+
+            <li><a href="bot" aria-expanded="false">
+                    <i class="fa-solid fa-message"></i>
+                    <span class="nav-text">Chat Bot</span>
+                </a></li>
         </ul>
     </div>
 </div>
