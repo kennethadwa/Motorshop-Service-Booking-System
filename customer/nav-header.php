@@ -13,7 +13,7 @@ exit();
 </style>
 
 <div class="nav-header">
-            <a href="index" class="brand-logo">
+            <a href="packages" class="brand-logo">
 				<i class="fa-solid fa-motorcycle" style="color: #ffffff; font-size: 2rem; background-color: transparent;"></i>
                 
 				<p class="brand-title" width="124px" height="33px"  style="font-size: 30px; color: white;">Customer</p>

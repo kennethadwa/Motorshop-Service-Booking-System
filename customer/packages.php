@@ -1,11 +1,96 @@
 <?php
 session_start();
-if (!isset($_SESSION['account_type']) || $_SESSION['account_type'] != 2) {
-    header("Location: ../login-register.php");
-    exit();
-}
 
 include('../connection.php');
+require_once '../config.php';
+require_once '../vendor/autoload.php';
+
+// Authenticate code from Google OAuth Flow
+if (isset($_GET['code'])) {
+    $token = $client->fetchAccessTokenWithAuthCode($_GET['code']);
+    
+    if (isset($token['access_token'])) {
+        $client->setAccessToken($token['access_token']);
+
+        // Get profile info
+        $google_oauth = new \Google\Service\Oauth2($client);
+        $google_account_info = $google_oauth->userinfo->get();
+        
+        $userinfo = [
+            'email' => $google_account_info['email'],
+            'first_name' => $google_account_info['givenName'],
+            'last_name' => $google_account_info['familyName'],
+            'sex' => $google_account_info['gender'],
+            'token' => $google_account_info['id'],
+        ];
+
+        // Check if Google account already exists in the database
+        $sql = "SELECT * FROM customers WHERE token = '{$userinfo['token']}'";
+        $result = mysqli_query($conn, $sql);
+
+        if (!$result) {
+            die("Query Failed: " . mysqli_error($conn));
+        }
+
+        if (mysqli_num_rows($result) > 0) {
+            // Existing user
+            $userinfo = mysqli_fetch_assoc($result);
+            $_SESSION['token'] = $userinfo['token']; // Use token for Google SSO users
+            $_SESSION['customer_id'] = $userinfo['customer_id'];
+            $_SESSION['account_type'] = $userinfo['account_type']; // Set account type
+        } else {
+            // New user, insert into the database
+            $sql = "INSERT INTO customers (first_name, last_name, sex, email, account_type, token) 
+                    VALUES ('{$userinfo['first_name']}', '{$userinfo['last_name']}', '{$userinfo['sex']}', '{$userinfo['email']}', 2, '{$userinfo['token']}')";
+            $result = mysqli_query($conn, $sql);
+
+            if (!$result) {
+                die("Error creating account: " . mysqli_error($conn));
+            }
+
+            // Retrieve the customer ID of the newly inserted user
+            $stmt = $conn->prepare("SELECT customer_id, account_type FROM customers WHERE token = ?");
+            $stmt->bind_param("s", $userinfo['token']);
+            $stmt->execute();
+            $stmt->bind_result($customer_id, $account_type);
+            $stmt->fetch();
+            $_SESSION['token'] = $userinfo['token']; // Use token for Google SSO users
+            $_SESSION['customer_id'] = $customer_id;
+            $_SESSION['account_type'] = $account_type; // Set account type
+            $stmt->close();
+
+            echo "<script>alert('Account Successfully Created!');</script>";
+        }
+
+        // Redirect after login or account creation
+        header("Location: packages"); // Redirect to your main page
+        exit();
+    } else {
+        echo "Authentication failed. Please try again.";
+        die();
+    }
+} else {
+    // Check if user is already logged in using other methods
+    if (isset($_SESSION['customer_id'])) {
+        $sql = "SELECT * FROM customers WHERE customer_id = '{$_SESSION['customer_id']}'";
+        $result = mysqli_query($conn, $sql);
+
+        if (!$result) {
+            die("Query Failed: " . mysqli_error($conn));
+        }
+
+        if (mysqli_num_rows($result) > 0) {
+            $userinfo = mysqli_fetch_assoc($result);
+            $_SESSION['account_type'] = $userinfo['account_type'];
+        }
+    }
+}
+
+// Redirect if account_type is not set to 2
+if (!isset($_SESSION['account_type']) || $_SESSION['account_type'] != 2) {
+    header("Location: ../login-register.php"); // Redirect to login page if not allowed
+    exit();
+}
 
 // Fetch packages data with needed items from the database
 $query = "SELECT p.package_id, p.package_name, p.price, pp.product_id, pr.product_name 
