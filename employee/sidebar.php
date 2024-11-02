@@ -175,11 +175,6 @@ if ($c_employee_id) {
                 <i class="fa-solid fa-calendar-check"></i>
                 <span class="nav-text">Completed Task</span>
             </a></li>
-
-            <li><a href="logout" class="ai-icon" aria-expanded="false">
-                <i class="fa-solid fa-right-from-bracket"></i>
-                <span class="nav-text">Logout</span>
-            </a></li>
         </ul>
     </div>
 </div>

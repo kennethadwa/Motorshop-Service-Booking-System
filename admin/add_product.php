@@ -83,43 +83,42 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <style>
         body {
             background-color: #17153B;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: #FFFFFF;
         }
-        .container-fluid {
-            display: flex;
-            justify-content: center;
-            height: 100vh;
+        .container {
+            margin-top: 50px;
+            max-width: 800px;
+            background-color: #FFFFFF;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
         }
-        .card {
-            max-width: 100%;
-            width: 100%; 
-            height: auto;
-            box-shadow: none; 
-            background: transparent;
+        .form-control {
+            background-color: #EDE8DC;
+            border: none;
+            color: black;
         }
-        @media (min-width: 768px) {
-            .card {
-                width: 600px;
-            }
+        .form-control:focus {
+            background-color: #EDE8DC;
+            color: black;
+            border-color: black;
+            box-shadow: none;
         }
-        @media (max-width: 576px) {
-            .card {
-                width: 100%; 
-                margin: 0 10px; 
-            }
+        label {
+            font-weight: bold;
+            color: black;
         }
-        ::-webkit-scrollbar {
-            width: 18px;
-        }
-        ::-webkit-scrollbar-track {
-            background: #17153B;
-        }
-        ::-webkit-scrollbar-thumb {
-            background-color: #DA0C81;
-            border-radius: 10px;
-            border: 2px solid #DA0C81;
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background-color: #555;
+        .btn-custom {
+            background-color: #180161;
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            width: 100%;
+            transition: background-color 0.3s;
         }
     </style>
 </head>
@@ -140,69 +139,55 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <!-- Sidebar End -->
 
     <!-- Content Body Start -->
-   <div class="content-body">
-        <div class="container-fluid">
-            <div class="row invoice-card-row">
-                <div class="col-12">
-                    <div class="card mb-4">
-                        <div class="card-body">
-                            <form method="POST" action="" enctype="multipart/form-data">
-                                <div class="row">
-
-                            <div class="col-md-6">
-                                <div class="form-group mt-3">
-                                    <label for="product_name">Product Name:</label>
-                                    <input type="text" name="product_name" id="product_name" class="form-control" required>
-                                </div>
-                                <div class="form-group mt-3">
-                                    <label for="description">Description:</label>
-                                    <textarea name="description" id="description" class="form-control" rows="4" required></textarea>
-                                </div>
-
-                                <!-- Category Dropdown -->
-                                <div class="form-group mt-3">
-                                    <label for="category">Category:</label>
-                                    <select name="category" id="category" class="form-control" required>
-                                        <option value="">Select a Category</option>
-                                        <?php foreach ($categories as $category): ?>
-                                            <option value="<?php echo $category['category_id']; ?>">
-                                                <?php echo $category['category_name']; ?>
-                                            </option>
-                                        <?php endforeach; ?>
-                                    </select>
-                                </div>
-                              </div>
-
-                              <div class="col-md-6">
-                                <div class="form-group mt-3">
-                                    <label for="price">Price:</label>
-                                    <input type="number" step="0.01" name="price" id="price" class="form-control" required>
-                                </div>
-                                <div class="form-group mt-3">
-                                    <label for="quantity">Quantity:</label>
-                                    <input type="number" name="quantity" id="quantity" class="form-control" required>
-                                </div>
-                                <div class="form-group mt-3">
-                                    <label for="image">Upload Image:</label>
-                                    <input type="file" name="image" id="image" class="form-control" accept="image/*" required>
-                                </div>
-                                </div>
-                               </div>
-                                <div class="add-btn" style="display: flex; justify-content:center">
-                                    <button type="submit" class="btn mt-5" style="background-color: blue; color: white; box-shadow: none;">Add Product</button>
-                                </div>
-                            </form>
-
-                            <?php if ($product_added): ?>
-                            <script>
-                                alert("Product added successfully!");
-                                window.location.href = "view_products";
-                            </script>
-                            <?php endif; ?>
-                        </div>
-                    </div>
+    <div class="content-body">
+        <div class="container">
+            <form method="POST" action="" enctype="multipart/form-data">
+                <div class="mb-3">
+                    <label for="product_name">Product Name:</label>
+                    <input type="text" name="product_name" id="product_name" class="form-control" required>
                 </div>
-            </div>
+                <div class="mb-3">
+                    <label for="description">Description:</label>
+                    <textarea name="description" id="description" class="form-control" rows="4" required></textarea>
+                </div>
+
+                <!-- Category Dropdown -->
+                <div class="mb-3">
+                    <label for="category">Category:</label>
+                    <select name="category" id="category" class="form-control" required>
+                        <option value="">Select a Category</option>
+                        <?php foreach ($categories as $category): ?>
+                            <option value="<?php echo $category['category_id']; ?>">
+                                <?php echo $category['category_name']; ?>
+                            </option>
+                        <?php endforeach; ?>
+                    </select>
+                </div>
+
+                <div class="mb-3">
+                    <label for="price">Price:</label>
+                    <input type="number" step="0.01" name="price" id="price" class="form-control" required>
+                </div>
+                <div class="mb-3">
+                    <label for="quantity">Quantity:</label>
+                    <input type="number" name="quantity" id="quantity" class="form-control" required>
+                </div>
+                <div class="mb-3">
+                    <label for="image">Upload Image:</label>
+                    <input type="file" name="image" id="image" class="form-control" accept="image/*" required>
+                </div>
+
+                <div class="add-btn" style="display: flex; justify-content:center">
+                    <button type="submit" class="btn-custom mt-3">Add Product</button>
+                </div>
+            </form>
+
+            <?php if ($product_added): ?>
+            <script>
+                alert("Product added successfully!");
+                window.location.href = "view_products";
+            </script>
+            <?php endif; ?>
         </div>
     </div>
     <!-- Content Body End -->
@@ -226,3 +211,4 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 </body>
 </html>
+
