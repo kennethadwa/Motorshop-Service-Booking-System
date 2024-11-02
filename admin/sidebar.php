@@ -196,7 +196,7 @@ if ($c_admin_id) {
             </li>
             
             <!-- Other Menu Items -->
-            <li><a href="index.php" aria-expanded="false">
+            <li><a href="index" aria-expanded="false">
                 <i class="flaticon-025-dashboard" style="color:white;"></i>
                 <span class="nav-text" style="color:white;">Dashboard</span>
             </a></li>
@@ -212,7 +212,7 @@ if ($c_admin_id) {
             </a></li>
 
             <li><a href="packages" aria-expanded="false">
-                <i class="fa-regular fa-envelope" style="color:white;"></i>
+                <i class="fa-solid fa-box-open" style="color: white;"></i>
                 <span class="nav-text">Packages</span>
             </a></li>
 

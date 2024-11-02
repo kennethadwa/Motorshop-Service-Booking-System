@@ -4,29 +4,22 @@
     flex-wrap: wrap;
     gap: 1.5rem; /* Gap between cards */
     justify-content: center;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    padding: 2rem; /* Add padding around the container */
 }
 
 .pcard {
     flex: 1 1 300px; /* Allow cards to grow and shrink, with a minimum width of 300px */
     max-width: 600px; /* Adjust width for landscape */
     display: flex;
-    border-radius: 0.75rem;
-    background-color: #ffffff; /* Changed to a light background */
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); /* Softer shadow for a more elegant look */
-    padding: 2rem; /* Increased padding for a more spacious feel */
+    border-radius: 0.5rem;
+    background-color: rgba(17, 24, 39, 1);
+    box-shadow: 2px 2px 7px black;
+    padding: 1.5rem;
     margin-bottom: 2rem; 
-    transition: transform 0.3s; /* Add transition for hover effect */
-}
-
-.pcard:hover {
-    transform: translateY(-5px); /* Slight lift on hover for interactivity */
 }
 
 .pcard .left-side {
     flex: 1; /* Takes remaining space */
-    padding-right: 1.5rem; /* Space between left and right side */
+    padding-right: 1rem; /* Space between left and right side */
 }
 
 .pcard .right-side {
@@ -34,34 +27,35 @@
 }
 
 .title {
-    font-size: 1.75rem; /* Increased font size for better prominence */
+    font-size: 1.5rem;
     line-height: 2rem;
     font-weight: 700;
-    color: #333; /* Darker color for better readability */
+    color: #fff;
 }
 
 .price {
-    font-size: 1.25rem; /* Increased font size for better visibility */
+    font-size: 1rem;
+    line-height: 1;
     font-weight: 700;
-    color: #007BFF; /* Blue color for prices */
+    color: #fff;
 }
 
 .desc {
-    margin-top: 0.5rem;
-    margin-bottom: 0.5rem;
+    margin-top: 0.75rem;
+    margin-bottom: 0.75rem;
     line-height: 1.625;
-    color: #555; /* Slightly darker gray for better contrast */
+    color: rgba(156, 163, 175, 1);
 }
 
 .duration {
     margin-top: 0.5rem;
     line-height: 1.625;
-    color: #007BFF; /* Blue color for duration */
+    color: rgba(156, 163, 175, 1);
 }
 
 .lists {
     margin-bottom: 1.5rem;
-    color: #555; /* Use dark gray for consistency */
+    color: rgba(156, 163, 175, 1);
 }
 
 .lists .list {
@@ -70,19 +64,16 @@
     margin-left: 0.5rem;
 }
 
-.bookbtn {
-    color: #fff; 
+.bookbtn{
+    color: black; 
     border-radius: 5px; 
-    background: #007BFF; /* Blue color for button */
-    padding: 12px 20px; 
-    font-weight: bold; /* Bold text for emphasis */
-    text-align: center; /* Center text */
-    text-decoration: none; /* Remove underline */
-    transition: background 0.3s ease;
+    background: #7A1CAC; 
+    padding: 10px 15px; 
+    transition: 0.5s ease;
 }
 
-.bookbtn:hover {
-    background: #0056b3; /* Darker blue on hover */
+.bookbtn:hover{
+    background: #4F1787;
 }
 
 /* Media Queries for Responsiveness */
@@ -103,11 +94,11 @@
     }
 
     .title {
-        font-size: 1.5rem; /* Adjust title size for smaller screens */
+        font-size: 1.25rem; /* Adjust title size for smaller screens */
     }
 
     .price, .desc, .duration {
-        font-size: 1rem; /* Consistent font size for readability */
+        font-size: 0.9rem; /* Smaller font sizes for better fit */
     }
 
     .action {
@@ -115,6 +106,8 @@
     }
 }
 </style>
+
+
 
 <?php
 include('../connection.php');
@@ -179,34 +172,31 @@ $packages = array_values($packages);
         <div class="pcard">
             <div class="left-side">
                 <span class="title"><?php echo htmlspecialchars($package['name']); ?></span>
-                <br><br>
-                <span class="price">
-                    <span style="color: #333;">Price: </span><?php echo htmlspecialchars($package['price']); ?>
+                <br>
+                <span class="price" style="color: yellow;">
+                    <span style="color: white;">Price: </span><?php echo htmlspecialchars($package['price']); ?>
                 </span>
-                <br><br>
                 <p class="desc"><?php echo htmlspecialchars($package['description']); ?></p>
-                <br><br>
-                <p class="duration" style="font-weight: bold; font-size: 16px;">Duration: <?php echo htmlspecialchars($package['duration']); ?></p>
+                <p class="duration" style="color:lightseagreen;">Duration: <?php echo htmlspecialchars($package['duration']); ?></p>
             </div>
             <div class="right-side d-flex align-items-center" style="flex-direction: column;">
-                <h5 style="color: #333;">Included Products:</h5>
+                <h5 style="color: #fff;">Included Products:</h5>
                 <div class="prdct mt-2 mb-3">
                     <?php if (!empty($package['products'])): ?>
                     <?php foreach ($package['products'] as $product): ?>
                         <div class="list">                       
-                            <span style="color: #555;">
-                                <i class="fa-solid fa-square-check" style="color: #007BFF;"></i>&nbsp;
-                                <?php echo htmlspecialchars($product['name']); ?> (<span style="color: #007BFF;"><?php echo htmlspecialchars($product['price']); ?></span>)
+                            <span style="color: rgba(156, 163, 175, 1);">
+                                <i class="fa-solid fa-square-check" style="color: #f9a939;"></i>&nbsp;
+                                <?php echo htmlspecialchars($product['name']); ?> (<span style="color: lightseagreen;"><?php echo htmlspecialchars($product['price']); ?></span>)
                             </span>
                         </div>
                     <?php endforeach; ?>
                 <?php else: ?>
-                    <p style="color: #555;">No products included.</p>
+                    <p style="color: rgba(156, 163, 175, 1);">No products included.</p>
                 <?php endif; ?>
                 </div>
-                <br>
                 <div class="d-flex justify-content-center">
-                    <a href="request_booking" class="bookbtn">Book Now</a>
+                    <a href="request_booking" class="bookbtn" style="color: white;">Book Now</a>
                 </div>
             </div>
         </div>

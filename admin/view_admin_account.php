@@ -133,8 +133,6 @@ if (!isset($_SESSION['account_type']) || (int)$_SESSION['account_type'] !== 0) {
                             <!-- Action Buttons -->
                             <div class="col-12 text-center mt-4">
                                 <a href="manage-account.php" class="btn btn-warning action-btn" style="box-shadow: none; border: none; background: orange;"> <i class="fas fa-arrow-left"></i> Back</a>
-
-                                <a href="update_admin_account.php?id=<?php echo $admin_id; ?>" class="btn action-btn" style="box-shadow: none; border: none; background: green; color: white;"><i class="fa-solid fa-pen-nib" style="color: #ffffff;"></i> Update</a>
                             </div>
                         </div>
                     </div>
