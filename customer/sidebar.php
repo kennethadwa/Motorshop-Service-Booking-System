@@ -191,11 +191,6 @@ if ($c_customer_id) {
                     <i class="fa-solid fa-dollar-sign"></i>
                     <span class="nav-text">Transaction History</span>
                 </a></li>
-
-            <li><a href="bot" aria-expanded="false">
-                    <i class="fa-solid fa-message"></i>
-                    <span class="nav-text">Chat Bot</span>
-                </a></li>
         </ul>
     </div>
 </div>

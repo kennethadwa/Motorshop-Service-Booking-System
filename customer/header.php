@@ -37,6 +37,16 @@ $page_title = isset($page_titles[$current_page]) ? $page_titles[$current_page] :
                 </div>
                         <ul class="navbar-nav header-right">
 
+                        <li>
+
+                        <div style="background: white; width: auto; height: auto; padding: 10px; border-radius: 50%;">
+                            <a href="bot.php"><img width="50" height="50" src="https://img.icons8.com/color/96/online-support.png" alt="online-support"/></a>
+                            
+                        </div>
+                        </li>
+
+                        &nbsp;
+                        &nbsp;
 
                 <li class="nav-item">
 								<a href="logout.php" class="btn d-sm-inline-block d-none" style="background-color: red; padding:15px 20px; border-radius: 10px; color:white;">

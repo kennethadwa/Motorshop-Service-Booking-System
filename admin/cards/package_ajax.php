@@ -196,10 +196,20 @@ $packages = array_values($packages);
                 <?php endif; ?>
                 </div>
                 <div class="d-flex justify-content-center">
-                    <a href="request_booking" class="bookbtn" style="font-weight: bold;">Book Now</a>
+                    <a href="edit_package.php?package_id=<?php echo $package['id']; ?>" class="bookbtn" style="font-weight: bold; background: green; color: white;">Edit</a>
+                    &nbsp;
+                    &nbsp;
+                    <a href="delete_package.php?package_id=<?php echo $package['id']; ?>" class="bookbtn" style="font-weight: bold; background: red; color: white;" onclick="return confirmDelete();" >Delete</a>
                 </div>
                 
             </div>
         </div>
     <?php } ?>
 </div>
+
+<script>
+function confirmDelete() {
+    return confirm("Are you sure you want to delete this package?");
+}
+</script>
+
