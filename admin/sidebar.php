@@ -222,37 +222,6 @@ if ($c_admin_id) {
                 <span class="nav-text">Inventory</span>
             </a></li>
 
-            <!-- Transaction History Menu -->
-            <li><a href="transaction" aria-expanded="false">
-                <i class="fa-solid fa-dollar-sign" style="color:white;"></i>
-                <span class="nav-text">Transaction History</span>
-            </a></li>
-
-            <!-- Account -->
-            <li style="background-color: transparent;">
-                <a class="nav-link" href="javascript:void(0);" role="button" data-bs-toggle="collapse" data-bs-target="#userDropdown" aria-expanded="false" style="background-color: transparent;">
-                    <i class="fa-solid fa-user" style="color:white;"></i>
-                    <span class="nav-text">User</span>
-                    <i class="fa fa-caret-down ms-auto"></i>
-                </a>
-
-                <!-- Dropdown content (collapsible) -->
-                <ul id="userDropdown" class="drp_btn collapse list-unstyled" style="background-color: transparent;">
-
-                    <li>
-                        <a class="drp_btn" href="user-information" style="color: white; font-size: 1rem;">
-                            User Information
-                        </a>
-                    </li>
-
-                    <li>
-                        <a class="drp_btn" href="manage-account" style="color: white; font-size: 1rem;">
-                            Manage Account
-                        </a>
-                    </li>
-
-                </ul>
-            </li>
         </ul>
     </div>
 </div>
