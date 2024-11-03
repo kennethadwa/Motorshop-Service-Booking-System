@@ -130,7 +130,7 @@ $stmt = $conn->prepare($sql);
 $stmt->bind_param("i", $requestId);
 $stmt->execute();
 $result = $stmt->get_result();
-$deposit_price = $result->fetch_assoc()['price'] / 2;  // 50% deposit
+$deposit_price = $result->fetch_assoc()['price'];  // 50% deposit
 ?>
 
 <!DOCTYPE html>
@@ -285,7 +285,7 @@ $deposit_price = $result->fetch_assoc()['price'] / 2;  // 50% deposit
 
                             <div style="height: auto; display: flex; flex-direction: column; justify-content: center; align-items: center; margin: 30px;">
                               
-                               <h3 style="color: white;"><?php echo 'In order to proceed with your booking request, we kindly request a deposit of at least' . '<span style="color: orange;"> ₱' . number_format($deposit_price, 2) . '</span>'; ?>.</h3>
+                               <h3 style="color: white;"><?php echo 'In order to proceed with your booking request, we kindly request payment of at least' . '<span style="color: orange;"> ₱' . number_format($deposit_price, 2) . '</span>'; ?>.</h3>
 
                                <br>
 
