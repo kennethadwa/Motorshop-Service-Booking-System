@@ -145,7 +145,7 @@ if ($c_admin_id) {
     }
 
     .header-profile{
-        background-color: #402E7A;
+        background-color: #4C3BCF;
         margin: 0;
     }
 

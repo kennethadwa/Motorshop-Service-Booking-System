@@ -7,14 +7,26 @@ if (!isset($_SESSION['account_type']) || $_SESSION['account_type'] != 0) {
 
 include('../connection.php');
 
+// Pagination settings
+$limit = 15; // Number of products per page
+$page = isset($_GET['page']) ? (int)$_GET['page'] : 1; // Current page number
+$offset = ($page - 1) * $limit; // Calculate offset
+
 // Fetch products from the database, joining with categories for the category name
 $query = "SELECT product_id, products.product_name, products.image, products.description, 
                  products.price, products.quantity, categories.category_name 
           FROM products 
-          LEFT JOIN categories ON products.category_id = categories.category_id";
+          LEFT JOIN categories ON products.category_id = categories.category_id 
+          LIMIT $limit OFFSET $offset";
 $result = mysqli_query($conn, $query);
-?>
 
+// Fetch total number of products for pagination
+$total_query = "SELECT COUNT(*) as total FROM products";
+$total_result = mysqli_query($conn, $total_query);
+$total_row = mysqli_fetch_assoc($total_result);
+$total_products = $total_row['total'];
+$total_pages = ceil($total_products / $limit); // Total number of pages
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -100,6 +112,28 @@ $result = mysqli_query($conn, $query);
         text-align: center;
     }
 }
+    .pagination {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .pagination a {
+            margin: 0 5px;
+            padding: 8px 12px;
+            background: blue;
+            color: white;
+            border-radius: 5px;
+            text-decoration: none;
+        }
+
+        .pagination a.active {
+            background: #DA0C81;
+        }
+
+        .pagination a:hover {
+            background: #555;
+        }
 
   </style>
 </head>
@@ -114,7 +148,7 @@ $result = mysqli_query($conn, $query);
             <div class="container-fluid">
                 <div class="row invoice-card-row">
                     <div class="col-12">
-                      <div class="d-flex justify-content-evenly mt-5 mb-5">
+                      <div class="d-flex justify-content-end mt-5 mb-5 gap-3" style="margin: 0 10px 0 10px;">
 
                         <a href="add_product" style="padding: 15px 20px; background: blue; color: white; font-weight: bold; font-size: 1rem; border-radius: 10px;"><i class="fa fa-plus"></i> &nbsp;Add Product</a>
 
@@ -139,6 +173,9 @@ $result = mysqli_query($conn, $query);
                             <a href="#" data-category="Maintenance Services" onclick="filterByCategory(event)">Maintenance Services</a>
                             <a href="#" data-category="Performance Upgrades" onclick="filterByCategory(event)">Performance Upgrades</a>
                             <a href="#" data-category="Custom Builds & Modifications" onclick="filterByCategory(event)">Custom Builds &   Modifications</a>
+                            <a href="#" data-category="Filters" onclick="filterByCategory(event)">Filters</a>
+                            <a href="#" data-category="Ignition" onclick="filterByCategory(event)">Ignition</a>
+                            <a href="#" data-category="Diagnostic Tool" onclick="filterByCategory(event)">Diagnostic Tool</a>
                         </div>
 
                         <!-- Products Table -->
@@ -163,21 +200,36 @@ $result = mysqli_query($conn, $query);
                                         </div>
                                         </td>
                                         <td class="title" style="background: transparent; color: white; text-align: center;"><?php echo $row['product_name']; ?></td>
-                                        <td style="background: transparent; color: white; text-align: center;"><?php echo $row['description']; ?></td>
+                                        <td style="background: transparent; color: white; text-align: center;">
+                                          <?php echo $row['description']; ?>
+                                        </td>
                                         <td style="background: transparent; color: white; text-align: center;"><?php echo $row['category_name']; ?></td>
-                                        <td style="background: transparent; color: white; text-align: center;"><?php echo $row['price']; ?></td>
+                                        <td style="background: transparent; color: white; text-align: center;"><?php echo '₱' .  $row['price']; ?></td>
                                         <td style="background: transparent; color: white; text-align: center;"><?php echo $row['quantity']; ?></td>
                                         <td style="background: transparent; color: white; text-align: center;">
-                                          <a href="edit_product.php?product_id=<?php echo $row['product_id']; ?>" style="padding: 10px 20px; background: green; color: white; border-radius: 10px;">Edit</a>
-                                          &nbsp;
-                                          &nbsp;
+                                          <a href="edit_product.php?product_id=<?php echo $row['product_id']; ?>" style="padding: 10px 20px; background: green; margin-bottom: 5px; color: white; border-radius: 10px;">Edit</a>
+                                          <br>
+                                          <br>
                                           <a href="delete_product.php?product_id=<?php echo $row['product_id']; ?>" style="padding: 10px; background: red; color: white; border-radius: 10px;" onclick="return confirmDelete()">Delete</a>
                                         </td>
                                     </tr>
                                 <?php endwhile; ?>
                             </tbody>
                         </table>
-
+                        <!-- Pagination -->
+                        <div class="pagination">
+                            <?php if ($page > 1): ?>
+                                <a href="?page=<?php echo $page - 1; ?>">Prev</a>
+                            <?php endif; ?>
+                            
+                            <?php for ($i = 1; $i <= $total_pages; $i++): ?>
+                                <a href="?page=<?php echo $i; ?>" class="<?php echo ($i == $page) ? 'active' : ''; ?>"><?php echo $i; ?></a>
+                            <?php endfor; ?>
+                            
+                            <?php if ($page < $total_pages): ?>
+                                <a href="?page=<?php echo $page + 1; ?>">Next</a>
+                            <?php endif; ?>
+                        </div>
                     </div>
                 </div>
             </div>

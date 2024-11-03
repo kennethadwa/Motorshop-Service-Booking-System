@@ -67,13 +67,13 @@
 .bookbtn{
     color: black; 
     border-radius: 5px; 
-    background: rgba(167, 139, 250, 1); 
+    background: #7A1CAC; 
     padding: 10px 15px; 
     transition: 0.5s ease;
 }
 
 .bookbtn:hover{
-    background: #27005D;
+    background: #4F1787;
 }
 
 /* Media Queries for Responsiveness */
@@ -153,7 +153,7 @@ if ($result && $result->num_rows > 0) {
 $packages = array_values($packages);
 ?>
 
-<div class="container">
+<div class="container" style="padding: 5px;">
     <?php
     foreach ($packages as $package) {
         $statusColor = '';
@@ -192,7 +192,7 @@ $packages = array_values($packages);
                         </div>
                     <?php endforeach; ?>
                 <?php else: ?>
-                    <p style="color: rgba(156, 163, 175, 1);">No products included.</p>
+                    <p style="color: orange; text-align: center;">No customer-purchased products required. Inspection tools are provided by the shop.</p>
                 <?php endif; ?>
                 </div>
                 <div class="d-flex justify-content-center">
@@ -201,7 +201,6 @@ $packages = array_values($packages);
                     &nbsp;
                     <a href="delete_package.php?package_id=<?php echo $package['id']; ?>" class="bookbtn" style="font-weight: bold; background: red; color: white;" onclick="return confirmDelete();" >Delete</a>
                 </div>
-                
             </div>
         </div>
     <?php } ?>

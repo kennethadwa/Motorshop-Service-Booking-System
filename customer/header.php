@@ -44,7 +44,7 @@ $page_title = isset($page_titles[$current_page]) ? $page_titles[$current_page] :
                         <ul class="navbar-nav header-right">
 
                         <li class="nav-item">
-						  <a href="transaction" class="btn d-sm-inline-block d-none" style="background-color: rgba(0, 0, 0, 0.3); box-shadow: 1px 1px 5px black; padding:15px 20px; border-radius: 10px; color:white;">
+						  <a href="transaction" class="btn d-sm-inline-block d-none" style="background-color: #FF4301; box-shadow: 1px 1px 5px black; padding:15px 20px; border-radius: 10px; color:white;">
 						  	<i class="fa-solid fa-dollar-sign"></i>
                             <span class="nav-text">Transaction History</span>
 						  </a>

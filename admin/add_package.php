@@ -126,6 +126,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         textarea {
             resize: none;
         }
+
+        .form-group {
+         background: #1E201E;
+         border-radius: 10px;
+         padding: 15px;
+         max-height: 200px;
+         overflow-y: auto;
+         }
+         .form-check {
+             margin-bottom: 10px; 
+         }
+
     </style>
 
 </head>
@@ -199,16 +211,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                 </div>
                             
                             <div class="mb-3">
-                                <label>Needed Items:</label>
-                                <div class="form-group" style="background:#1E201E; border-radius: 10px; padding: 15px 0 10px 0; display: flex; justify-content: space-evenly;">
-                                    <?php foreach ($products as $product): ?>
-                                        <div class="form-check">
-                                            <input type="checkbox" style="border: 1px solid black;" class="form-check-input" name="needed_items[]" value="<?php echo $product['product_id']; ?>" id="product_<?php echo $product['product_id']; ?>">
-                                            <label class="form-check-label" style="color: white;" for="product_<?php echo $product['product_id']; ?>"><?php echo $product['product_name']; ?></label>
-                                        </div>
-                                    <?php endforeach; ?>
-                                </div>
-                            </div>
+                                 <label>Needed Items:</label>
+                                 <div class="form-group" style="background:#1E201E; border-radius: 10px; padding: 15px; max-height: 200px; overflow-y:                              auto;">
+                                     <?php foreach ($products as $product): ?>
+                                         <div class="form-check">
+                                             <input type="checkbox" style="border: 1px solid black;" class="form-check-input" name="needed_items[]"                              value="<?php echo $product['product_id']; ?>" id="product_<?php echo $product['product_id']; ?>">
+                                             <label class="form-check-label" style="color: white;" for="product_<?php echo $product['product_id']; ?>"><?php echo $product['product_name']; ?></label>
+                                         </div>
+                                     <?php endforeach; ?>
+                                 </div>
+                             </div>
 
                                 <div class="add-btn" style="display: flex; justify-content:center">
                                     <button type="submit" class="btn btn-primary mt-3" style="background: blue; color: white; border: none; box-shadow: 1px 1px 10px black; border-radius: 10px;">Add Package</button>

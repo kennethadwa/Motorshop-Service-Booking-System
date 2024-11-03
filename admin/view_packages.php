@@ -50,6 +50,10 @@ if ($result && $result->num_rows > 0) {
     <style>
         body {
             background-color: #17153B;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: #343a40;
+            margin: 0;
+            padding: 0;
         }
 
         ::-webkit-scrollbar {
@@ -110,11 +114,16 @@ if ($result && $result->num_rows > 0) {
         <div class="container-fluid">
             <div class="row invoice-card-row">
                 <div class="col-12">
-                    <div class="d-flex justify-content-end mt-5 mb-3">
-                        <a href="add_package" style="padding: 15px 20px; border-radius: 10px; background: blue; font-weight: bold; font-size: 1rem; color: white;"><i class="fa fa-plus"></i> &nbsp;  Add Package</a>
-                    </div>
                     <div class="search-container d-flex justify-content-center">
-                        <input type="text" id="search-input" placeholder="Search packages..." onkeyup="filterPackages()">
+
+                      <div class="d-flex justify-content-end" style="flex: 2;">
+                          <input type="text" id="search-input" placeholder="Search packages..." onkeyup="filterPackages()" style="flex: 2;">  
+                        </div>
+
+                        <div class="d-flex justify-content-end" style="flex: 1;">
+                            <a href="add_package" style="padding: 15px 20px; border-radius: 10px; background: blue; font-weight: bold; font-size: 1rem; color: white;"><i class="fa fa-plus"></i> &nbsp;  Add Package</a>
+                        </div>
+                       
                     </div>
                     <div class="card mb-4" style="box-shadow: none; background: transparent;">
                         <div class="card-body" id="package-list">
