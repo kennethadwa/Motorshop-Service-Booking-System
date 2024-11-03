@@ -8,7 +8,7 @@ $current_month_name = date('F'); // Get the current month name
             <div class="d-flex flex-column justify-content-center" style="width: 100%; text-align: center;">
                 <h4 class="card-title mb-2">Top Customers</h4>
                 <h4>(Month of <?php echo htmlspecialchars($current_month_name); ?>)</h4>
-                <span class="fs-12">Customers with the most completed requests this month</span>
+                <span class="fs-12">Customers with the most requested booking this month</span>
             </div>
         </div>
         <div class="card-body">    

@@ -3,7 +3,7 @@
         <div class="card-header d-flex flex-wrap border-0 pb-0">
             <div class="me-auto mb-sm-0 mb-3">
                 <h4 class="card-title mb-2">Transaction Overview</h4>
-                <span class="fs-12">Lorem ipsum dolor sit amet, consectetur</span>
+                <span class="fs-12">Monthly Transactions</span>
             </div>
             <a href="javascript:void(0)" class="btn btn-rounded btn-md btn-primary me-3 me-3" onclick="exportToPDF()">
                 <i class="las la-download scale5 me-3"></i>Download Report
@@ -14,7 +14,7 @@
                 <canvas id="lineChart" style="height: 450px; width: 100%;"></canvas>
             </div>
             <div class="mt-3">
-                <h5>Total Deposit: ₱<?php echo number_format($total_deposit, 2); ?></h5>
+                <h5>Total Monthly Revenue: ₱<?php echo number_format($total_deposit, 2); ?></h5>
 
                 <?php
                 // Assuming the following variables are already defined
@@ -29,7 +29,7 @@
                     $percentage_increase = (($current_month_total - $previous_month_total) / $previous_month_total) * 100;
                 }
                 ?>
-                <h5>Percentage Increase in Deposits: <?php echo number_format($percentage_increase, 2); ?>%</h5>
+                <h5>Percentage Increase in Revenue: <?php echo number_format($percentage_increase, 2); ?>%</h5>
 
                 <?php
                 // Assuming similar logic for completed bookings
