@@ -84,7 +84,7 @@ if ($c_customer_id) {
     }
 
     .dlabnav {
-        background-color: #2B2A4C;
+        background-color: #030637;
         box-shadow: none;
         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     }
@@ -122,7 +122,7 @@ if ($c_customer_id) {
     }
 
     .header-profile {
-        background-color: #3C486B;
+        background-color: #030637;
         margin: 0;
     }
 
@@ -175,22 +175,21 @@ if ($c_customer_id) {
             <li><a href="packages" aria-expanded="false">
                     <i class="fa-solid fa-box-open"></i>
                     <span class="nav-text">Packages</span>
-                </a></li>
+                </a>
+            </li>
 
             <li><a href="request_booking" aria-expanded="false">
                     <i class="fa-solid fa-calendar-check"></i>
                     <span class="nav-text">Book a Service</span>
-                </a></li>
+                </a>
+            </li>
 
             <li><a href="booking_history" aria-expanded="false">
                     <i class="fa-solid fa-clock-rotate-left"></i>
                     <span class="nav-text">Booking History</span>
-                </a></li>
+                </a>
+            </li>
 
-            <li><a href="transaction" aria-expanded="false">
-                    <i class="fa-solid fa-dollar-sign"></i>
-                    <span class="nav-text">Transaction History</span>
-                </a></li>
         </ul>
     </div>
 </div>

@@ -7,8 +7,14 @@ $page_titles = [
     'index.php' => 'Homepage',
     'schedule.php' => 'My Schedule',
     'bookings.php' => 'Booking History',
-		'inventory.php' => 'Inventory',
-		'profile.php' => 'Profile', 
+	'inventory.php' => 'Inventory',
+	'profile.php' => 'Profile', 
+    'transaction.php' => 'Transaction History',
+    'booking_history.php' => 'Booking History',
+    'view_booking.php' => 'Booking Information',
+    'view_approved.php' => 'Booking Information',
+    'request_booking.php' => 'Request Booking',
+    'packages.php' => 'View Packages',
 ];
 
 // Set a default title in case the page is not listed
@@ -37,11 +43,20 @@ $page_title = isset($page_titles[$current_page]) ? $page_titles[$current_page] :
                 </div>
                         <ul class="navbar-nav header-right">
 
-                        <li>
+                        <li class="nav-item">
+						  <a href="transaction" class="btn d-sm-inline-block d-none" style="background-color: rgba(0, 0, 0, 0.3); box-shadow: 1px 1px 5px black; padding:15px 20px; border-radius: 10px; color:white;">
+						  	<i class="fa-solid fa-dollar-sign"></i>
+                            <span class="nav-text">Transaction History</span>
+						  </a>
+						</li>
 
+                        &nbsp;
+                        &nbsp;
+                        &nbsp;
+
+                        <li>
                         <div style="background: white; width: auto; height: auto; padding: 10px; border-radius: 50%;">
-                            <a href="bot.php"><img width="50" height="50" src="https://img.icons8.com/color/96/online-support.png" alt="online-support"/></a>
-                            
+                            <a href="bot.php"><img width="50" height="50" src="https://img.icons8.com/color/96/online-support.png" alt="online-support"/></a>    
                         </div>
                         </li>
 

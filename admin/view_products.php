@@ -114,6 +114,15 @@ $result = mysqli_query($conn, $query);
             <div class="container-fluid">
                 <div class="row invoice-card-row">
                     <div class="col-12">
+                      <div class="d-flex justify-content-evenly mt-5 mb-5">
+
+                        <a href="add_product" style="padding: 15px 20px; background: blue; color: white; font-weight: bold; font-size: 1rem; border-radius: 10px;"><i class="fa fa-plus"></i> &nbsp;Add Product</a>
+
+                        <a href="add_category" style="padding: 15px 20px; background:blue; color: white; font-weight: bold; font-size: 1rem; border-radius: 10px;"><i class="fa fa-plus"></i> &nbsp;Add Category</a>
+                        
+                        <a href="view_category" style="padding: 15px 20px; background:blue; color: white; font-weight: bold; font-size: 1rem; border-radius: 10px;">View Category</a>
+
+                      </div>
                         <div class="search-container d-flex justify-content-center">
                             <input type="text" id="search-input" placeholder="Search products..." onkeyup="filterPackages()">
                         </div>

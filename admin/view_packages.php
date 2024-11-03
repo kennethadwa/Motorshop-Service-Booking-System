@@ -110,6 +110,9 @@ if ($result && $result->num_rows > 0) {
         <div class="container-fluid">
             <div class="row invoice-card-row">
                 <div class="col-12">
+                    <div class="d-flex justify-content-end mt-5 mb-3">
+                        <a href="add_package" style="padding: 15px 20px; border-radius: 10px; background: blue; font-weight: bold; font-size: 1rem; color: white;"><i class="fa fa-plus"></i> &nbsp;  Add Package</a>
+                    </div>
                     <div class="search-container d-flex justify-content-center">
                         <input type="text" id="search-input" placeholder="Search packages..." onkeyup="filterPackages()">
                     </div>

@@ -109,7 +109,7 @@ if ($c_admin_id) {
     }
 
     .dlabnav{
-        background-color: #180161;
+        background-color: #4C3BCF;
         box-shadow: none;
     }
 
@@ -145,7 +145,7 @@ if ($c_admin_id) {
     }
 
     .header-profile{
-        background-color: #2E236C;
+        background-color: #402E7A;
         margin: 0;
     }
 
@@ -211,13 +211,13 @@ if ($c_admin_id) {
                 <span class="nav-text">Bookings</span>
             </a></li>
 
-            <li><a href="packages" aria-expanded="false">
+            <li><a href="view_packages" aria-expanded="false">
                 <i class="fa-solid fa-box-open" style="color: white;"></i>
                 <span class="nav-text">Packages</span>
             </a></li>
 
             <!-- Inventory Menu -->
-            <li><a href="inventory" aria-expanded="false">
+            <li><a href="view_products" aria-expanded="false">
                 <i class="fa-solid fa-truck-ramp-box" style="color:white;"></i>
                 <span class="nav-text">Inventory</span>
             </a></li>
