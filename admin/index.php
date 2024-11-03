@@ -1,7 +1,7 @@
 <?php
 session_start();
 if (!isset($_SESSION['account_type']) || $_SESSION['account_type'] != 0) {
-    header("Location: ../login-register.php");
+    header("Location: ../login.php");
     exit();
 }
 include('../connection.php');

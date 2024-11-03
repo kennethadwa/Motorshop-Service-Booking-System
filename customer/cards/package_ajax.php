@@ -192,7 +192,7 @@ $packages = array_values($packages);
                         </div>
                     <?php endforeach; ?>
                 <?php else: ?>
-                    <p style="color: rgba(156, 163, 175, 1);">No products included.</p>
+                    <p style="color: orange; text-align: center;">No customer-purchased products required. Inspection tools are provided by the shop.</p>
                 <?php endif; ?>
                 </div>
                 <div class="d-flex justify-content-center">

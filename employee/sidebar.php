@@ -80,7 +80,7 @@ if ($c_employee_id) {
     }
 
     .dlabnav{
-        background-color: #180161;
+        background-color: #2E236C;
         box-shadow: none;
     }
 
@@ -162,7 +162,7 @@ if ($c_employee_id) {
                     </div>
                 </a>
                 <div class="my-profile">
-                    <a class="profileBtn" style="color: white;" href="profile?id=<?php echo $c_employee_id ? $c_employee_id : ($c_employee_id ? $c_employee_id : $c_employee_id); ?>">View Profile</a>
+                    <a class="profileBtn" style="color: white;" href="update_profile?id=<?php echo $c_employee_id ? $c_employee_id : ($c_employee_id ? $c_employee_id : $c_employee_id); ?>">View Profile</a>
                 </div>
             </li>
 

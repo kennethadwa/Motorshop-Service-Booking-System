@@ -135,12 +135,12 @@ if ($data) {
             <div class="spinner-border" role="status">
                 <span class="visually-hidden">Loading...</span>
             </div>
-            <p>Redirecting in <span id="countdown">20</span> seconds...</p>
+            <p>Redirecting in <span id="countdown">10</span> seconds...</p>
         </div>
     </div>
 
     <script>
-        let countdown = 20; // Set countdown time in seconds
+        let countdown = 10; // Set countdown time in seconds
         const countdownElement = document.getElementById('countdown');
 
         const countdownInterval = setInterval(() => {

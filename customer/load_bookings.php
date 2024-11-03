@@ -66,7 +66,7 @@ if ($requests->num_rows > 0) {
         if ($row['status'] == 'approved') {
             echo '<a href="view_approved_booking.php?request_id=' . $row['request_id'] . '" class="btn btn-primary" style="background-color: #FF3FF9;">View</a>';
         } else {
-            echo '<a href="view_booking.php?request_id=' . $row['request_id'] . '" class="btn btn-primary" style="background-color: #FF3FF9;">View</a>';
+            echo '<a href="view_booking.php?request_id=' . $row['request_id'] . '" class="btn btn-primary" style="background-color: #FF4C29;">View</a>';
         }
         echo '</div></div>';
     }

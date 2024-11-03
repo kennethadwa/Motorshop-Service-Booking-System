@@ -191,7 +191,7 @@ if ($c_admin_id) {
                     </div>
                 </a>
                 <div class="my-profile">
-                    <a class="profileBtn" style="color: white;" href="profile?id=<?php echo $c_admin_id ? $c_admin_id : ($c_employee_id ? $c_employee_id : $c_customer_id); ?>">View Profile</a>
+                    <a class="profileBtn" style="color: white;" href="update_profile?id=<?php echo $c_admin_id ? $c_admin_id : ($c_employee_id ? $c_employee_id : $c_customer_id); ?>">View Profile</a>
                 </div>
             </li>
             

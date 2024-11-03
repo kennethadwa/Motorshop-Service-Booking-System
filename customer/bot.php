@@ -257,10 +257,17 @@ if (!isset($_SESSION['account_type']) || $_SESSION['account_type'] != 2) {
 <body>
 
 <div class="wrapper">
-    <div class="title">Chat Support</div>
+
+    <div class="title"  style="display: flex; padding: 10px;">
+        <img src="../images/sairom.png" alt="" style="width: 60px; height: 60px; border-radius: 50%;">
+        &nbsp;&nbsp;
+        Sairom Motor Shop
+    </div>
+
     <div class="form">
         <div class="bot-inbox inbox">
-            <div class="icon"><i class="fas fa-user"></i></div>
+            <div><img src="../images/sairom.png" alt="" style="width: 60px; height: 60px; border-radius: 50%;"></div>
+            &nbsp;
             <div class="msg-header">
                 <p>Hello there, how can I help you?</p>
             </div>
@@ -301,7 +308,7 @@ if (!isset($_SESSION['account_type']) || $_SESSION['account_type'] != 2) {
                 type: 'POST',
                 data: { text: value },
                 success: function(result){
-                  let reply = '<div class="bot-inbox inbox"><div class="icon"><i class="fas fa-user"></i></div><div class="msg-header"><p>' + result + '</p></div></div>';
+                  let reply = '<div class="bot-inbox inbox"><div><img src="../images/sairom.png" alt="" style="width: 60px; height: 60px; border-radius: 50%;"></div> &nbsp; <div class="msg-header"><p>' + result + '</p></div></div>';
                   $(".form").append(reply);
                   $(".form").scrollTop($(".form")[0].scrollHeight);
                 }

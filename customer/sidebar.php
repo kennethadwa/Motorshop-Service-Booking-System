@@ -168,7 +168,7 @@ if ($c_customer_id) {
                     </div>
                 </a>
                 <div class="my-profile">
-                    <a class="profileBtn" style="color: white;" href="profile?id=<?php echo $c_customer_id ? $c_customer_id : ($c_customer_id ? $c_customer_id : $c_customer_id); ?>">View Profile</a>
+                    <a class="profileBtn" style="color: white;" href="update_profile?id=<?php echo $c_customer_id ? $c_customer_id : ($c_customer_id ? $c_customer_id : $c_customer_id); ?>">View Profile</a>
                 </div>
             </li>
 
