@@ -55,7 +55,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if ($conn->query($sql) === TRUE) {
         echo "<script>
                 alert('Profile information updated successfully.');
-                window.location.href = 'profile?id={$customer_id}'; // Redirect to view_customer.php
+                window.location.href ='packages'; // Redirect to view_customer.php
               </script>";
         exit;
     } else {

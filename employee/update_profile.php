@@ -145,7 +145,7 @@ if (!isset($_SESSION['account_type']) || $_SESSION['account_type'] != 1) {
                         ?>
 
                         <div class="profile-picture-wrapper">
-                            <img src="<?php echo $profile_picture; ?>" alt="Profile Picture" class="profile-picture" style="width: 130px; height: 120px; border-radius: 10px;">
+                            <img id="profilePicture" src="<?php echo $profile_picture; ?>" alt="Profile Picture" class="profile-picture" style="width: 130px; height: 120px; border-radius: 10px;">
                         </div>
 
                         <form action="update_profile_process.php" method="POST" enctype="multipart/form-data">
@@ -208,7 +208,7 @@ if (!isset($_SESSION['account_type']) || $_SESSION['account_type'] != 1) {
                                     </div>
                                     <div class="form-group">
                                         <label for="profile">Profile Picture:</label>
-                                        <input type="file" style="background-color: transparent; color: white;" name="profile" class="form-control-file">
+                                        <input type="file" id="profileInput" name="profile" class="form-control-file" onchange="uploadProfilePicture()">
                                     </div>
                                 </div>
                             </div>
@@ -242,5 +242,29 @@ if (!isset($_SESSION['account_type']) || $_SESSION['account_type'] != 1) {
 <script src="js/demo.js"></script>
 <script src="js/styleSwitcher.js"></script>
 
+<script>
+function uploadProfilePicture() {
+    const profileInput = document.getElementById('profileInput').files[0];
+    const profilePicture = document.getElementById('profilePicture');
+    const formData = new FormData();
+    formData.append('profile', profileInput);
+
+    fetch('update_profile_picture.php', {
+        method: 'POST',
+        body: formData,
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            // Update the profile picture preview
+            profilePicture.src = data.filepath + '?' + new Date().getTime(); // Append timestamp to prevent caching
+            alert('Profile picture updated successfully!');
+        } else {
+            alert(data.error);
+        }
+    })
+    .catch(error => console.error('Error:', error));
+}
+</script>
 </body>
 </html>

@@ -50,7 +50,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if ($conn->query($sql) === TRUE) {
         echo "<script>
                 alert('Admin profile updated successfully.');
-                window.location.href = 'profile?id={$admin_id}'; // Correct redirection to admin's profile
+                window.location.href = 'index'; // Correct redirection to admin's profile
               </script>";
         exit;
     } else {

@@ -3,10 +3,8 @@ session_start();
 require_once 'connection.php';
 require_once 'config.php';
 
-// Store the Google login URL in a variable
 $googleLoginUrl = $client->createAuthUrl();
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -30,6 +28,11 @@ $googleLoginUrl = $client->createAuthUrl();
       opacity: 0.7;
       border: none; 
     }
+    .error {
+      color: red;
+      margin-top: 10px;
+      font-size: 0.9rem;
+    }
   </style>
 </head>
 
@@ -41,7 +44,7 @@ $googleLoginUrl = $client->createAuthUrl();
   <form action="auth-signup.php" method="post">
     <h1>Sign Up</h1>
     <br>
-    <span>please enter a valid email for registration</span>
+    <span>Please enter a valid email for registration</span>
     <input type="text" name="first_name" placeholder="First Name" required>
     <input type="text" name="last_name" placeholder="Last Name" required>
     <input type="email" name="email" placeholder="Valid Email Address" required>
@@ -62,6 +65,14 @@ $googleLoginUrl = $client->createAuthUrl();
     <span>or use your email password</span>
     <input type="email" name="email" placeholder="Email" required>
     <input type="password" name="password" placeholder="Password" required>
+    
+    <!-- Display Login Error -->
+    <?php
+    if (isset($_SESSION['loginErr'])) {
+        echo '<div class="error">'.htmlspecialchars($_SESSION['loginErr']).'</div>';
+        unset($_SESSION['loginErr']); // Clear error after displaying
+    }
+    ?>  
     <a href="forget_password.php">Forget Your Password?</a>
     <button type="submit" id="signinBtn" disabled="disabled" style="background: blue;">Sign In</button>
     <br>

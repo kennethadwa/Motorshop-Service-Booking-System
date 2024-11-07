@@ -1,99 +1,97 @@
 <?php
 session_start();
-include 'connection.php';
+include 'connection.php'; // Ensure this file connects to your database
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $email = $_POST['email'];
-    $password = $_POST['password'];
+$maxAttempts = 3;
+$lockoutTime = 15 * 60; // 15 minutes in seconds
+$loginErr = "";
 
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // Check if the email and password are set
+    if (isset($_POST['email']) && isset($_POST['password'])) {
+        $email = trim($_POST['email']);
+        $password = trim($_POST['password']);
+        
+        // Sanitize inputs to prevent SQL injection
+        $email = mysqli_real_escape_string($conn, $email);
+        $password = mysqli_real_escape_string($conn, $password);
 
-    $email = mysqli_real_escape_string($conn, $email);
-    $password = mysqli_real_escape_string($conn, $password);
+        // Prepare query to get user info, including attempts and lockout time
+        $query = "SELECT customer_id, first_name, last_name, account_type, password, failed_attempts, last_failed_login FROM customers WHERE email = ? LIMIT 1";
+        
+        if ($stmt = $conn->prepare($query)) {
+            $stmt->bind_param("s", $email);
+            $stmt->execute();
+            $result = $stmt->get_result();
 
-    if(isset($_POST['g-recaptcha-response']) && !empty($_POST['g-recaptcha-response'])){
+            if ($result->num_rows > 0) {
+                $row = $result->fetch_assoc();
+                $hashed_password = $row['password'];
+                $loginAttempts = $row['failed_attempts'];
+                $lockedUntil = $row['last_failed_login'];
 
-        $secretKey = '6LddpWYqAAAAAOAe7s3Sfry8xRZhTFur38Ienozm';
+                // Check if the account is locked
+                if ($lockedUntil && strtotime($lockedUntil) > time()) {
+                    $remainingLockTime = ceil((strtotime($lockedUntil) - time()) / 60);
+                    $loginErr = "Account locked. Try again in $remainingLockTime minutes.";
+                } else {
+                    // Verify password
+                    if (password_verify($password, $hashed_password)) {
+                        // Reset attempts and unlock account on successful login
+                        $updateQuery = "UPDATE customers SET failed_attempts = 0, last_failed_login = NULL WHERE email = ?";
+                        $stmtUpdate = $conn->prepare($updateQuery);
+                        $stmtUpdate->bind_param("s", $email);
+                        $stmtUpdate->execute();
 
-        $verifyResponse = file_get_contents('https://www.google.com/recaptcha/api/siteverify?secret='. $secretKey.'&response='.$_POST['g-recaptcha-response']);
-        $response = json_decode($verifyResponse);
+                        // Set session variables
+                        $_SESSION['email'] = $email;
+                        $_SESSION['first_name'] = $row['first_name'];
+                        $_SESSION['last_name'] = $row['last_name'];
+                        $_SESSION['customer_id'] = $row['customer_id'];
 
-        if($response -> success){
+                        // Redirect to the customer's dashboard
+                        header("Location: ./customer/packages.php");
+                        exit();
+                    } else {
+                        // Wrong password, increment login attempts
+                        $loginAttempts++;
+                        if ($loginAttempts >= $maxAttempts) {
+                            $lockedUntil = date("Y-m-d H:i:s", time() + $lockoutTime);
+                            $loginErr = "Too many failed attempts. Account locked for 15 minutes.";
+                        } else {
+                            $lockedUntil = NULL;
+                            $attemptsLeft = $maxAttempts - $loginAttempts;
+                            $loginErr = "Incorrect password. Attempts left: $attemptsLeft.";
+                        }
 
-                    $query = "SELECT admin_id, employee_id, customer_id, first_name, last_name, account_type, password FROM (
-                SELECT admin_id, NULL AS employee_id, NULL AS customer_id, email, first_name, last_name, account_type, password FROM admin
-                UNION ALL
-                SELECT NULL AS admin_id, employee_id, NULL AS customer_id, email, first_name, last_name, account_type, password FROM employees
-                UNION ALL
-                SELECT NULL AS admin_id, NULL AS employee_id, customer_id, email, first_name, last_name, account_type, password FROM customers
-              ) AS users
-              WHERE email = ? LIMIT 1";
-
-    // Prepare the statement
-    $stmt = $conn->prepare($query);
-    $stmt->bind_param("s", $email);
-    $stmt->execute();
-    $result = $stmt->get_result();
-
-    if ($result->num_rows > 0) {
-        $row = $result->fetch_assoc();
-        $hashed_password = $row['password'];
-
-    
-        if (password_verify($password, $hashed_password)) {
-            $account_type = $row['account_type'];
-
-   
-            $_SESSION['email'] = $email;
-            $_SESSION['first_name'] = $row['first_name']; 
-            $_SESSION['last_name'] = $row['last_name']; 
-            $_SESSION['account_type'] = $account_type;
-
-            
-            if ($account_type == 0) { 
-                $_SESSION['admin_id'] = $row['admin_id']; 
-            } elseif ($account_type == 1) {
-                $_SESSION['employee_id'] = $row['employee_id']; 
-            } elseif ($account_type == 2) { 
-                $_SESSION['customer_id'] = $row['customer_id']; 
+                        // Update login attempts and locked_until in database
+                        $updateQuery = "UPDATE customers SET failed_attempts = ?, last_failed_login = ? WHERE email = ?";
+                        $stmtUpdate = $conn->prepare($updateQuery);
+                        $stmtUpdate->bind_param("iss", $loginAttempts, $lockedUntil, $email);
+                        $stmtUpdate->execute();
+                    }
+                }
+            } else {
+                $loginErr = "No user found with this email.";
             }
 
-            switch ($account_type) {
-                case 0: 
-                    header("Location: ./admin/index"); 
-                    break;
-                case 1:
-                    header("Location: ./employee/schedule"); 
-                    break;
-                case 2: 
-                    header("Location: ./customer/packages"); 
-                    break;
-                default:
-                    echo "<script>alert('Invalid account type!'); window.location.href='login-register.php';</script>";
-                    exit();
-            }
-            exit();
+            $stmt->close();
         } else {
-           
-            echo "<script>alert('Invalid password!'); window.location.href='login-register.php';</script>";
-            exit();
+            $loginErr = "Database error: Unable to prepare statement.";
         }
     } else {
-        
-        echo "<script>alert('No user found with this email!'); window.location.href='login-register.php';</script>";
+        $loginErr = "Please enter both email and password.";
+    }
+
+    // Set error message and redirect back to login
+    if ($loginErr) {
+        $_SESSION['loginErr'] = $loginErr;
+        header("Location: login-register.php");
         exit();
     }
-
-        } else {
-            echo '<script>alert("Failed to verify");</script>';
-            header("Location: login-register");
-        }
-
-    } else {
-
-        echo '<script>alert("Failed to verify");</script>';
-        header("Location: login-register");
-    }
-
-    
 }
+
+// Redirect to login if not a POST request
+header("Location: login-register.php");
+exit();
 ?>

@@ -135,7 +135,7 @@ if (!isset($_SESSION['account_type']) || $_SESSION['account_type'] != 0) {
                         ?>
 
                         <div class="profile-picture-wrapper">
-                            <img src="<?php echo $profile_picture; ?>" alt="Profile Picture" class="profile-picture" style="width: 130px; height: 120px; border-radius: 10px;">
+                            <img id="profilePicture" src="<?php echo $profile_picture; ?>" alt="Profile Picture" class="profile-picture" style="width: 130px; height: 120px; border-radius: 10px;">
                         </div>
 
                         <form action="update_profile_process.php" method="POST" enctype="multipart/form-data">
@@ -204,11 +204,11 @@ if (!isset($_SESSION['account_type']) || $_SESSION['account_type'] != 0) {
                         
                             <!-- Profile Picture Upload -->
                             <div class="form-group">
-                                <label for="profile">Profile Picture:</label>
-                                <input type="file" name="profile" class="form-control-file">
+                                        <label for="profile">Profile Picture:</label>
+                                        <input type="file" id="profileInput" name="profile" class="form-control-file" onchange="uploadProfilePicture()">
                             </div>
-                        </div>
-                    </div>
+                                </div>
+                            </div>
                             <!-- Submit Button -->
                             <div class="text-center">
                                 <a href="profile?id=<?php echo $admin_id; ?>" class="btn" style="box-shadow: none; color: white; border: none; background: orange;"> <i class="fas fa-arrow-left"></i> Back</a>
@@ -240,5 +240,29 @@ if (!isset($_SESSION['account_type']) || $_SESSION['account_type'] != 0) {
 <script src="js/demo.js"></script>
 <script src="js/styleSwitcher.js"></script>
 
+<script>
+function uploadProfilePicture() {
+    const profileInput = document.getElementById('profileInput').files[0];
+    const profilePicture = document.getElementById('profilePicture');
+    const formData = new FormData();
+    formData.append('profile', profileInput);
+
+    fetch('update_profile_picture.php', {
+        method: 'POST',
+        body: formData,
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            // Update the profile picture preview
+            profilePicture.src = data.filepath + '?' + new Date().getTime(); // Append timestamp to prevent caching
+            alert('Profile picture updated successfully!');
+        } else {
+            alert(data.error);
+        }
+    })
+    .catch(error => console.error('Error:', error));
+}
+</script>
 </body>
 </html>

@@ -51,7 +51,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if ($conn->query($sql) === TRUE) {
         echo "<script>
                 alert('Profile information updated successfully.');
-                window.location.href = 'profile?id={$employee_id}'; // Redirect to view_employee.php
+                window.location.href = 'schedule'; // Redirect to view_employee.php
               </script>";
         exit;
     } else {
